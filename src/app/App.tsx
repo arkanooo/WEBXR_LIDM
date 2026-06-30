@@ -302,32 +302,25 @@ function Group3() {
   );
 }
 
-function Group() {
+function Group({ activeIndex }: { activeIndex: number }) {
+  const badgeText = CAROUSEL_DATA[activeIndex].badgeText;
   return (
     <div className="absolute contents left-[861.24px] top-[708.58px]" data-name="Group">
-      <Group4 />
-      <div className="absolute flex h-[8.107px] items-center justify-center left-[865.24px] top-[802.18px] w-[15.54px]">
-        <div className="flex-none rotate-[-102.85deg]">
-          <p className="[word-break:break-word] font-['Chivo:Regular',sans-serif] font-normal h-[14.813px] leading-[normal] relative text-[#000002] text-[17.622px] w-[4.938px]">-</p>
-        </div>
-      </div>
-      <Group5 />
-      <div className="absolute flex h-[14.916px] items-center justify-center left-[940.03px] top-[708.58px] w-[5.258px]">
-        <div className="flex-none rotate-[1.24deg]">
-          <p className="[word-break:break-word] font-['Chivo:Regular',sans-serif] font-normal h-[14.813px] leading-[normal] relative text-[#000002] text-[17.622px] w-[4.938px]">-</p>
-        </div>
-      </div>
-      <Group3 />
-      <div className="absolute flex h-[14.813px] items-center justify-center left-[938.44px] top-[850.67px] w-[4.938px]">
-        <div className="flex-none rotate-180">
-          <p className="[word-break:break-word] font-['Chivo:Black',sans-serif] font-black h-[14.813px] leading-[normal] relative text-[#000002] text-[17.622px] w-[4.938px]">-</p>
-        </div>
+      <div className="absolute left-[841px] top-[687px] w-[197.254px] h-[197.254px]" style={{ zIndex: 10, pointerEvents: 'auto', cursor: 'pointer' }} onClick={() => alert("Menuju ke Simulasi Lab Virtual...")}>
+        <svg viewBox="0 0 197.254 197.254" className="absolute inset-0 size-full block">
+          <path id="textCircle" d="M 98.627, 98.627 m -70, 0 a 70,70 0 1,1 140,0 a 70,70 0 1,1 -140,0" fill="transparent" />
+          <text className="font-['Chivo',sans-serif] font-bold text-[18px] fill-[#000002]" letterSpacing="5">
+            <textPath href="#textCircle" startOffset="0%" textAnchor="start">
+              {badgeText.repeat(2)}
+            </textPath>
+          </text>
+        </svg>
       </div>
     </div>
   );
 }
 
-function Group6() {
+function Group6({ activeIndex }: { activeIndex: number }) {
   return (
     <div className="absolute left-0 top-0 w-full h-full" style={{ zIndex: 5, pointerEvents: 'none' }}>
     <div className="absolute contents left-[841px] top-[687px]">
@@ -339,7 +332,7 @@ function Group6() {
         </div>
       </div>
       <Group9 />
-      <Group />
+      <Group activeIndex={activeIndex} />
     </div>
     </div>
   );
@@ -422,11 +415,11 @@ function Group15() {
   );
 }
 
-function Group17() {
+function Group17({ metricValue, metricDesc }: { metricValue: string, metricDesc: string }) {
   return (
     <div className="[word-break:break-word] absolute contents leading-[normal] left-[942.77px] text-white top-[990px]">
-      <p className="absolute font-['Chivo:Bold',sans-serif] font-bold left-[942.77px] text-[40px] top-[1003px] whitespace-nowrap">1600 +</p>
-      <p className="absolute font-['Chivo:Regular',sans-serif] font-normal left-[1098.57px] text-[30px] top-[990px] w-[234.431px]">{`Play games with your friends `}</p>
+      <p className="absolute font-['Chivo:Bold',sans-serif] font-bold left-[942.77px] text-[40px] top-[1003px] whitespace-nowrap">{metricValue}</p>
+      <p className="absolute font-['Chivo:Regular',sans-serif] font-normal left-[1098.57px] text-[30px] top-[990px] w-[234.431px]">{metricDesc}</p>
     </div>
   );
 }
@@ -434,27 +427,36 @@ function Group17() {
 const CAROUSEL_DATA = [
   { 
     id: 0, 
-    title: 'Head Strap', 
+    title: 'Modul Pembelajaran', 
     imageSrc: imgImage44, 
     bg: 'transparent',
     centerImgClasses: 'absolute h-[111.25%] left-[-36.84%] max-w-none top-[-11.25%] w-[173.86%]',
-    sideImgClasses: 'absolute inset-0 max-w-none object-contain pointer-events-none size-full scale-110 drop-shadow-lg'
+    sideImgClasses: 'absolute inset-0 max-w-none object-contain pointer-events-none size-full scale-110 drop-shadow-lg',
+    badgeText: 'START MODUL PEMBELAJARAN \u00A0 \u2022 \u00A0',
+    metricValue: '15+',
+    metricDesc: 'Modul Praktikum Siap Pakai '
   },
   { 
     id: 1, 
-    title: 'VR Controller', 
+    title: 'Komponen Mesin', 
     imageSrc: imgImage45, 
     bg: '#ffbf00',
     centerImgClasses: 'absolute inset-0 max-w-none object-contain pointer-events-none size-full scale-150 drop-shadow-2xl',
-    sideImgClasses: 'absolute inset-0 max-w-none object-cover pointer-events-none size-full'
+    sideImgClasses: 'absolute inset-0 max-w-none object-cover pointer-events-none size-full',
+    badgeText: 'START KOMPONEN MESIN \u00A0 \u2022 \u00A0',
+    metricValue: '50+',
+    metricDesc: 'Komponen Mesin 3D Interaktif '
   },
   { 
     id: 2, 
-    title: 'VR Gun', 
+    title: 'Simulasi Lab', 
     imageSrc: imgImage46, 
     bg: '#00cba0',
     centerImgClasses: 'absolute inset-0 max-w-none object-contain pointer-events-none size-full scale-150 drop-shadow-2xl',
-    sideImgClasses: 'absolute h-[123.89%] left-0 max-w-none top-[-11.38%] w-[109.89%]'
+    sideImgClasses: 'absolute h-[123.89%] left-0 max-w-none top-[-11.38%] w-[109.89%]',
+    badgeText: 'MULAI SIMULASI LAB VIRTUAL \u00A0 \u2022 \u00A0',
+    metricValue: '500+',
+    metricDesc: 'Mahasiswa aktif di lab ini '
   }
 ];
 
@@ -466,7 +468,7 @@ function CenterSlot({ title, imageSrc, imgClasses }: { title: string; imageSrc: 
           <div className="backdrop-blur-[12px] border border-solid border-white h-[270px] relative rounded-[14px] w-[206px]" style={{ backgroundImage: "linear-gradient(268.609deg, rgba(172, 190, 241, 0.6) 9.7725%, rgba(205, 209, 220, 0.306) 94.771%)" }} />
         </div>
       </div>
-      <p className="-translate-x-1/2 [word-break:break-word] absolute font-['Chivo:Regular',sans-serif] font-normal leading-[normal] left-[497.5px] text-[30px] text-center text-white top-[1032px] w-[163px] transition-all duration-500">{title}</p>
+      <p className="-translate-x-1/2 absolute font-['Chivo:Regular',sans-serif] font-normal leading-[normal] left-[497.5px] text-[30px] text-center text-white top-[1032px] whitespace-nowrap transition-all duration-500">{title}</p>
       <div className="absolute flex h-[182.687px] items-center justify-center left-[401.6px] top-[824.03px] w-[222.661px]">
         <div className="-scale-y-100 flex-none rotate-180 size-full flex items-center justify-center transition-all duration-500 relative">
           <img alt="" className={imgClasses} src={imageSrc} />
@@ -516,8 +518,7 @@ function ArrowButton({ direction, onClick }: { direction: 'left' | 'right'; onCl
   );
 }
 
-function Group24() {
-  const [activeIndex, setActiveIndex] = useState(0);
+function Group24({ activeIndex, setActiveIndex }: { activeIndex: number, setActiveIndex: React.Dispatch<React.SetStateAction<number>> }) {
 
   const handlePrev = () => setActiveIndex((prev) => (prev === 0 ? CAROUSEL_DATA.length - 1 : prev - 1));
   const handleNext = () => setActiveIndex((prev) => (prev === CAROUSEL_DATA.length - 1 ? 0 : prev + 1));
@@ -553,7 +554,7 @@ function Group24() {
           </div>
         </div>
       </div>
-      <Group17 />
+      <Group17 metricValue={centerItem.metricValue} metricDesc={centerItem.metricDesc} />
       
       <CenterSlot title={centerItem.title} imageSrc={centerItem.imageSrc} imgClasses={centerItem.centerImgClasses} />
       <SideSlot position="right" imageSrc={rightItem.imageSrc} bgColor={rightItem.bg} imgClasses={rightItem.sideImgClasses} />
@@ -570,6 +571,7 @@ function Group24() {
 }
 
 function OculusDesign() {
+  const [activeIndex, setActiveIndex] = useState(0);
   return (
     <div className="relative" style={{ width: `${DESIGN_W}px`, height: `${DESIGN_H}px` }} data-name="Design">
       <div className="absolute h-[1159px] left-0 shadow-[0px_30px_4px_0px_rgba(0,0,0,0.8)] top-0 w-[1440px]" style={{ backgroundImage: "linear-gradient(119.498deg, rgb(84, 38, 27) 1.3746%, rgb(0, 0, 2) 36.02%)" }} />
@@ -641,7 +643,7 @@ function OculusDesign() {
       <div className="absolute border border-[rgba(255,255,255,0.38)] border-solid h-[482.337px] left-[123px] rounded-[302px] top-[155.84px] w-[1193.697px]" style={{ zIndex: 1, WebkitMaskImage: 'linear-gradient(to bottom, black 20%, transparent 80%)', maskImage: 'linear-gradient(to bottom, black 20%, transparent 80%)' }} />
       <div className="absolute border border-[rgba(255,255,255,0.38)] border-solid h-[592.658px] left-[57px] rounded-[302px] top-[108px] w-[1325.907px]" style={{ zIndex: 1, WebkitMaskImage: 'linear-gradient(to bottom, black 20%, transparent 80%)', maskImage: 'linear-gradient(to bottom, black 20%, transparent 80%)' }} />
       <div className="absolute border border-[rgba(255,255,255,0.38)] border-solid h-[368.175px] left-[187px] rounded-[302px] top-[202.92px] w-[1066.192px]" style={{ zIndex: 1, WebkitMaskImage: 'linear-gradient(to bottom, black 20%, transparent 80%)', maskImage: 'linear-gradient(to bottom, black 20%, transparent 80%)' }} />
-      <Group6 />
+      <Group6 activeIndex={activeIndex} />
       <Group11 />
       <Group16 />
       <Group14 />
@@ -649,7 +651,7 @@ function OculusDesign() {
       <p className="-translate-x-full [word-break:break-word] absolute font-['Chivo:Regular',sans-serif] font-normal leading-[normal] left-[1437.37px] text-[30px] text-right text-white top-[-51.03px] whitespace-nowrap">spatialforge.id</p>
       <p className="[word-break:break-word] absolute font-['Saira_ExtraCondensed:Regular',sans-serif] leading-[normal] left-[248px] not-italic text-[#bffd44] text-[80px] top-[488px] whitespace-nowrap" style={{ zIndex: 10 }}>you need to</p>
       <p className="[word-break:break-word] absolute font-['Chivo:Regular',sans-serif] font-normal leading-[normal] left-[246px] text-[#bffd44] text-[110px] top-[617px] whitespace-nowrap" style={{ zIndex: 10 }}>Explore</p>
-      <Group24 />
+      <Group24 activeIndex={activeIndex} setActiveIndex={setActiveIndex} />
     </div>
   );
 }

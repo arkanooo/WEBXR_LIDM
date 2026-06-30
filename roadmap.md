@@ -1,15 +1,32 @@
 # Roadmap Desain Lanjutan 3DUTOPIA (SpatialForge)
 
-Fokus utama: **Interaktivitas Dinamis dan Sinkronisasi UI**
+Fokus utama: **Interaktivitas Dinamis dan Sinkronisasi UI (Command Center Logic)**
 
-## 1. State Management untuk Modul Aktif (`activeModule`)
-Menghubungkan logika *Carousel* di bagian bawah (saat tombol panah kiri/kanan diklik) agar otomatis mengubah metrik dan teks di sebelahnya. Misalnya, teks metrik "1600+ Play games..." akan berubah menyesuaikan modul/alat (Mesin Bubut, CNC, dll) yang sedang aktif di tengah.
+## 1. Sinkronisasi Modul Carousel, Badge, dan Metrik
+Mengubah bagian bawah layar (*slider*) menjadi pusat kendali utama (*command center*) yang saling terhubung secara terpusat.
 
-## 2. Dinamisasi Badge Bergerigi (Spinning Badge)
-Membuat teks melingkar di dalam *badge* yang bisa diklik (yang saat ini bertuliskan "Play - Beyond - Imagination") ikut beradaptasi atau bereaksi dengan modul yang sedang dipilih di *Carousel*.
+**Skenario Logika:**
 
-## 3. Transisi ke Simulasi Lab Virtual
-Menyempurnakan efek visual dan navigasi (yang saat ini masih berupa `alert("Menuju ke Simulasi Lab Virtual...")`) menjadi transisi halaman atau efek visual yang sesungguhnya saat *badge* tersebut diklik.
+*   **State 1 (Modul Pembelajaran):**
+    *   **Carousel Aktif:** Modul Pembelajaran
+    *   **Teks Badge Bergerigi:** "START MODUL PEMBELAJARAN"
+    *   **Teks Metrik Utama:** "15+"
+    *   **Sub-teks Metrik:** "Modul Praktikum Siap Pakai"
 
-## 4. Pengembangan Seksi Selanjutnya (Opsional)
+*   **State 2 (Komponen Mesin):**
+    *   **Carousel Aktif:** Komponen Mesin
+    *   **Teks Badge Bergerigi:** "START KOMPONEN MESIN"
+    *   **Teks Metrik Utama:** "50+"
+    *   **Sub-teks Metrik:** "Komponen Mesin 3D Interaktif"
+
+*   **State 3 (Simulasi Lab):**
+    *   **Carousel Aktif:** Simulasi Lab
+    *   **Teks Badge Bergerigi:** "MULAI SIMULASI LAB VIRTUAL"
+    *   **Teks Metrik Utama:** "500+"
+    *   **Sub-teks Metrik:** "Mahasiswa aktif di lab ini"
+
+## 2. Transisi ke Simulasi Lab Virtual
+Menyempurnakan efek visual dan navigasi (yang saat ini masih berupa `alert("Menuju ke Simulasi Lab Virtual...")`) menjadi transisi halaman atau efek visual yang sesungguhnya saat *badge* tersebut diklik, dengan parameter berdasarkan *state* yang sedang aktif.
+
+## 3. Pengembangan Seksi Selanjutnya (Opsional)
 Mulai mendesain tata letak bagian bawah halaman seperti seksi *Products*, *Features*, *Support*, dan *About* yang dapat dilihat apabila pengguna melakukan *scroll* ke bawah halaman utama.
