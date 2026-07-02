@@ -304,13 +304,16 @@ function Group3() {
 
 function Group({ activeIndex }: { activeIndex: number }) {
   const badgeText = CAROUSEL_DATA[activeIndex].badgeText;
+  const radius = 66; 
+  const circumference = 2 * Math.PI * radius;
+
   return (
     <div className="absolute contents left-[861.24px] top-[708.58px]" data-name="Group">
-      <div className="absolute left-[841px] top-[687px] w-[197.254px] h-[197.254px]" style={{ zIndex: 10, pointerEvents: 'auto', cursor: 'pointer' }} onClick={() => alert("Menuju ke Simulasi Lab Virtual...")}>
-        <svg viewBox="0 0 197.254 197.254" className="absolute inset-0 size-full block">
-          <path id="textCircle" d="M 98.627, 98.627 m -70, 0 a 70,70 0 1,1 140,0 a 70,70 0 1,1 -140,0" fill="transparent" />
-          <text className="font-['Chivo',sans-serif] font-bold text-[18px] fill-[#000002]" letterSpacing="5">
-            <textPath href="#textCircle" startOffset="0%" textAnchor="start">
+      <div className="absolute left-[841px] top-[687px] w-[197.254px] h-[197.254px]" style={{ zIndex: 10, pointerEvents: 'auto', cursor: 'pointer' }} onClick={() => alert(`Menuju ke Halaman: ${CAROUSEL_DATA[activeIndex].title}...`)}>
+        <svg viewBox="0 0 197.254 197.254" className="absolute inset-0 size-full block animate-[spin_20s_linear_infinite]">
+          <path id="textCircle" d={`M 98.627, 98.627 m -${radius}, 0 a ${radius},${radius} 0 1,1 ${radius * 2},0 a ${radius},${radius} 0 1,1 -${radius * 2},0`} fill="transparent" />
+          <text className="font-['Chivo',sans-serif] font-bold text-[15px] fill-[#000002] uppercase tracking-wide">
+            <textPath href="#textCircle" startOffset="0%" textAnchor="start" textLength={circumference} lengthAdjust="spacing">
               {badgeText.repeat(2)}
             </textPath>
           </text>
@@ -417,9 +420,9 @@ function Group15() {
 
 function Group17({ metricValue, metricDesc }: { metricValue: string, metricDesc: string }) {
   return (
-    <div className="[word-break:break-word] absolute contents leading-[normal] left-[942.77px] text-white top-[990px]">
-      <p className="absolute font-['Chivo:Bold',sans-serif] font-bold left-[942.77px] text-[40px] top-[1003px] whitespace-nowrap">{metricValue}</p>
-      <p className="absolute font-['Chivo:Regular',sans-serif] font-normal left-[1098.57px] text-[30px] top-[990px] w-[234.431px]">{metricDesc}</p>
+    <div className="absolute left-[942.77px] top-[990px] flex items-center gap-5 text-white h-[76px] transition-all duration-500">
+      <p className="font-['Chivo:Bold',sans-serif] font-bold text-[40px] whitespace-nowrap m-0 w-[100px] text-right">{metricValue}</p>
+      <p className="font-['Chivo:Regular',sans-serif] font-normal text-[22px] w-[220px] leading-tight m-0">{metricDesc}</p>
     </div>
   );
 }
@@ -430,9 +433,9 @@ const CAROUSEL_DATA = [
     title: 'Modul Pembelajaran', 
     imageSrc: imgImage44, 
     bg: 'transparent',
-    centerImgClasses: 'absolute h-[111.25%] left-[-36.84%] max-w-none top-[-11.25%] w-[173.86%]',
-    sideImgClasses: 'absolute inset-0 max-w-none object-contain pointer-events-none size-full scale-110 drop-shadow-lg',
-    badgeText: 'START MODUL PEMBELAJARAN \u00A0 \u2022 \u00A0',
+    centerImgClasses: 'absolute inset-0 size-full object-contain pointer-events-none drop-shadow-2xl scale-105 transition-transform duration-500',
+    sideImgClasses: 'absolute inset-0 size-full object-contain pointer-events-none drop-shadow-lg scale-90 transition-transform duration-500',
+    badgeText: 'MULAI MODUL PEMBELAJARAN \u00A0 \u2022 \u00A0',
     metricValue: '15+',
     metricDesc: 'Modul Praktikum Siap Pakai '
   },
@@ -441,9 +444,9 @@ const CAROUSEL_DATA = [
     title: 'Komponen Mesin', 
     imageSrc: imgImage45, 
     bg: '#ffbf00',
-    centerImgClasses: 'absolute inset-0 max-w-none object-contain pointer-events-none size-full scale-150 drop-shadow-2xl',
-    sideImgClasses: 'absolute inset-0 max-w-none object-cover pointer-events-none size-full',
-    badgeText: 'START KOMPONEN MESIN \u00A0 \u2022 \u00A0',
+    centerImgClasses: 'absolute inset-0 size-full object-contain pointer-events-none drop-shadow-2xl scale-100 transition-transform duration-500',
+    sideImgClasses: 'absolute inset-0 size-full object-contain pointer-events-none drop-shadow-lg scale-75 transition-transform duration-500',
+    badgeText: 'MULAI KOMPONEN MESIN \u00A0 \u2022 \u00A0',
     metricValue: '50+',
     metricDesc: 'Komponen Mesin 3D Interaktif '
   },
@@ -452,8 +455,8 @@ const CAROUSEL_DATA = [
     title: 'Simulasi Lab', 
     imageSrc: imgImage46, 
     bg: '#00cba0',
-    centerImgClasses: 'absolute inset-0 max-w-none object-contain pointer-events-none size-full scale-150 drop-shadow-2xl',
-    sideImgClasses: 'absolute h-[123.89%] left-0 max-w-none top-[-11.38%] w-[109.89%]',
+    centerImgClasses: 'absolute inset-0 size-full object-contain pointer-events-none drop-shadow-2xl scale-100 transition-transform duration-500',
+    sideImgClasses: 'absolute inset-0 size-full object-contain pointer-events-none drop-shadow-lg scale-75 transition-transform duration-500',
     badgeText: 'MULAI SIMULASI LAB VIRTUAL \u00A0 \u2022 \u00A0',
     metricValue: '500+',
     metricDesc: 'Mahasiswa aktif di lab ini '
@@ -468,8 +471,8 @@ function CenterSlot({ title, imageSrc, imgClasses }: { title: string; imageSrc: 
           <div className="backdrop-blur-[12px] border border-solid border-white h-[270px] relative rounded-[14px] w-[206px]" style={{ backgroundImage: "linear-gradient(268.609deg, rgba(172, 190, 241, 0.6) 9.7725%, rgba(205, 209, 220, 0.306) 94.771%)" }} />
         </div>
       </div>
-      <p className="-translate-x-1/2 absolute font-['Chivo:Regular',sans-serif] font-normal leading-[normal] left-[497.5px] text-[30px] text-center text-white top-[1032px] whitespace-nowrap transition-all duration-500">{title}</p>
-      <div className="absolute flex h-[182.687px] items-center justify-center left-[401.6px] top-[824.03px] w-[222.661px]">
+      <p className="-translate-x-1/2 absolute font-['Chivo:Regular',sans-serif] font-normal leading-[1.2] left-[497.5px] text-[26px] text-center text-white top-[1005px] w-[206px] transition-all duration-500 flex items-center justify-center h-[72px]">{title}</p>
+      <div className="absolute flex h-[186px] items-center justify-center left-[393.83px] top-[819px] w-[206px]">
         <div className="-scale-y-100 flex-none rotate-180 size-full flex items-center justify-center transition-all duration-500 relative">
           <img alt="" className={imgClasses} src={imageSrc} />
         </div>
@@ -482,7 +485,7 @@ function SideSlot({ imageSrc, bgColor, position, imgClasses }: { imageSrc: strin
   const isLeft = position === 'left';
   const leftPos = isLeft ? '224.87px' : '660.4px';
   const topPos = isLeft ? '953.02px' : '949.12px';
-  const imgLeft = isLeft ? '233.63px' : '667.47px';
+  const imgLeft = isLeft ? '209.82px' : '645.35px';
   
   return (
     <div className="absolute contents">
