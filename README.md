@@ -24,14 +24,14 @@ Repositori ini sedang dalam tahap restrukturisasi menuju format *Monorepo*:
 - `/backend` - (Mendatang) Logika server, integrasi *database*, dan *pipeline* kecerdasan buatan.
 
 ## ⚙️ Cara Menjalankan (Development)
-Untuk menjalankan aplikasi secara lokal:
+Karena proyek ini menggunakan arsitektur *Monorepo*, Anda harus menjalankan perintah dari *root directory*.
 
 ```bash
-# 1. Install semua dependensi
+# 1. Install semua dependensi untuk seluruh workspace
 npm install
 
-# 2. Jalankan server pengembangan
-npm run dev
+# 2. Jalankan server pengembangan untuk frontend (Aplikasi Web)
+npm run dev:frontend
 ```
 
 Buka peramban dan navigasikan ke `http://localhost:5173`.
