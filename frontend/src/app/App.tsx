@@ -1,8 +1,10 @@
 import { useEffect, useState, lazy, Suspense } from "react";
 import type { ComponentType } from "react";
 import { HashRouter, Routes, Route, Navigate, useNavigate, useLocation } from "react-router";
+import { AnimatePresence, motion } from "framer-motion";
 import svgPaths from "../imports/Design-1/svg-jznrhsi95h";
 import imgImage23 from "../imports/Design-1/160f1dac8fe9fd273b1ebc605342a06f7934a7d9.png";
+import logo3d from "../assets/Logo 3DUTOPIA 2 tes.png";
 import { ModulArt, KomponenArt, PraktikumArt } from "./components/CarouselArt";
 import PageShell from "./components/PageShell";
 import KomponenPage from "./pages/KomponenPage";
@@ -318,8 +320,8 @@ function Group({ activeIndex }: { activeIndex: number }) {
 
   return (
     <div className="absolute contents left-[861.24px] top-[708.58px]" data-name="Group">
-      <div className="absolute left-[841px] top-[687px] w-[197.254px] h-[197.254px]" style={{ zIndex: 10, pointerEvents: 'auto', cursor: 'pointer' }} onClick={() => navigate(CAROUSEL_DATA[activeIndex].route)}>
-        <svg viewBox="0 0 197.254 197.254" className="absolute inset-0 size-full block animate-[spin_20s_linear_infinite]">
+      <div className="absolute left-[841px] top-[687px] w-[197.254px] h-[197.254px] group" style={{ zIndex: 10, pointerEvents: 'auto', cursor: 'pointer' }} onClick={() => navigate(CAROUSEL_DATA[activeIndex].route)}>
+        <svg viewBox="0 0 197.254 197.254" className="absolute inset-0 size-full block animate-[spin_20s_linear_infinite] group-hover:scale-105 transition-transform duration-300">
           <path id="textCircle" d={`M 98.627, 98.627 m -${radius}, 0 a ${radius},${radius} 0 1,1 ${radius * 2},0 a ${radius},${radius} 0 1,1 -${radius * 2},0`} fill="transparent" />
           <text className="font-['Chivo',sans-serif] font-bold text-[15px] fill-[#000002] uppercase tracking-wide">
             <textPath href="#textCircle" startOffset="0%" textAnchor="start" textLength={circumference} lengthAdjust="spacing">
@@ -352,14 +354,8 @@ function Group6({ activeIndex }: { activeIndex: number }) {
 
 function Group10() {
   return (
-    <div className="absolute h-[28.537px] left-[39.93px] top-[53.39px] w-[50px]">
-      <svg className="absolute block inset-0 size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 50 28.5369">
-        <g id="Group 1000001328">
-          <path d={svgPaths.p38b0eb00} id="Rectangle 7" stroke="var(--stroke-0, white)" />
-          <path d={svgPaths.p3f18fe40} fill="var(--fill-0, #BFFD44)" id="Rectangle 6" />
-          <path d={svgPaths.p2b671a00} fill="var(--fill-0, #BFFD44)" id="Rectangle 9" />
-        </g>
-      </svg>
+    <div className="absolute left-[20px] top-[32px] h-[64px] w-[64px]">
+      <img src={logo3d} alt="3DUTOPIA Logo" className="absolute inset-0 size-full object-contain" />
     </div>
   );
 }
@@ -522,13 +518,15 @@ const CAROUSEL_DATA: CarouselItem[] = [
 
 function CenterSlot({ title, Art, bg, soon, onOpen }: { title: string; Art: ComponentType<{ className?: string }>; bg: string; soon?: boolean; onOpen: () => void }) {
   return (
-    <div className="absolute contents left-[393.83px] top-[819px]">
-      <div className="absolute flex h-[270px] items-center justify-center left-[393.83px] top-[819px] w-[206px] transition-all duration-500">
-        <div className="-scale-y-100 flex-none rotate-180">
-          <div className="backdrop-blur-[12px] border border-solid border-white h-[270px] relative rounded-[14px] w-[206px]" style={{ backgroundImage: "linear-gradient(268.609deg, rgba(172, 190, 241, 0.6) 9.7725%, rgba(205, 209, 220, 0.306) 94.771%)" }} />
+    <div 
+      className="absolute left-[393.83px] top-[819px] w-[206px] h-[270px]"
+    >
+      <div className="absolute inset-0 flex transition-all duration-500">
+        <div className="-scale-y-100 flex-none rotate-180 size-full">
+          <div className="backdrop-blur-[12px] border border-solid border-white h-full relative rounded-[14px] w-full transition-all duration-300" style={{ backgroundImage: "linear-gradient(268.609deg, rgba(172, 190, 241, 0.6) 9.7725%, rgba(205, 209, 220, 0.306) 94.771%)" }} />
         </div>
       </div>
-      <div className="absolute flex items-center justify-center left-[393.83px] top-[849px] w-[206px]">
+      <div className="absolute left-0 top-[30px] flex w-full items-center justify-center">
         <div
           className="flex h-[132px] w-[132px] items-center justify-center rounded-[30px] text-white shadow-[0_8px_24px_-6px_rgba(0,0,0,0.5)] transition-all duration-500"
           style={{ backgroundColor: bg }}
@@ -537,14 +535,14 @@ function CenterSlot({ title, Art, bg, soon, onOpen }: { title: string; Art: Comp
         </div>
       </div>
       {/* title + call-to-action hint */}
-      <div className="absolute left-[393.83px] top-[1000px] w-[206px] flex flex-col items-center gap-1 text-center" style={{ pointerEvents: 'none' }}>
+      <div className="absolute left-0 top-[181px] flex w-full flex-col items-center gap-1 text-center" style={{ pointerEvents: 'none' }}>
         <span className="font-['Chivo:Bold',sans-serif] font-bold text-[24px] leading-[1.1] text-white">{title}</span>
         <span className="text-[13px] font-medium text-[#bffd44] tracking-wide">{soon ? 'Segera hadir →' : 'Buka halaman →'}</span>
       </div>
       {/* clickable overlay with neon highlight */}
       <div
         onClick={onOpen}
-        className="group absolute left-[393.83px] top-[819px] h-[270px] w-[206px] cursor-pointer rounded-[16px] transition-transform duration-300 hover:scale-[1.03]"
+        className="group absolute inset-0 cursor-pointer rounded-[16px] transition-transform duration-300 hover:scale-[1.03]"
         style={{ zIndex: 62, pointerEvents: 'auto' }}
       >
         <div className="absolute inset-0 rounded-[16px] border-2 border-[#bffd44]/70 shadow-[0_0_28px_-6px_rgba(191,253,68,0.55)] transition-all duration-300 group-hover:border-[#bffd44] group-hover:shadow-[0_0_44px_-4px_rgba(191,253,68,0.85)]" />
@@ -928,75 +926,104 @@ function RequireAuth({ children }: { children: React.ReactElement }) {
   return children;
 }
 
-export default function App() {
+function PageTransition({ children }: { children: React.ReactNode }) {
   return (
-    <HashRouter>
-      <AuthProvider>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route
-            path="/komponen"
-            element={
-              <RequireAuth>
-                <KomponenPage />
-              </RequireAuth>
-            }
-          />
-          <Route
-            path="/komponen/:no"
-            element={
-              <RequireAuth>
-                <Suspense
-                  fallback={
-                    <div
-                      className="flex min-h-screen items-center justify-center bg-black text-[#BFFD44]"
-                      style={{ fontFamily: "'Chivo', sans-serif" }}
-                    >
-                      Memuat model 3D…
-                    </div>
-                  }
-                >
-                  <KomponenDetailPage />
-                </Suspense>
-              </RequireAuth>
-            }
-          />
-          <Route
-            path="/praktikum"
-            element={
-              <RequireAuth>
+    <motion.div
+      initial={{ opacity: 0, scale: 0.95, filter: "blur(4px)" }}
+      animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+      exit={{ opacity: 0, scale: 1.05, filter: "blur(4px)" }}
+      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+      className="w-full h-full transform-gpu"
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+function AnimatedRoutes() {
+  const location = useLocation();
+  return (
+    <AnimatePresence mode="wait">
+      <Routes location={location} key={location.pathname}>
+        <Route path="/" element={<PageTransition><HomePage /></PageTransition>} />
+        <Route path="/login" element={<PageTransition><LoginPage /></PageTransition>} />
+        <Route
+          path="/komponen"
+          element={
+            <RequireAuth>
+              <PageTransition><KomponenPage /></PageTransition>
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/komponen/:no"
+          element={
+            <RequireAuth>
+              <Suspense
+                fallback={
+                  <div
+                    className="flex min-h-screen items-center justify-center bg-black text-[#BFFD44]"
+                    style={{ fontFamily: "'Chivo', sans-serif" }}
+                  >
+                    Memuat model 3D…
+                  </div>
+                }
+              >
+                <PageTransition><KomponenDetailPage /></PageTransition>
+              </Suspense>
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/praktikum"
+          element={
+            <RequireAuth>
+              <PageTransition>
                 <PlaceholderPage
                   eyebrow="Virtual Lab"
                   title="Praktikum"
                   desc="Ruang praktikum virtual interaktif untuk menjalankan simulasi dan latihan mandiri. Modul ini sedang kami siapkan."
                 />
-              </RequireAuth>
-            }
-          />
-          <Route
-            path="/modul"
-            element={
-              <RequireAuth>
+              </PageTransition>
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/modul"
+          element={
+            <RequireAuth>
+              <PageTransition>
                 <PlaceholderPage
                   eyebrow="Materi Pembelajaran"
                   title="Modul"
                   desc="Kumpulan modul pembelajaran daring yang mendampingi setiap sesi praktikum. Kontennya sedang dalam penyusunan."
                 />
-              </RequireAuth>
-            }
-          />
-          <Route
-            path="/about"
-            element={
+              </PageTransition>
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/about"
+          element={
+            <PageTransition>
               <PlaceholderPage
                 eyebrow="Tentang Kami"
                 title="About"
                 desc="3DUTOPIA SpatialForge — platform virtual praktikum untuk pendidikan vokasi. Informasi selengkapnya akan segera hadir."
               />
-            }
-          />
-        </Routes>
+            </PageTransition>
+          }
+        />
+      </Routes>
+    </AnimatePresence>
+  );
+}
+
+export default function App() {
+  return (
+    <HashRouter>
+      <AuthProvider>
+        <AnimatedRoutes />
       </AuthProvider>
     </HashRouter>
   );
