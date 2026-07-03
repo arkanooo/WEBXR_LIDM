@@ -1,15 +1,17 @@
 import { useEffect, useState, lazy, Suspense } from "react";
-import { HashRouter, Routes, Route, useNavigate } from "react-router";
+import type { ComponentType } from "react";
+import { HashRouter, Routes, Route, Navigate, useNavigate, useLocation } from "react-router";
 import svgPaths from "../imports/Design-1/svg-jznrhsi95h";
+import imgImage23 from "../imports/Design-1/160f1dac8fe9fd273b1ebc605342a06f7934a7d9.png";
+import { ModulArt, KomponenArt, PraktikumArt } from "./components/CarouselArt";
+import PageShell from "./components/PageShell";
 import KomponenPage from "./pages/KomponenPage";
 import PlaceholderPage from "./pages/PlaceholderPage";
+import LoginPage from "./pages/LoginPage";
+import { AuthProvider, useAuth } from "./auth";
 
 // three.js is heavy — load the 3D/AR detail page only when it is opened.
 const KomponenDetailPage = lazy(() => import("./pages/KomponenDetailPage"));
-import imgImage23 from "../imports/Design-1/160f1dac8fe9fd273b1ebc605342a06f7934a7d9.png";
-import imgImage44 from "../imports/Design-1/6f81fc780204799bc4e9644a144e373dbc5cf509.png";
-import imgImage45 from "../imports/Design-1/3fb5d238b0206ce37d420f17b6ecda52b8d3da49.png";
-import imgImage46 from "../imports/Design-1/632ee31821342e74b585e6ee403db7e979a135ad.png";
 
 const DESIGN_W = 1440;
 const DESIGN_H = 1159;
@@ -309,13 +311,14 @@ function Group3() {
 }
 
 function Group({ activeIndex }: { activeIndex: number }) {
+  const navigate = useNavigate();
   const badgeText = CAROUSEL_DATA[activeIndex].badgeText;
-  const radius = 66; 
+  const radius = 66;
   const circumference = 2 * Math.PI * radius;
 
   return (
     <div className="absolute contents left-[861.24px] top-[708.58px]" data-name="Group">
-      <div className="absolute left-[841px] top-[687px] w-[197.254px] h-[197.254px]" style={{ zIndex: 10, pointerEvents: 'auto', cursor: 'pointer' }} onClick={() => alert(`Menuju ke Halaman: ${CAROUSEL_DATA[activeIndex].title}...`)}>
+      <div className="absolute left-[841px] top-[687px] w-[197.254px] h-[197.254px]" style={{ zIndex: 10, pointerEvents: 'auto', cursor: 'pointer' }} onClick={() => navigate(CAROUSEL_DATA[activeIndex].route)}>
         <svg viewBox="0 0 197.254 197.254" className="absolute inset-0 size-full block animate-[spin_20s_linear_infinite]">
           <path id="textCircle" d={`M 98.627, 98.627 m -${radius}, 0 a ${radius},${radius} 0 1,1 ${radius * 2},0 a ${radius},${radius} 0 1,1 -${radius * 2},0`} fill="transparent" />
           <text className="font-['Chivo',sans-serif] font-bold text-[15px] fill-[#000002] uppercase tracking-wide">
@@ -371,32 +374,39 @@ function Group11() {
   );
 }
 
-const NAV_LINKS: { label: string; path: string; left: number; active?: boolean }[] = [
-  { label: "Home", path: "/", left: 441, active: true },
-  { label: "Praktikum", path: "/praktikum", left: 531 },
-  { label: "Modul", path: "/modul", left: 665 },
-  { label: "Komponen", path: "/komponen", left: 761 },
-  { label: "About", path: "/about", left: 897 },
+const NAV_LINKS: { label: string; path: string }[] = [
+  { label: "Home", path: "/" },
+  { label: "About", path: "/about" },
 ];
 
 function Group13() {
   const navigate = useNavigate();
+  const location = useLocation();
   return (
-    <div className="[word-break:break-word] absolute contents leading-[normal] left-[441px] text-[18px] top-[52px] whitespace-nowrap">
-      {NAV_LINKS.map((link) => (
-        <p
-          key={link.path}
-          onClick={() => navigate(link.path)}
-          className={`absolute top-[52px] cursor-pointer transition-colors hover:text-[#bffd44] ${
-            link.active
-              ? "font-['Chivo:Bold',sans-serif] font-bold text-[#bffd44]"
-              : "font-['Chivo:Light',sans-serif] font-light text-white"
-          }`}
-          style={{ left: `${link.left}px`, zIndex: 40, pointerEvents: "auto" }}
-        >
-          {link.label}
-        </p>
-      ))}
+    <div
+      className="absolute top-[48px] left-1/2 -translate-x-1/2 flex items-center gap-16 text-[18px] whitespace-nowrap"
+      style={{ zIndex: 40, pointerEvents: "auto" }}
+    >
+      {NAV_LINKS.map((link) => {
+        const active =
+          link.path === "/" ? location.pathname === "/" : location.pathname.startsWith(link.path);
+        return (
+          <button
+            key={link.path}
+            onClick={() => navigate(link.path)}
+            className={`relative cursor-pointer transition-colors hover:text-[#bffd44] ${
+              active
+                ? "font-['Chivo:Bold',sans-serif] font-bold text-[#bffd44]"
+                : "font-['Chivo:Light',sans-serif] font-light text-white"
+            }`}
+          >
+            {link.label}
+            {active && (
+              <span className="absolute -bottom-2 left-0 h-[2px] w-full rounded-full bg-[#bffd44]" />
+            )}
+          </button>
+        );
+      })}
     </div>
   );
 }
@@ -442,52 +452,75 @@ function Group15() {
   );
 }
 
-function Group17({ metricValue, metricDesc }: { metricValue: string, metricDesc: string }) {
+function Group17({ metricValue, metricDesc, soon }: { metricValue: string, metricDesc: string, soon?: boolean }) {
   return (
     <div className="absolute left-[942.77px] top-[990px] flex items-center gap-5 text-white h-[76px] transition-all duration-500">
-      <p className="font-['Chivo:Bold',sans-serif] font-bold text-[40px] whitespace-nowrap m-0 w-[100px] text-right">{metricValue}</p>
+      {soon ? (
+        <span className="flex items-center gap-2 rounded-full border border-[#bffd44]/50 bg-[#bffd44]/10 px-4 py-1.5 text-[18px] font-bold text-[#bffd44] whitespace-nowrap">
+          <span className="h-2 w-2 rounded-full bg-[#bffd44]" />
+          {metricValue}
+        </span>
+      ) : (
+        <p className="font-['Chivo:Bold',sans-serif] font-bold text-[40px] whitespace-nowrap m-0 w-[100px] text-right">{metricValue}</p>
+      )}
       <p className="font-['Chivo:Regular',sans-serif] font-normal text-[22px] w-[220px] leading-tight m-0">{metricDesc}</p>
     </div>
   );
 }
 
-const CAROUSEL_DATA = [
-  { 
-    id: 0, 
-    title: 'Modul Pembelajaran', 
-    imageSrc: imgImage44, 
-    bg: 'transparent',
-    centerImgClasses: 'absolute inset-0 size-full object-contain pointer-events-none drop-shadow-2xl scale-105 transition-transform duration-500',
-    sideImgClasses: 'absolute inset-0 size-full object-contain pointer-events-none drop-shadow-lg scale-90 transition-transform duration-500',
+type CarouselItem = {
+  id: number;
+  title: string;
+  short: string;
+  route: string;
+  Art: ComponentType<{ className?: string }>;
+  bg: string;
+  badgeText: string;
+  metricValue: string;
+  metricDesc: string;
+  soon: boolean;
+};
+
+const CAROUSEL_DATA: CarouselItem[] = [
+  {
+    id: 0,
+    title: 'Modul Pembelajaran',
+    short: 'Modul',
+    route: '/modul',
+    Art: ModulArt,
+    bg: '#7c4dff',
     badgeText: 'MULAI MODUL PEMBELAJARAN \u00A0 \u2022 \u00A0',
-    metricValue: '15+',
-    metricDesc: 'Modul Praktikum Siap Pakai '
+    metricValue: 'Segera',
+    metricDesc: 'Modul Pembelajaran Daring',
+    soon: true,
   },
-  { 
-    id: 1, 
-    title: 'Komponen Mesin', 
-    imageSrc: imgImage45, 
+  {
+    id: 1,
+    title: 'Komponen Mesin',
+    short: 'Komponen',
+    route: '/komponen',
+    Art: KomponenArt,
     bg: '#ffbf00',
-    centerImgClasses: 'absolute inset-0 size-full object-contain pointer-events-none drop-shadow-2xl scale-100 transition-transform duration-500',
-    sideImgClasses: 'absolute inset-0 size-full object-contain pointer-events-none drop-shadow-lg scale-75 transition-transform duration-500',
-    badgeText: 'MULAI KOMPONEN MESIN \u00A0 \u2022 \u00A0',
-    metricValue: '50+',
-    metricDesc: 'Komponen Mesin 3D Interaktif '
+    badgeText: 'JELAJAHI KOMPONEN MESIN \u00A0 \u2022 \u00A0',
+    metricValue: '13',
+    metricDesc: 'Komponen Mesin 3D + AR',
+    soon: false,
   },
-  { 
-    id: 2, 
-    title: 'Simulasi Lab', 
-    imageSrc: imgImage46, 
+  {
+    id: 2,
+    title: 'Praktikum Virtual',
+    short: 'Praktikum',
+    route: '/praktikum',
+    Art: PraktikumArt,
     bg: '#00cba0',
-    centerImgClasses: 'absolute inset-0 size-full object-contain pointer-events-none drop-shadow-2xl scale-100 transition-transform duration-500',
-    sideImgClasses: 'absolute inset-0 size-full object-contain pointer-events-none drop-shadow-lg scale-75 transition-transform duration-500',
-    badgeText: 'MULAI SIMULASI LAB VIRTUAL \u00A0 \u2022 \u00A0',
-    metricValue: '500+',
-    metricDesc: 'Mahasiswa aktif di lab ini '
+    badgeText: 'MASUK PRAKTIKUM VIRTUAL \u00A0 \u2022 \u00A0',
+    metricValue: 'Segera',
+    metricDesc: 'Praktikum Lab Virtual (WebXR)',
+    soon: true,
   }
 ];
 
-function CenterSlot({ title, imageSrc, imgClasses }: { title: string; imageSrc: string; imgClasses: string }) {
+function CenterSlot({ title, Art, bg, soon, onOpen }: { title: string; Art: ComponentType<{ className?: string }>; bg: string; soon?: boolean; onOpen: () => void }) {
   return (
     <div className="absolute contents left-[393.83px] top-[819px]">
       <div className="absolute flex h-[270px] items-center justify-center left-[393.83px] top-[819px] w-[206px] transition-all duration-500">
@@ -495,33 +528,59 @@ function CenterSlot({ title, imageSrc, imgClasses }: { title: string; imageSrc: 
           <div className="backdrop-blur-[12px] border border-solid border-white h-[270px] relative rounded-[14px] w-[206px]" style={{ backgroundImage: "linear-gradient(268.609deg, rgba(172, 190, 241, 0.6) 9.7725%, rgba(205, 209, 220, 0.306) 94.771%)" }} />
         </div>
       </div>
-      <p className="-translate-x-1/2 absolute font-['Chivo:Regular',sans-serif] font-normal leading-[1.2] left-[497.5px] text-[26px] text-center text-white top-[1005px] w-[206px] transition-all duration-500 flex items-center justify-center h-[72px]">{title}</p>
-      <div className="absolute flex h-[186px] items-center justify-center left-[393.83px] top-[819px] w-[206px]">
-        <div className="-scale-y-100 flex-none rotate-180 size-full flex items-center justify-center transition-all duration-500 relative">
-          <img alt="" className={imgClasses} src={imageSrc} />
+      <div className="absolute flex items-center justify-center left-[393.83px] top-[849px] w-[206px]">
+        <div
+          className="flex h-[132px] w-[132px] items-center justify-center rounded-[30px] text-white shadow-[0_8px_24px_-6px_rgba(0,0,0,0.5)] transition-all duration-500"
+          style={{ backgroundColor: bg }}
+        >
+          <Art className="h-[78px] w-[78px]" />
         </div>
+      </div>
+      {/* title + call-to-action hint */}
+      <div className="absolute left-[393.83px] top-[1000px] w-[206px] flex flex-col items-center gap-1 text-center" style={{ pointerEvents: 'none' }}>
+        <span className="font-['Chivo:Bold',sans-serif] font-bold text-[24px] leading-[1.1] text-white">{title}</span>
+        <span className="text-[13px] font-medium text-[#bffd44] tracking-wide">{soon ? 'Segera hadir →' : 'Buka halaman →'}</span>
+      </div>
+      {/* clickable overlay with neon highlight */}
+      <div
+        onClick={onOpen}
+        className="group absolute left-[393.83px] top-[819px] h-[270px] w-[206px] cursor-pointer rounded-[16px] transition-transform duration-300 hover:scale-[1.03]"
+        style={{ zIndex: 62, pointerEvents: 'auto' }}
+      >
+        <div className="absolute inset-0 rounded-[16px] border-2 border-[#bffd44]/70 shadow-[0_0_28px_-6px_rgba(191,253,68,0.55)] transition-all duration-300 group-hover:border-[#bffd44] group-hover:shadow-[0_0_44px_-4px_rgba(191,253,68,0.85)]" />
       </div>
     </div>
   );
 }
 
-function SideSlot({ imageSrc, bgColor, position, imgClasses }: { imageSrc: string; bgColor: string; position: 'left' | 'right'; imgClasses: string }) {
+function SideSlot({ Art, bgColor, position, label, onSelect }: { Art: ComponentType<{ className?: string }>; bgColor: string; position: 'left' | 'right'; label: string; onSelect: () => void }) {
   const isLeft = position === 'left';
   const leftPos = isLeft ? '224.87px' : '660.4px';
   const topPos = isLeft ? '953.02px' : '949.12px';
-  const imgLeft = isLeft ? '209.82px' : '645.35px';
-  
+
   return (
     <div className="absolute contents">
       <div className="absolute flex h-[121.375px] items-center justify-center w-[109.912px] transition-all duration-500" style={{ left: leftPos, top: topPos }}>
-        <div className="-scale-y-100 flex-none rotate-180">
-          <div className="h-[121.375px] relative rounded-[12px] w-[109.912px] transition-colors duration-500" style={{ backgroundColor: bgColor === 'transparent' ? '#9b59b6' : bgColor }} />
-        </div>
+        <div className="h-[121.375px] w-[109.912px] rounded-[12px] transition-colors duration-500" style={{ backgroundColor: bgColor === 'transparent' ? '#9b59b6' : bgColor }} />
       </div>
-      <div className="absolute flex items-center justify-center size-[140px] transition-all duration-500" style={{ left: imgLeft, top: topPos }}>
-        <div className="-scale-y-100 flex-none rotate-[161.27deg] size-[117px] relative flex items-center justify-center">
-          <img alt="" className={imgClasses} src={imageSrc} />
-        </div>
+      <div className="absolute flex items-center justify-center h-[121.375px] w-[109.912px] text-white transition-all duration-500" style={{ left: leftPos, top: topPos }}>
+        <Art className="h-[58px] w-[58px]" />
+      </div>
+      {/* label */}
+      <p
+        className="absolute text-center text-[15px] font-['Chivo:Light',sans-serif] font-light text-white/70 w-[109.912px]"
+        style={{ left: leftPos, top: '1082px', pointerEvents: 'none' }}
+      >
+        {label}
+      </p>
+      {/* clickable overlay to bring this item to center */}
+      <div
+        onClick={onSelect}
+        className="group absolute cursor-pointer rounded-[12px] transition-transform duration-300 hover:scale-[1.06]"
+        style={{ left: leftPos, top: topPos, width: '109.912px', height: '121.375px', zIndex: 61, pointerEvents: 'auto' }}
+        title={`Pilih ${label}`}
+      >
+        <div className="absolute inset-0 rounded-[12px] border border-white/25 transition-colors duration-300 group-hover:border-white/80" />
       </div>
     </div>
   );
@@ -546,6 +605,7 @@ function ArrowButton({ direction, onClick }: { direction: 'left' | 'right'; onCl
 }
 
 function Group24({ activeIndex, setActiveIndex }: { activeIndex: number, setActiveIndex: React.Dispatch<React.SetStateAction<number>> }) {
+  const navigate = useNavigate();
 
   const handlePrev = () => setActiveIndex((prev) => (prev === 0 ? CAROUSEL_DATA.length - 1 : prev - 1));
   const handleNext = () => setActiveIndex((prev) => (prev === CAROUSEL_DATA.length - 1 ? 0 : prev + 1));
@@ -581,11 +641,11 @@ function Group24({ activeIndex, setActiveIndex }: { activeIndex: number, setActi
           </div>
         </div>
       </div>
-      <Group17 metricValue={centerItem.metricValue} metricDesc={centerItem.metricDesc} />
-      
-      <CenterSlot title={centerItem.title} imageSrc={centerItem.imageSrc} imgClasses={centerItem.centerImgClasses} />
-      <SideSlot position="right" imageSrc={rightItem.imageSrc} bgColor={rightItem.bg} imgClasses={rightItem.sideImgClasses} />
-      <SideSlot position="left" imageSrc={leftItem.imageSrc} bgColor={leftItem.bg} imgClasses={leftItem.sideImgClasses} />
+      <Group17 metricValue={centerItem.metricValue} metricDesc={centerItem.metricDesc} soon={centerItem.soon} />
+
+      <CenterSlot title={centerItem.title} Art={centerItem.Art} bg={centerItem.bg} soon={centerItem.soon} onOpen={() => navigate(centerItem.route)} />
+      <SideSlot position="right" Art={rightItem.Art} bgColor={rightItem.bg} label={rightItem.short} onSelect={handleNext} />
+      <SideSlot position="left" Art={leftItem.Art} bgColor={leftItem.bg} label={leftItem.short} onSelect={handlePrev} />
 
       <div className="absolute left-[828.82px] top-[1007.02px]" style={{ zIndex: 60, pointerEvents: 'auto' }}>
         <ArrowButton direction="right" onClick={handleNext} />
@@ -597,8 +657,49 @@ function Group24({ activeIndex, setActiveIndex }: { activeIndex: number, setActi
   );
 }
 
+function HomeAuthControl() {
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+
+  if (!user) {
+    return (
+      <button
+        onClick={() => navigate("/login")}
+        className="absolute right-[40px] top-[44px] inline-flex items-center gap-2 rounded-full bg-[#bffd44] px-7 py-2.5 text-[18px] font-bold text-black transition-transform hover:scale-105 active:scale-95"
+        style={{ zIndex: 40, pointerEvents: "auto" }}
+      >
+        Login
+      </button>
+    );
+  }
+
+  return (
+    <div
+      className="absolute right-[40px] top-[40px] flex items-center gap-3"
+      style={{ zIndex: 40, pointerEvents: "auto" }}
+    >
+      <div className="flex items-center gap-3 rounded-full border border-white/20 bg-white/10 py-1.5 pl-1.5 pr-5 backdrop-blur-md">
+        <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#bffd44] text-[16px] font-black uppercase text-black">
+          {user.name.charAt(0)}
+        </span>
+        <span className="flex flex-col leading-tight">
+          <span className="text-[15px] font-bold text-white">{user.name}</span>
+          <span className="text-[12px] font-light text-white/60">{user.role}</span>
+        </span>
+      </div>
+      <button
+        onClick={logout}
+        className="rounded-full border border-white/20 bg-white/5 px-5 py-2.5 text-[15px] font-light text-white/80 transition-colors hover:border-[#fb7943] hover:text-white"
+      >
+        Keluar
+      </button>
+    </div>
+  );
+}
+
 function OculusDesign() {
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(1);
+  const { user } = useAuth();
   return (
     <div className="relative" style={{ width: `${DESIGN_W}px`, height: `${DESIGN_H}px` }} data-name="Design">
       <div className="absolute h-[1159px] left-0 shadow-[0px_30px_4px_0px_rgba(0,0,0,0.8)] top-0 w-[1440px]" style={{ backgroundImage: "linear-gradient(119.498deg, rgb(84, 38, 27) 1.3746%, rgb(0, 0, 2) 36.02%)" }} />
@@ -670,16 +771,101 @@ function OculusDesign() {
       <div className="absolute border border-[rgba(255,255,255,0.38)] border-solid h-[482.337px] left-[123px] rounded-[302px] top-[155.84px] w-[1193.697px]" style={{ zIndex: 1, WebkitMaskImage: 'linear-gradient(to bottom, black 20%, transparent 80%)', maskImage: 'linear-gradient(to bottom, black 20%, transparent 80%)' }} />
       <div className="absolute border border-[rgba(255,255,255,0.38)] border-solid h-[592.658px] left-[57px] rounded-[302px] top-[108px] w-[1325.907px]" style={{ zIndex: 1, WebkitMaskImage: 'linear-gradient(to bottom, black 20%, transparent 80%)', maskImage: 'linear-gradient(to bottom, black 20%, transparent 80%)' }} />
       <div className="absolute border border-[rgba(255,255,255,0.38)] border-solid h-[368.175px] left-[187px] rounded-[302px] top-[202.92px] w-[1066.192px]" style={{ zIndex: 1, WebkitMaskImage: 'linear-gradient(to bottom, black 20%, transparent 80%)', maskImage: 'linear-gradient(to bottom, black 20%, transparent 80%)' }} />
-      <Group6 activeIndex={activeIndex} />
+      {/* Badge "jelajahi..." hanya muncul setelah login */}
+      {user && <Group6 activeIndex={activeIndex} />}
       <Group11 />
       <Group16 />
-      <Group14 />
-      <Group15 />
+      <HomeAuthControl />
       <p className="-translate-x-full [word-break:break-word] absolute font-['Chivo:Regular',sans-serif] font-normal leading-[normal] left-[1437.37px] text-[30px] text-right text-white top-[-51.03px] whitespace-nowrap">spatialforge.id</p>
       <p className="[word-break:break-word] absolute font-['Saira_ExtraCondensed:Regular',sans-serif] leading-[normal] left-[248px] not-italic text-[#bffd44] text-[80px] top-[488px] whitespace-nowrap" style={{ zIndex: 10 }}>you need to</p>
       <p className="[word-break:break-word] absolute font-['Chivo:Regular',sans-serif] font-normal leading-[normal] left-[246px] text-[#bffd44] text-[110px] top-[617px] whitespace-nowrap" style={{ zIndex: 10 }}>Explore</p>
-      <Group24 activeIndex={activeIndex} setActiveIndex={setActiveIndex} />
+      {/* Carousel pemilihan hanya muncul setelah login */}
+      {user && <Group24 activeIndex={activeIndex} setActiveIndex={setActiveIndex} />}
     </div>
+  );
+}
+
+function MobileSectionCard({ item, onClick }: { item: CarouselItem; onClick: () => void }) {
+  const { Art } = item;
+  return (
+    <button
+      onClick={onClick}
+      className="group flex items-center gap-4 rounded-2xl border border-white/12 bg-white/[0.04] p-4 text-left backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5 hover:border-[#bffd44]/60 hover:bg-white/[0.07] active:scale-[0.99]"
+    >
+      <div
+        className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl text-white shadow-[0_6px_18px_-6px_rgba(0,0,0,0.5)]"
+        style={{ backgroundColor: item.bg }}
+      >
+        <Art className="h-9 w-9" />
+      </div>
+      <div className="min-w-0 flex-1">
+        <h3 className="text-[19px] font-bold leading-tight text-white">{item.title}</h3>
+        <p className="mt-0.5 text-[13px] font-light text-white/60">{item.metricDesc}</p>
+      </div>
+      <div className="flex shrink-0 flex-col items-end gap-1">
+        {item.soon ? (
+          <span className="rounded-full border border-[#bffd44]/50 bg-[#bffd44]/10 px-2.5 py-0.5 text-[11px] font-bold text-[#bffd44]">
+            Segera
+          </span>
+        ) : (
+          <span className="text-[22px] font-bold leading-none text-[#bffd44]">{item.metricValue}</span>
+        )}
+        <span className="text-[12px] font-medium text-white/50 transition-colors group-hover:text-[#bffd44]">
+          Buka →
+        </span>
+      </div>
+    </button>
+  );
+}
+
+function HomeMobile() {
+  const navigate = useNavigate();
+  const { user } = useAuth();
+  return (
+    <PageShell>
+      <section className="px-6 pb-6 pt-8" style={{ fontFamily: "'Chivo', sans-serif" }}>
+        <p className="text-[12px] font-light uppercase tracking-[0.25em] text-[#bffd44]">
+          3DUTOPIA · SpatialForge
+        </p>
+        <h1
+          className="mt-4 text-[64px] leading-[0.85] text-[#bffd44]"
+          style={{ fontFamily: "'Monoton', sans-serif" }}
+        >
+          FUTURE
+        </h1>
+        <p
+          className="mt-3 text-[30px] leading-none text-white/90"
+          style={{ fontFamily: "'Saira Extra Condensed', sans-serif" }}
+        >
+          you need to
+        </p>
+        <p className="text-[46px] font-normal leading-none text-[#bffd44]">Explore</p>
+        <p className="mt-5 max-w-md text-[15px] font-light leading-relaxed text-white/70">
+          Platform praktikum manufaktur imersif berbasis WebXR. Jelajahi modul pembelajaran,
+          komponen mesin 3D + AR, dan lab virtual — langsung dari browser maupun headset.
+        </p>
+
+        {user ? (
+          <div className="mt-8 flex flex-col gap-4">
+            {CAROUSEL_DATA.map((item) => (
+              <MobileSectionCard key={item.id} item={item} onClick={() => navigate(item.route)} />
+            ))}
+          </div>
+        ) : (
+          <div className="mt-8 rounded-2xl border border-white/12 bg-white/[0.04] p-6 backdrop-blur-md">
+            <p className="text-[15px] font-light text-white/70">
+              Masuk untuk membuka modul, komponen 3D + AR, dan lab virtual.
+            </p>
+            <button
+              onClick={() => navigate("/login")}
+              className="mt-4 w-full rounded-xl bg-[#bffd44] px-4 py-3 text-[16px] font-bold text-black transition-transform active:scale-[0.99]"
+            >
+              Login →
+            </button>
+          </div>
+        )}
+      </section>
+    </PageShell>
   );
 }
 
@@ -705,11 +891,15 @@ function HomePage() {
         [class*="Monoton:Regular"] { font-family: 'Monoton', sans-serif !important; font-weight: 400 !important; }
         [class*="Saira_ExtraCondensed:Regular"] { font-family: 'Saira Extra Condensed', sans-serif !important; font-weight: 400 !important; }
       `}</style>
-      {/* Fill the full viewport with the hero's dark gradient and vertically
-          center the fixed-scale design so narrow/short screens show no black
-          void below the scaled billboard. */}
+      {/* Mobile (< md): purpose-built fluid layout */}
+      <div className="md:hidden">
+        <HomeMobile />
+      </div>
+
+      {/* Tablet & desktop (>= md): the fixed-scale Figma billboard, centered
+          vertically on the hero gradient so short screens show no black void. */}
       <div
-        className="flex min-h-screen w-full items-center overflow-hidden"
+        className="hidden md:flex min-h-screen w-full items-center overflow-hidden"
         style={{
           backgroundImage:
             "linear-gradient(119.498deg, rgb(84, 38, 27) 1.3746%, rgb(0, 0, 2) 36.02%)",
@@ -732,60 +922,82 @@ function HomePage() {
   );
 }
 
+function RequireAuth({ children }: { children: React.ReactElement }) {
+  const { user } = useAuth();
+  if (!user) return <Navigate to="/login" replace />;
+  return children;
+}
+
 export default function App() {
   return (
     <HashRouter>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/komponen" element={<KomponenPage />} />
-        <Route
-          path="/komponen/:no"
-          element={
-            <Suspense
-              fallback={
-                <div
-                  className="flex min-h-screen items-center justify-center bg-black text-[#BFFD44]"
-                  style={{ fontFamily: "'Chivo', sans-serif" }}
+      <AuthProvider>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route
+            path="/komponen"
+            element={
+              <RequireAuth>
+                <KomponenPage />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/komponen/:no"
+            element={
+              <RequireAuth>
+                <Suspense
+                  fallback={
+                    <div
+                      className="flex min-h-screen items-center justify-center bg-black text-[#BFFD44]"
+                      style={{ fontFamily: "'Chivo', sans-serif" }}
+                    >
+                      Memuat model 3D…
+                    </div>
+                  }
                 >
-                  Memuat model 3D…
-                </div>
-              }
-            >
-              <KomponenDetailPage />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/praktikum"
-          element={
-            <PlaceholderPage
-              eyebrow="Virtual Lab"
-              title="Praktikum"
-              desc="Ruang praktikum virtual interaktif untuk menjalankan simulasi dan latihan mandiri. Modul ini sedang kami siapkan."
-            />
-          }
-        />
-        <Route
-          path="/modul"
-          element={
-            <PlaceholderPage
-              eyebrow="Materi Pembelajaran"
-              title="Modul"
-              desc="Kumpulan modul pembelajaran daring yang mendampingi setiap sesi praktikum. Kontennya sedang dalam penyusunan."
-            />
-          }
-        />
-        <Route
-          path="/about"
-          element={
-            <PlaceholderPage
-              eyebrow="Tentang Kami"
-              title="About"
-              desc="3DUTOPIA SpatialForge — platform virtual praktikum untuk pendidikan vokasi. Informasi selengkapnya akan segera hadir."
-            />
-          }
-        />
-      </Routes>
+                  <KomponenDetailPage />
+                </Suspense>
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/praktikum"
+            element={
+              <RequireAuth>
+                <PlaceholderPage
+                  eyebrow="Virtual Lab"
+                  title="Praktikum"
+                  desc="Ruang praktikum virtual interaktif untuk menjalankan simulasi dan latihan mandiri. Modul ini sedang kami siapkan."
+                />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/modul"
+            element={
+              <RequireAuth>
+                <PlaceholderPage
+                  eyebrow="Materi Pembelajaran"
+                  title="Modul"
+                  desc="Kumpulan modul pembelajaran daring yang mendampingi setiap sesi praktikum. Kontennya sedang dalam penyusunan."
+                />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/about"
+            element={
+              <PlaceholderPage
+                eyebrow="Tentang Kami"
+                title="About"
+                desc="3DUTOPIA SpatialForge — platform virtual praktikum untuk pendidikan vokasi. Informasi selengkapnya akan segera hadir."
+              />
+            }
+          />
+        </Routes>
+      </AuthProvider>
     </HashRouter>
   );
 }
