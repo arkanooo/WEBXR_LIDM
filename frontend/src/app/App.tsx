@@ -1,5 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, lazy, Suspense } from "react";
+import { HashRouter, Routes, Route, useNavigate } from "react-router";
 import svgPaths from "../imports/Design-1/svg-jznrhsi95h";
+import KomponenPage from "./pages/KomponenPage";
+import PlaceholderPage from "./pages/PlaceholderPage";
+
+// three.js is heavy — load the 3D/AR detail page only when it is opened.
+const KomponenDetailPage = lazy(() => import("./pages/KomponenDetailPage"));
 import imgImage23 from "../imports/Design-1/160f1dac8fe9fd273b1ebc605342a06f7934a7d9.png";
 import imgImage44 from "../imports/Design-1/6f81fc780204799bc4e9644a144e373dbc5cf509.png";
 import imgImage45 from "../imports/Design-1/3fb5d238b0206ce37d420f17b6ecda52b8d3da49.png";
@@ -365,14 +371,32 @@ function Group11() {
   );
 }
 
+const NAV_LINKS: { label: string; path: string; left: number; active?: boolean }[] = [
+  { label: "Home", path: "/", left: 441, active: true },
+  { label: "Praktikum", path: "/praktikum", left: 531 },
+  { label: "Modul", path: "/modul", left: 665 },
+  { label: "Komponen", path: "/komponen", left: 761 },
+  { label: "About", path: "/about", left: 897 },
+];
+
 function Group13() {
+  const navigate = useNavigate();
   return (
     <div className="[word-break:break-word] absolute contents leading-[normal] left-[441px] text-[18px] top-[52px] whitespace-nowrap">
-      <p className="absolute font-['Chivo:Bold',sans-serif] font-bold left-[441px] text-[#bffd44] top-[52px]">Home</p>
-      <p className="absolute font-['Chivo:Light',sans-serif] font-light left-[550.37px] text-white top-[52px]">Products</p>
-      <p className="absolute font-['Chivo:Light',sans-serif] font-light left-[686.37px] text-white top-[52px]">Features</p>
-      <p className="absolute font-['Chivo:Light',sans-serif] font-light left-[820.37px] text-white top-[52px]">Support</p>
-      <p className="absolute font-['Chivo:Light',sans-serif] font-light left-[948.37px] text-white top-[52px]">About</p>
+      {NAV_LINKS.map((link) => (
+        <p
+          key={link.path}
+          onClick={() => navigate(link.path)}
+          className={`absolute top-[52px] cursor-pointer transition-colors hover:text-[#bffd44] ${
+            link.active
+              ? "font-['Chivo:Bold',sans-serif] font-bold text-[#bffd44]"
+              : "font-['Chivo:Light',sans-serif] font-light text-white"
+          }`}
+          style={{ left: `${link.left}px`, zIndex: 40, pointerEvents: "auto" }}
+        >
+          {link.label}
+        </p>
+      ))}
     </div>
   );
 }
@@ -659,7 +683,7 @@ function OculusDesign() {
   );
 }
 
-export default function App() {
+function HomePage() {
   const [scale, setScale] = useState(1);
 
   useEffect(() => {
@@ -681,21 +705,87 @@ export default function App() {
         [class*="Monoton:Regular"] { font-family: 'Monoton', sans-serif !important; font-weight: 400 !important; }
         [class*="Saira_ExtraCondensed:Regular"] { font-family: 'Saira Extra Condensed', sans-serif !important; font-weight: 400 !important; }
       `}</style>
+      {/* Fill the full viewport with the hero's dark gradient and vertically
+          center the fixed-scale design so narrow/short screens show no black
+          void below the scaled billboard. */}
       <div
-        className="w-full overflow-hidden"
-        style={{ height: `${DESIGN_H * scale}px` }}
+        className="flex min-h-screen w-full items-center overflow-hidden"
+        style={{
+          backgroundImage:
+            "linear-gradient(119.498deg, rgb(84, 38, 27) 1.3746%, rgb(0, 0, 2) 36.02%)",
+        }}
       >
-        <div
-          style={{
-            width: `${DESIGN_W}px`,
-            height: `${DESIGN_H}px`,
-            transformOrigin: "top left",
-            transform: `scale(${scale})`,
-          }}
-        >
-          <OculusDesign />
+        <div className="w-full overflow-hidden" style={{ height: `${DESIGN_H * scale}px` }}>
+          <div
+            style={{
+              width: `${DESIGN_W}px`,
+              height: `${DESIGN_H}px`,
+              transformOrigin: "top left",
+              transform: `scale(${scale})`,
+            }}
+          >
+            <OculusDesign />
+          </div>
         </div>
       </div>
     </>
+  );
+}
+
+export default function App() {
+  return (
+    <HashRouter>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/komponen" element={<KomponenPage />} />
+        <Route
+          path="/komponen/:no"
+          element={
+            <Suspense
+              fallback={
+                <div
+                  className="flex min-h-screen items-center justify-center bg-black text-[#BFFD44]"
+                  style={{ fontFamily: "'Chivo', sans-serif" }}
+                >
+                  Memuat model 3D…
+                </div>
+              }
+            >
+              <KomponenDetailPage />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/praktikum"
+          element={
+            <PlaceholderPage
+              eyebrow="Virtual Lab"
+              title="Praktikum"
+              desc="Ruang praktikum virtual interaktif untuk menjalankan simulasi dan latihan mandiri. Modul ini sedang kami siapkan."
+            />
+          }
+        />
+        <Route
+          path="/modul"
+          element={
+            <PlaceholderPage
+              eyebrow="Materi Pembelajaran"
+              title="Modul"
+              desc="Kumpulan modul pembelajaran daring yang mendampingi setiap sesi praktikum. Kontennya sedang dalam penyusunan."
+            />
+          }
+        />
+        <Route
+          path="/about"
+          element={
+            <PlaceholderPage
+              eyebrow="Tentang Kami"
+              title="About"
+              desc="3DUTOPIA SpatialForge — platform virtual praktikum untuk pendidikan vokasi. Informasi selengkapnya akan segera hadir."
+            />
+          }
+        />
+      </Routes>
+    </HashRouter>
   );
 }
