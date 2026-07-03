@@ -9,19 +9,11 @@ const NAV_ITEMS: { label: string; path: string }[] = [
   { label: "About", path: "/about" },
 ];
 
+import logo3d from "../../assets/Logo 3DUTOPIA 2 tes.png";
+
 function LogoMark() {
   return (
-    <svg width="50" height="29" viewBox="0 0 50 28.5369" fill="none" className="shrink-0">
-      <path
-        d="M1 6 L24 1 L49 6 L49 22 L24 27.5 L1 22 Z"
-        stroke="white"
-        strokeWidth="1"
-        fill="none"
-        opacity="0.6"
-      />
-      <rect x="6" y="9" width="16" height="11" rx="1.5" fill="#BFFD44" />
-      <rect x="28" y="9" width="16" height="11" rx="1.5" fill="#BFFD44" opacity="0.85" />
-    </svg>
+    <img src={logo3d} alt="3DUTOPIA Logo" className="shrink-0 h-[64px] w-auto" />
   );
 }
 
