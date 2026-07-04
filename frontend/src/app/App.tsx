@@ -10,6 +10,12 @@ import PageShell from "./components/PageShell";
 import KomponenPage from "./pages/KomponenPage";
 import PlaceholderPage from "./pages/PlaceholderPage";
 import LoginPage from "./pages/LoginPage";
+import ModulPage from "./pages/ModulPage";
+import ModulDetailPage from "./pages/ModulDetailPage";
+import PraktikumPage from "./pages/PraktikumPage";
+
+// three.js berat — muat simulator hanya saat dibuka.
+const EmbossingSimPage = lazy(() => import("./pages/EmbossingSimPage"));
 import { AuthProvider, useAuth } from "./auth";
 
 // three.js is heavy — load the 3D/AR detail page only when it is opened.
@@ -979,12 +985,29 @@ function AnimatedRoutes() {
           element={
             <RequireAuth>
               <PageTransition>
-                <PlaceholderPage
-                  eyebrow="Virtual Lab"
-                  title="Praktikum"
-                  desc="Ruang praktikum virtual interaktif untuk menjalankan simulasi dan latihan mandiri. Modul ini sedang kami siapkan."
-                />
+                <PraktikumPage />
               </PageTransition>
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/praktikum/embossing-machine"
+          element={
+            <RequireAuth>
+              <Suspense
+                fallback={
+                  <div
+                    className="flex min-h-screen items-center justify-center bg-black text-[#BFFD44]"
+                    style={{ fontFamily: "'Chivo', sans-serif" }}
+                  >
+                    Memuat simulator…
+                  </div>
+                }
+              >
+                <PageTransition>
+                  <EmbossingSimPage />
+                </PageTransition>
+              </Suspense>
             </RequireAuth>
           }
         />
@@ -993,11 +1016,17 @@ function AnimatedRoutes() {
           element={
             <RequireAuth>
               <PageTransition>
-                <PlaceholderPage
-                  eyebrow="Materi Pembelajaran"
-                  title="Modul"
-                  desc="Kumpulan modul pembelajaran daring yang mendampingi setiap sesi praktikum. Kontennya sedang dalam penyusunan."
-                />
+                <ModulPage />
+              </PageTransition>
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/modul/:id"
+          element={
+            <RequireAuth>
+              <PageTransition>
+                <ModulDetailPage />
               </PageTransition>
             </RequireAuth>
           }
