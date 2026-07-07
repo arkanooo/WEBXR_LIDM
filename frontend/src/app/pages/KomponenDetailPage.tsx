@@ -97,6 +97,28 @@ export default function KomponenDetailPage() {
               </div>
             </div>
 
+            {/* Marker ARPeGa asli dari lembar modul (diekstrak dari Layout ARPEGA Final.pdf) */}
+            <div className="mt-5 flex flex-col gap-5 rounded-2xl border border-white/12 bg-white/[0.04] p-6 backdrop-blur-md sm:flex-row sm:items-center">
+              <div className="shrink-0 rounded-xl bg-white p-3">
+                <img
+                  src={`/markers/${item.no}.png`}
+                  alt={`Marker ARPeGa ${item.nama}`}
+                  className="h-[128px] w-[128px] object-contain"
+                />
+              </div>
+              <div>
+                <p className="text-[13px] font-bold uppercase tracking-widest text-[#BFFD44]">
+                  Marker ARPeGa — Lembar Modul Asli
+                </p>
+                <p className="mt-2 max-w-sm text-[14px] font-light leading-relaxed text-white/70">
+                  Marker resmi dari lembar modul <span className="text-white">AR — Penyederhanaan
+                  Gambar</span> untuk komponen <span className="text-white">{item.nama}</span>.
+                  Pindai marker ini menggunakan aplikasi <b className="text-white">ARPeGa</b> untuk
+                  memunculkan model 3D-nya, sama seperti pada lembar cetak.
+                </p>
+              </div>
+            </div>
+
             <p className="mt-4 text-[12px] font-light text-white/35">
               Sumber: modul praktikum Penyederhanaan Gambar (ARPeGa) · Tanpa skala · Satuan mm ·
               Proyeksi sudut ketiga
