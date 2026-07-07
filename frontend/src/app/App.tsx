@@ -377,39 +377,71 @@ function Group11() {
   );
 }
 
-const NAV_LINKS: { label: string; path: string }[] = [
-  { label: "Home", path: "/" },
-  { label: "About", path: "/about" },
+const HOME_EXPLORE: { label: string; path: string }[] = [
+  { label: "Praktikum", path: "/praktikum" },
+  { label: "Modul", path: "/modul" },
+  { label: "Komponen", path: "/komponen" },
 ];
 
 function Group13() {
   const navigate = useNavigate();
   const location = useLocation();
+  const { user } = useAuth();
+  const isActive = (path: string) =>
+    path === "/" ? location.pathname === "/" : location.pathname.startsWith(path);
+  const exploreActive = HOME_EXPLORE.some((e) => location.pathname.startsWith(e.path));
+
+  const linkCls = (active: boolean) =>
+    `relative cursor-pointer transition-colors hover:text-[#bffd44] ${
+      active
+        ? "font-['Chivo:Bold',sans-serif] font-bold text-[#bffd44]"
+        : "font-['Chivo:Light',sans-serif] font-light text-white"
+    }`;
+
   return (
     <div
       className="absolute top-[48px] left-1/2 -translate-x-1/2 flex items-center gap-16 text-[18px] whitespace-nowrap"
       style={{ zIndex: 40, pointerEvents: "auto" }}
     >
-      {NAV_LINKS.map((link) => {
-        const active =
-          link.path === "/" ? location.pathname === "/" : location.pathname.startsWith(link.path);
-        return (
-          <button
-            key={link.path}
-            onClick={() => navigate(link.path)}
-            className={`relative cursor-pointer transition-colors hover:text-[#bffd44] ${
-              active
-                ? "font-['Chivo:Bold',sans-serif] font-bold text-[#bffd44]"
-                : "font-['Chivo:Light',sans-serif] font-light text-white"
-            }`}
-          >
-            {link.label}
-            {active && (
-              <span className="absolute -bottom-2 left-0 h-[2px] w-full rounded-full bg-[#bffd44]" />
-            )}
+      <button onClick={() => navigate("/")} className={linkCls(isActive("/"))}>
+        Home
+        {isActive("/") && <span className="absolute -bottom-2 left-0 h-[2px] w-full rounded-full bg-[#bffd44]" />}
+      </button>
+
+      {user && (
+        <div className="relative group">
+          <button className={`${linkCls(exploreActive)} flex items-center gap-1.5`}>
+            Jelajahi
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" className="transition-transform group-hover:rotate-180">
+              <path d="M2.5 4.5L6 8L9.5 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            {exploreActive && <span className="absolute -bottom-2 left-0 h-[2px] w-full rounded-full bg-[#bffd44]" />}
           </button>
-        );
-      })}
+          <div className="invisible absolute left-1/2 top-full z-50 -translate-x-1/2 pt-3 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100">
+            <div className="flex w-52 flex-col overflow-hidden rounded-xl border border-white/12 bg-black/80 p-1.5 backdrop-blur-lg shadow-[0_20px_40px_-12px_rgba(0,0,0,0.6)]">
+              {HOME_EXPLORE.map((item) => {
+                const active = isActive(item.path);
+                return (
+                  <button
+                    key={item.path}
+                    onClick={() => navigate(item.path)}
+                    className={`rounded-lg px-4 py-2.5 text-left text-[16px] font-['Chivo:Regular',sans-serif] transition-colors ${
+                      active ? "bg-[#bffd44]/15 text-[#bffd44] font-bold" : "text-white/85 font-light hover:bg-white/8 hover:text-white"
+                    }`}
+                  >
+                    {item.label}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      )}
+
+      <button onClick={() => navigate("/about")} className={linkCls(isActive("/about"))}>
+        About
+        {isActive("/about") && <span className="absolute -bottom-2 left-0 h-[2px] w-full rounded-full bg-[#bffd44]" />}
+      </button>
     </div>
   );
 }
