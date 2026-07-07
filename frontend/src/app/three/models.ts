@@ -7,14 +7,14 @@ const SCALE = 200; // 1 scene unit = 200 mm  → a 60 mm part ≈ 0.3 units
 const mm = (v: number) => v / SCALE;
 
 const METAL = new THREE.MeshStandardMaterial({
-  color: 0x9aa3ad,
-  metalness: 0.85,
-  roughness: 0.35,
+  color: 0xc3cad4,
+  metalness: 0.75,
+  roughness: 0.3,
 });
 const METAL_DARK = new THREE.MeshStandardMaterial({
-  color: 0x6b7280,
-  metalness: 0.8,
-  roughness: 0.45,
+  color: 0x8b93a1,
+  metalness: 0.7,
+  roughness: 0.4,
 });
 
 function hexPrism(acrossFlats: number, height: number, boreDia = 0): THREE.Mesh {

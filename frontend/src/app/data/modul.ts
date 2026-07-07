@@ -56,6 +56,7 @@ export type Modul = {
   tabelOutlet: DataTableRow[];
   pertanyaan: string[];
   vrStages: VRStage[];
+  pdfUrl: string;
 };
 
 export const MODUL_LIST: Modul[] = [
@@ -206,5 +207,6 @@ export const MODUL_LIST: Modul[] = [
         ],
       },
     ],
+    pdfUrl: "/docs/Embossing-Machine.pdf",
   },
 ];

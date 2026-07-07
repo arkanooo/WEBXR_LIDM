@@ -106,6 +106,14 @@ export default function ModulPage() {
                       Buka modul →
                     </span>
                   </div>
+                  <a
+                    href={m.pdfUrl}
+                    download
+                    onClick={(e) => e.stopPropagation()}
+                    className="mt-3 inline-flex items-center gap-2 text-[13px] font-light text-white/50 transition-colors hover:text-white"
+                  >
+                    ⬇ Unduh lembar modul (PDF)
+                  </a>
                 </article>
               ))}
             </div>

@@ -96,9 +96,18 @@ export default function ModulDetailPage() {
         <p className="text-[14px] font-light uppercase tracking-[0.3em] text-[#BFFD44]">
           Praktikum Sistem Hidrolik · {modul.percobaan}
         </p>
-        <h1 className="mt-2 text-[44px] font-black uppercase leading-[0.95] text-white md:text-[64px]">
-          {modul.judul}
-        </h1>
+        <div className="flex flex-wrap items-end justify-between gap-4">
+          <h1 className="mt-2 text-[44px] font-black uppercase leading-[0.95] text-white md:text-[64px]">
+            {modul.judul}
+          </h1>
+          <a
+            href={modul.pdfUrl}
+            download
+            className="mb-1 inline-flex items-center gap-2 rounded-full border border-[#BFFD44]/50 bg-[#BFFD44]/10 px-5 py-2.5 text-[14px] font-bold text-[#BFFD44] transition-colors hover:bg-[#BFFD44] hover:text-black"
+          >
+            ⬇ Unduh Modul (PDF)
+          </a>
+        </div>
         <div className="mt-4 flex flex-wrap gap-2">
           {[modul.durasi, modul.tingkat, "Lab. Sistem Pneumatik & Hidrolik — DTMI ITS"].map((c) => (
             <span key={c} className="rounded-full border border-white/15 px-3 py-1 text-[12px] font-light text-white/60">

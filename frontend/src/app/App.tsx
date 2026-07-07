@@ -7,6 +7,7 @@ import imgImage23 from "../imports/Design-1/160f1dac8fe9fd273b1ebc605342a06f7934
 import logo3d from "../assets/Logo 3DUTOPIA 2 tes.png";
 import { ModulArt, KomponenArt, PraktikumArt } from "./components/CarouselArt";
 import PageShell from "./components/PageShell";
+import CustomCursor from "./components/CustomCursor";
 import KomponenPage from "./pages/KomponenPage";
 import PlaceholderPage from "./pages/PlaceholderPage";
 import LoginPage from "./pages/LoginPage";
@@ -1052,6 +1053,7 @@ export default function App() {
   return (
     <HashRouter>
       <AuthProvider>
+        <CustomCursor />
         <AnimatedRoutes />
       </AuthProvider>
     </HashRouter>

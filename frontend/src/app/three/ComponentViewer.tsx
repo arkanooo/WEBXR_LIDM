@@ -24,12 +24,16 @@ export default function ComponentViewer({ no }: { no: number }) {
     renderer.xr.enabled = true;
     mount.appendChild(renderer.domElement);
 
-    // Lighting
-    scene.add(new THREE.HemisphereLight(0xffffff, 0x30302f, 1.1));
-    const key = new THREE.DirectionalLight(0xffffff, 2.2);
+    // Lighting — brightened to match the simulator's studio-lit look.
+    scene.add(new THREE.AmbientLight(0xffffff, 0.6));
+    scene.add(new THREE.HemisphereLight(0xffffff, 0x3a3a38, 1.5));
+    const key = new THREE.DirectionalLight(0xffffff, 3.0);
     key.position.set(2, 3, 2);
     scene.add(key);
-    const rim = new THREE.DirectionalLight(0xbffd44, 0.8);
+    const fill = new THREE.DirectionalLight(0xcfe0ff, 1.2);
+    fill.position.set(-2, 2, 2.5);
+    scene.add(fill);
+    const rim = new THREE.DirectionalLight(0xbffd44, 0.9);
     rim.position.set(-2, 1, -2);
     scene.add(rim);
 
