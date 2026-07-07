@@ -9,7 +9,7 @@ import { ModulArt, KomponenArt, PraktikumArt } from "./components/CarouselArt";
 import PageShell from "./components/PageShell";
 import CustomCursor from "./components/CustomCursor";
 import KomponenPage from "./pages/KomponenPage";
-import PlaceholderPage from "./pages/PlaceholderPage";
+import AboutPage from "./pages/AboutPage";
 import LoginPage from "./pages/LoginPage";
 import ModulPage from "./pages/ModulPage";
 import ModulDetailPage from "./pages/ModulDetailPage";
@@ -1068,11 +1068,7 @@ function AnimatedRoutes() {
           path="/about"
           element={
             <PageTransition>
-              <PlaceholderPage
-                eyebrow="Tentang Kami"
-                title="About"
-                desc="3DUTOPIA SpatialForge — platform virtual praktikum untuk pendidikan vokasi. Informasi selengkapnya akan segera hadir."
-              />
+              <AboutPage />
             </PageTransition>
           }
         />
