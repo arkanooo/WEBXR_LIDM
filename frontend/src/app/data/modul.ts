@@ -25,7 +25,7 @@ export const PRAKTIKUM_OPTIONS: PraktikumOption[] = [
     nama: "Tensile Test",
     desc: "Pengujian tarik material: kurva tegangan-regangan, kekuatan luluh, dan kekuatan tarik.",
     accent: "#fb7943",
-    available: false,
+    available: true,
   },
 ];
 
@@ -52,8 +52,10 @@ export type Modul = {
   peralatan: Equipment[];
   prosedur: string[];
   ukuran: { simbol: string; arti: string }[];
-  tabelInlet: DataTableRow[];
-  tabelOutlet: DataTableRow[];
+  tabelInlet?: DataTableRow[];
+  tabelOutlet?: DataTableRow[];
+  /** Dimensi benda kerja standar (khusus modul uji material). */
+  dimensi?: { param: string; inch: string; mm: string }[];
   pertanyaan: string[];
   vrStages: VRStage[];
   pdfUrl: string;
@@ -208,5 +210,134 @@ export const MODUL_LIST: Modul[] = [
       },
     ],
     pdfUrl: "/docs/Embossing-Machine.pdf",
+  },
+  {
+    id: "tensile-test",
+    praktikum: "tensile-test",
+    percobaan: "Chapter 3 · ASTM E-8",
+    judul: "Tensile Test",
+    durasi: "± 120 menit",
+    tingkat: "Menengah",
+    tujuan: [
+      "Memahami perilaku material terhadap beban tarik aksial melalui diagram Force (F) – Elongation (ΔL).",
+      "Mengonversi diagram F–ΔL menjadi Stress–Strain Engineering Diagram dan True Diagram, serta menentukan Yield Point, Ultimate Tensile Strength, Modulus Elastisitas, dan Modulus Resilien.",
+      "Membedakan karakteristik material ductile dan brittle berdasarkan bentuk kurva, fenomena necking, dan titik fracture.",
+    ],
+    deskripsi:
+      "Kekuatan tarik adalah sifat mekanik yang paling dominan dalam perancangan konstruksi dan proses manufaktur. Pada Tensile Test, benda kerja standar (ASTM E8) diberi beban aksial yang terus membesar hingga patah; mesin mencatat diagram Force–Elongation yang kemudian dikonversi menjadi diagram tegangan-regangan. Dari kurva ini dibaca Proportional Limit, Elastic Limit, Yield Point (dengan Offset Method 0,2% untuk material brittle), Ultimate Tensile Strength, fenomena necking, hingga fracture.",
+    peralatan: [
+      { item: "1", qty: 1, desc: "Universal Testing Machine (16 komponen: upper/lower grip, crosshead, column, ram cylinder, dll.)" },
+      { item: "2", qty: 1, desc: "Vernier calliper" },
+      { item: "3", qty: 1, desc: "Timbangan" },
+      { item: "—", qty: 1, desc: "Benda kerja Tensile Test standar ASTM E8" },
+    ],
+    prosedur: [
+      "Tekan Switch Power On pada Universal Testing Machine (Personal Computer otomatis menyala).",
+      "Buka program U-60 di Personal Computer.",
+      "Ukur dan catat dimensi benda kerja meliputi Width (plat) / Diameter (round), Thickness, Gauge Length, Grip Length, dan Weight.",
+      "Input data dimensi benda kerja dan metode pengujian pada program U-60.",
+      "Cekam benda kerja pada ragum bagian atas, naikkan ragum bagian bawah (tekan push button up), lalu cekam juga dengan ragum bawah. Pastikan pencekaman sempurna!",
+      "Klik ikon Test pada program U-60 — proses penarikan benda kerja dimulai.",
+      "Tunggu hingga benda kerja patah (fracture).",
+      "Simpan data pengujian (Print Preview, Save) berupa diagram Force–Elongation dan nilai properties benda kerja.",
+      "Lepaskan benda kerja dari ragum atas dan bawah.",
+      "Ukur dan catat perubahan dimensi benda kerja (terutama Gauge Length dan diameter minimum pada necking sector).",
+      "Shutdown Personal Computer, lalu tekan Switch Power Off pada Universal Testing Machine.",
+    ],
+    ukuran: [
+      { simbol: "σE = F/A₀", arti: "Engineering stress (kgf/mm²) — gaya dibagi luas penampang awal" },
+      { simbol: "εE = ΔL/L₀", arti: "Engineering strain (mm/mm) — pertambahan panjang relatif" },
+      { simbol: "σT = σE(1+εE)", arti: "True stress — memperhitungkan pengecilan penampang aktual" },
+      { simbol: "εT = ln(1+εE)", arti: "True strain (mm/mm)" },
+      { simbol: "E = σy/εy", arti: "Modulus Elastisitas — kekakuan (stiffness) material (kgf/mm²)" },
+      { simbol: "U = ½·σy·εy", arti: "Modulus Resilien — energi terserap tanpa deformasi plastis" },
+    ],
+    dimensi: [
+      { param: "G (Gage length)", inch: "2.00 ± 0.005 in", mm: "50,0 ± 0,10 mm" },
+      { param: "D (Diameter)", inch: "0.5 ± 0.01 in", mm: "12,5 ± 0,25 mm" },
+      { param: "R (Radius of fillet)", inch: "3/8 in", mm: "10 mm" },
+      { param: "A (Length of Red. Sector)", inch: "2 1/3 in", mm: "60 mm" },
+    ],
+    pertanyaan: [
+      "Konversi Force (F) – Elongation (ΔL) Diagram hasil Tensile Test menjadi Stress (σE) – Strain (εE) Engineering Diagram!",
+      "Jelaskan jenis benda kerja termasuk Brittle atau Ductile!",
+      "Berapa besar nilai Stress (σY) dan Strain (εY) di titik Yield Point, Stress (σUTS) dan Strain (εUTS) di titik Ultimate Tensile Strength, Modulus Elastis, dan Modulus Resilien? Hitung menggunakan rumus!",
+      "Konversi Stress (σE) – Strain (εE) Engineering Diagram menjadi Stress (σT) – Strain (εT) True Diagram!",
+      "Jelaskan mengapa pada Tensile Test terdapat dua diagram: Engineering Diagram dan True Diagram!",
+      "Jelaskan yang dimaksud dengan Strain Hardening dan Poisson Ratio!",
+    ],
+    vrStages: [
+      {
+        no: 1,
+        judul: "Briefing & APD",
+        icon: "🦺",
+        ringkas: "Orientasi Universal Testing Machine dan alat pelindung diri.",
+        detail: [
+          "Mahasiswa berdiri di depan Universal Testing Machine 3D; ke-16 komponennya (grip, crosshead, column, ram cylinder…) berlabel dan bisa disorot satu per satu.",
+          "Panel keselamatan mengingatkan penggunaan APD sebelum tombol lanjut aktif — sesuai peringatan pada prosedur modul.",
+        ],
+      },
+      {
+        no: 2,
+        judul: "Pengukuran Benda Kerja",
+        icon: "📏",
+        ringkas: "Ukur dimensi spesimen ASTM E8 dengan vernier calliper virtual.",
+        detail: [
+          "Mahasiswa mengukur Gauge Length, Diameter, dan berat spesimen memakai calliper & timbangan virtual; nilai harus dicatat benar sebelum lanjut.",
+          "Sistem membandingkan hasil ukur dengan toleransi ASTM E8 (50,0 ± 0,10 mm; 12,5 ± 0,25 mm).",
+        ],
+      },
+      {
+        no: 3,
+        judul: "Input Data & Pencekaman",
+        icon: "🗜️",
+        ringkas: "Masukkan dimensi ke program U-60 lalu cekam spesimen di kedua ragum.",
+        detail: [
+          "Layar PC virtual menampilkan program U-60; data dimensi diinput lewat panel.",
+          "Spesimen dicekam ke ragum atas, ragum bawah dinaikkan (push button up), lalu dicekam — urutan salah memicu peringatan 'pencekaman tidak sempurna'.",
+        ],
+      },
+      {
+        no: 4,
+        judul: "Eksekusi Uji Tarik",
+        icon: "▶️",
+        ringkas: "Klik Test — crosshead menarik spesimen hingga patah.",
+        detail: [
+          "Spesimen meregang secara nyata; kurva Force–Elongation tergambar live di layar U-60 virtual.",
+          "Mahasiswa mengamati fase elastis, yield, strain hardening, necking (pada material ductile), sampai fracture — masing-masing ditandai pada kurva.",
+        ],
+      },
+      {
+        no: 5,
+        judul: "Pengamatan Necking & Fracture",
+        icon: "🔬",
+        ringkas: "Amati pengecilan penampang setempat dan pola patahan dari dekat.",
+        detail: [
+          "Setelah patah, spesimen bisa diambil dan diamati dari dekat: cup-and-cone (ductile) vs patah datar (brittle).",
+          "Mode perbandingan menampilkan dua spesimen material berbeda berdampingan.",
+        ],
+      },
+      {
+        no: 6,
+        judul: "Pengukuran Akhir & Konversi Data",
+        icon: "🧮",
+        ringkas: "Ukur Li dan diameter necking, konversi F–ΔL → σ–ε.",
+        detail: [
+          "Gauge length akhir dan diameter minimum diukur ulang dengan calliper.",
+          "Panel perhitungan memandu konversi 30 titik ke Engineering & True Diagram, lalu menghitung σY, εY, σUTS, E, dan U dengan rumus modul.",
+        ],
+      },
+      {
+        no: 7,
+        judul: "Analisis & Laporan",
+        icon: "🎓",
+        ringkas: "Jawab 6 pertanyaan pembahasan, data siap diekspor.",
+        detail: [
+          "Keenam pertanyaan pembahasan modul dijawab langsung di panel dengan bantuan kurva yang telah terbentuk.",
+          "Seluruh data pengujian dapat diekspor (CSV) untuk penyusunan laporan praktikum.",
+        ],
+      },
+    ],
+    pdfUrl: "/docs/Tensile-Test.pdf",
   },
 ];

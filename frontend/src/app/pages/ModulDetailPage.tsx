@@ -94,7 +94,7 @@ export default function ModulDetailPage() {
 
         {/* Header */}
         <p className="text-[14px] font-light uppercase tracking-[0.3em] text-[#BFFD44]">
-          Praktikum Sistem Hidrolik · {modul.percobaan}
+          {modul.praktikum === "tensile-test" ? "Praktikum Ilmu Bahan" : "Praktikum Sistem Hidrolik"} · {modul.percobaan}
         </p>
         <div className="flex flex-wrap items-end justify-between gap-4">
           <h1 className="mt-2 text-[44px] font-black uppercase leading-[0.95] text-white md:text-[64px]">
@@ -109,7 +109,13 @@ export default function ModulDetailPage() {
           </a>
         </div>
         <div className="mt-4 flex flex-wrap gap-2">
-          {[modul.durasi, modul.tingkat, "Lab. Sistem Pneumatik & Hidrolik — DTMI ITS"].map((c) => (
+          {[
+            modul.durasi,
+            modul.tingkat,
+            modul.praktikum === "tensile-test"
+              ? "Lab. Material Teknik & Metalurgi — DTMI ITS"
+              : "Lab. Sistem Pneumatik & Hidrolik — DTMI ITS",
+          ].map((c) => (
             <span key={c} className="rounded-full border border-white/15 px-3 py-1 text-[12px] font-light text-white/60">
               {c}
             </span>
@@ -185,12 +191,34 @@ export default function ModulDetailPage() {
             ))}
           </dl>
 
+          {/* Tabel dimensi benda kerja (modul uji material) */}
+          {modul.dimensi && (
+            <div className="mt-8 overflow-x-auto rounded-2xl border border-white/12">
+              <p className="border-b border-white/12 bg-white/[0.05] px-5 py-3 text-[13px] font-bold uppercase tracking-wide text-white/60">
+                Dimensi Benda Kerja — ASTM E8
+              </p>
+              <table className="w-full min-w-[420px] text-left text-[14px]">
+                <tbody>
+                  {modul.dimensi.map((d) => (
+                    <tr key={d.param} className="border-b border-white/5 last:border-0">
+                      <td className="px-5 py-2.5 font-light text-white/80">{d.param}</td>
+                      <td className="px-5 py-2.5 tabular-nums text-white/60">{d.inch}</td>
+                      <td className="px-5 py-2.5 font-bold tabular-nums text-[#BFFD44]">{d.mm}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+
           {/* Tabel pengamatan */}
           <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-2">
             {[
               { judul: "Fluctuating inlet pressure", rows: modul.tabelInlet },
               { judul: "Fluctuating outlet pressure", rows: modul.tabelOutlet },
-            ].map((tab) => (
+            ]
+              .filter((t): t is { judul: string; rows: NonNullable<typeof t.rows> } => !!t.rows)
+              .map((tab) => (
               <div key={tab.judul} className="overflow-x-auto rounded-2xl border border-white/12">
                 <p className="border-b border-white/12 bg-white/[0.05] px-5 py-3 text-[13px] font-bold uppercase tracking-wide text-white/60">
                   {tab.judul}
@@ -272,8 +300,9 @@ export default function ModulDetailPage() {
         </div>
 
         <p className="mt-10 text-[12px] font-light text-white/35">
-          Sumber: Modul Praktikum Sistem Hidrolik — Laboratorium Sistem Pneumatik dan Hidrolik,
-          Departemen Teknik Mesin Industri ITS.
+          {modul.praktikum === "tensile-test"
+            ? "Sumber: Modul Praktikum Ilmu Bahan — Laboratorium Material Teknik & Metalurgi, Departemen Teknik Mesin Industri ITS."
+            : "Sumber: Modul Praktikum Sistem Hidrolik — Laboratorium Sistem Pneumatik dan Hidrolik, Departemen Teknik Mesin Industri ITS."}
         </p>
       </section>
     </PageShell>

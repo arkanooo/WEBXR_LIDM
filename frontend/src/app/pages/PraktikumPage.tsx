@@ -21,7 +21,14 @@ const OPSI = [
     nama: "Tensile Test",
     desc: "Pengujian tarik material dengan kurva tegangan-regangan.",
     accent: "#fb7943",
-    sims: [],
+    sims: [
+      {
+        id: "tensile-test",
+        judul: "Tensile Test",
+        sub: "ASTM E-8 · Universal Testing Machine",
+        ready: true,
+      },
+    ],
   },
 ];
 

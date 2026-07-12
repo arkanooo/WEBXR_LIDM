@@ -17,6 +17,7 @@ import PraktikumPage from "./pages/PraktikumPage";
 
 // three.js berat — muat simulator hanya saat dibuka.
 const EmbossingSimPage = lazy(() => import("./pages/EmbossingSimPage"));
+const TensileSimPage = lazy(() => import("./pages/TensileSimPage"));
 import { AuthProvider, useAuth } from "./auth";
 
 // three.js is heavy — load the 3D/AR detail page only when it is opened.
@@ -1020,6 +1021,27 @@ function AnimatedRoutes() {
               <PageTransition>
                 <PraktikumPage />
               </PageTransition>
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/praktikum/tensile-test"
+          element={
+            <RequireAuth>
+              <Suspense
+                fallback={
+                  <div
+                    className="flex min-h-screen items-center justify-center bg-black text-[#BFFD44]"
+                    style={{ fontFamily: "'Chivo', sans-serif" }}
+                  >
+                    Memuat simulator…
+                  </div>
+                }
+              >
+                <PageTransition>
+                  <TensileSimPage />
+                </PageTransition>
+              </Suspense>
             </RequireAuth>
           }
         />
