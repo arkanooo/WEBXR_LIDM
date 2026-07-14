@@ -4,6 +4,7 @@ import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { VRButton } from "three/examples/jsm/webxr/VRButton.js";
 import PageShell from "../components/PageShell";
+import VRAccessCard from "../components/VRAccessCard";
 import {
   initialState,
   computeGauges,
@@ -336,12 +337,10 @@ export default function EmbossingSimPage() {
               ref={mountRef}
               className="h-[380px] w-full overflow-hidden rounded-2xl border border-white/12 md:h-[480px]"
             />
-            <div className="mt-3 flex flex-wrap items-center gap-3">
-              <div ref={vrSlotRef} />
-              <p className="text-[12px] font-light text-white/40">
-                Geser untuk memutar pandangan · scroll untuk zoom · di Quest 2 tekan “Masuk VR”.
-              </p>
-            </div>
+            <p className="mt-3 text-[12px] font-light text-white/40">
+              Geser untuk memutar pandangan · scroll untuk zoom.
+            </p>
+            <VRAccessCard judul="Embossing Machine" vrSlotRef={vrSlotRef} />
 
             {/* Gauges */}
             <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">

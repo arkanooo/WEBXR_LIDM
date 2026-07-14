@@ -4,6 +4,7 @@ import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { VRButton } from "three/examples/jsm/webxr/VRButton.js";
 import PageShell from "../components/PageShell";
+import VRAccessCard from "../components/VRAccessCard";
 import {
   MATERIALS,
   L0,
@@ -622,7 +623,6 @@ export default function TensileSimPage() {
           <div>
             <div ref={mountRef} className="h-[380px] w-full overflow-hidden rounded-2xl border border-white/12 md:h-[440px]" />
             <div className="mt-3 flex flex-wrap items-center gap-3">
-              <div ref={vrSlotRef} />
               <button
                 onClick={toggleMute}
                 className={`rounded-full border px-4 py-2 text-[13px] transition-colors ${
@@ -638,6 +638,7 @@ export default function TensileSimPage() {
                 Universal Testing Machine — geser untuk memutar pandangan.
               </p>
             </div>
+            <VRAccessCard judul="Tensile Test" vrSlotRef={vrSlotRef} />
 
             {/* readout */}
             <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
