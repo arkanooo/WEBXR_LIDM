@@ -51,7 +51,6 @@ const VR_NATIVE = [
     desc: "Pengalaman VR penuh: pasang komponen hidrolik satu per satu ke socket yang benar, gerakkan lever DCV, baca tekanan, dipandu narator robot.",
     fitur: ["XR Grab & Socket Interactor", "Fisika tekanan hidrolik nyata", "Narrative story robot pemandu"],
     validasi: "97,2% fitur lolos Black Box Testing · UEQ Excellent (36 responden)",
-    manual: "/docs/Manual-VR-Embossing-Machine.pdf",
     packageId: "com.unity.template.vr",
   },
   {
@@ -62,7 +61,6 @@ const VR_NATIVE = [
     desc: "Rekonstruksi VR dari pengujian tarik nyata di UTM ESH HCG-500 (500 kN): ambil spesimen, pasang di mesin, tarik hingga necking & putus.",
     fitur: ["Grabbable specimen", "Animasi necking → fracture", "Video grafik hasil uji nyata"],
     validasi: "Berbasis data uji tarik aktual — Yield 59,90 kN · UTS 66,40 kN",
-    manual: "/docs/Manual-VR-Uji-Tarik.pdf",
     packageId: "com.DefaultCompany.AplikasiUjiTarikST42",
   },
 ];
@@ -189,22 +187,13 @@ export default function PraktikumPage() {
                   ✓ {v.validasi}
                 </p>
 
-                <div className="mt-5 flex flex-wrap gap-3">
-                  <a
-                    href={launchIntent(v.packageId)}
-                    className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-[13px] font-bold text-black transition-transform hover:scale-105"
-                    style={{ backgroundColor: v.accent }}
-                  >
-                    ▶ Buka di Quest 2
-                  </a>
-                  <a
-                    href={v.manual}
-                    download
-                    className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-2 text-[13px] font-light text-white/75 transition-colors hover:border-[#BFFD44] hover:text-white"
-                  >
-                    ⬇ Manual (PDF)
-                  </a>
-                </div>
+                <a
+                  href={launchIntent(v.packageId)}
+                  className="mt-5 inline-flex items-center gap-2 rounded-full px-4 py-2 text-[13px] font-bold text-black transition-transform hover:scale-105"
+                  style={{ backgroundColor: v.accent }}
+                >
+                  ▶ Buka di Quest 2
+                </a>
                 <p className="mt-3 font-mono text-[10.5px] font-light text-white/25">{v.packageId}</p>
               </div>
             ))}
