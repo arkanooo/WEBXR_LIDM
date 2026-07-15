@@ -114,7 +114,7 @@ export const DOSEN: Anggota = {
   role: "Dosen Pembimbing",
   jurusan: "Teknik Mesin Industri",
   angkatan: "ITS Surabaya",
-  foto: "https://ui-avatars.com/api/?name=Rivai+Wardhani&background=ff5252&color=fff&size=512",
+  foto: "/profil/rivai.jpg",
   accent: "#ff5252",
   prestasi: [
     "S1 Teknik Mesin - Institut Teknologi Bandung (ITB)",
