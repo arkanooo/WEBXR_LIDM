@@ -117,13 +117,18 @@ export const DOSEN: Anggota = {
   foto: "/profil/rivai.jpg",
   accent: "#ff5252",
   prestasi: [
-    "S1 Teknik Mesin - Institut Teknologi Bandung (ITB)",
-    "S2 Production and Logistics - Universität Duisburg Essen, Germany",
+    "Wire Arc Additive Manufacturing Berbasis MIG Pada Material 316L (ITS 2025)",
+    "Construction of Concrete Houses with 3D Printing (LPDP Industri 2024)",
+    "Cloud Manufacturing Ex-situ & In-Situ Monitoring (RIIM BRIN 2024)",
   ],
   project: [
-    "Dosen Departemen Teknik Mesin Industri",
+    "Technical and Mechanical Drawing",
+    "Computer Aided Design (CAD & CAE)",
+    "Additive Manufacturing",
   ],
   organisasi: [
-    "Laboratorium Manufaktur Industri",
+    "Virtual Reality Application for Simulating Experimental Tensile Test (ICTDM 2023)",
+    "Marker-based AR to Enhance Simplified Representation Learning (2024)",
+    "HKI: Aplikasi VR Praktikum Mesin Emboss Hidrolik & Uji Tarik ST42",
   ],
 };

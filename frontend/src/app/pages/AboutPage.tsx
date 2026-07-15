@@ -101,16 +101,16 @@ function AnggotaCard({ a, index }: { a: Anggota; index: number }) {
         </h3>
 
         <div className="mt-6 flex flex-col gap-5">
-          <ListGroup judul="Prestasi" items={a.prestasi} accent={a.accent} />
-          <ListGroup judul="Project & Pengalaman" items={a.project} accent={a.accent} />
-          <ListGroup judul="Organisasi" items={a.organisasi} accent={a.accent} />
+          <ListGroup judul={a.role === "Dosen Pembimbing" ? "Riset & Penelitian" : "Prestasi"} items={a.prestasi} accent={a.accent} />
+          <ListGroup judul={a.role === "Dosen Pembimbing" ? "Pengalaman Mengajar" : "Project & Pengalaman"} items={a.project} accent={a.accent} />
+          <ListGroup judul={a.role === "Dosen Pembimbing" ? "Publikasi & HKI" : "Organisasi"} items={a.organisasi} accent={a.accent} />
         </div>
 
         <div className="mt-8 flex flex-wrap gap-10 border-t border-white/10 pt-6">
           {a.prestasi.length > 0 && (
-            <StatBlock value={String(a.prestasi.length)} label="Prestasi" accent={a.accent} />
+            <StatBlock value={String(a.prestasi.length)} label={a.role === "Dosen Pembimbing" ? "Top Riset" : "Prestasi"} accent={a.accent} />
           )}
-          <StatBlock value={String(a.project.length)} label="Project" accent={a.accent} />
+          <StatBlock value={String(a.project.length)} label={a.role === "Dosen Pembimbing" ? "Mata Kuliah" : "Project"} accent={a.accent} />
           <StatBlock value="ITS" label="Institut Teknologi Sepuluh Nopember" accent={a.accent} />
         </div>
       </div>
