@@ -114,7 +114,7 @@ export const DOSEN: Anggota = {
   role: "Dosen Pembimbing",
   jurusan: "Teknik Mesin Industri",
   angkatan: "ITS Surabaya",
-  foto: "/profil/rivai.jpg",
+  foto: "/profil/rivai.png",
   accent: "#ff5252",
   prestasi: [
     "Wire Arc Additive Manufacturing Berbasis MIG Pada Material 316L (ITS 2025)",
