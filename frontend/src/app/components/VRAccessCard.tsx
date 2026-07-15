@@ -1,11 +1,6 @@
 import { QRCodeSVG } from "qrcode.react";
 
-/**
- * Kartu akses VR yang menonjol — dipasang di setiap halaman simulator agar
- * integrasi Meta Quest 2 jelas terlihat, bukan tersembunyi sebagai tombol
- * kecil. Berisi QR (buka langsung di browser Quest 2) + slot untuk tombol
- * "Masuk VR" WebXR asli (diisi oleh three.js VRButton via ref).
- */
+
 export default function VRAccessCard({
   judul,
   vrSlotRef,

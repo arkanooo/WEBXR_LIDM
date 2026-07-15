@@ -1,10 +1,10 @@
-// Ilustrasi tematik untuk carousel beranda — sesuai judul tiap bagian.
-// Semua memakai currentColor agar warnanya mengikuti konteks (putih di kartu
-// samping berwarna, atau warna lain bila diperlukan).
+
+
+
 
 type ArtProps = { className?: string };
 
-/** Modul → buku terbuka (pembelajaran). */
+
 export function ModulArt({ className }: ArtProps) {
   return (
     <svg viewBox="0 0 100 100" fill="none" className={className}>
@@ -42,7 +42,7 @@ export function ModulArt({ className }: ArtProps) {
   );
 }
 
-/** Komponen → roda gigi. */
+
 export function KomponenArt({ className }: ArtProps) {
   const teeth = Array.from({ length: 10 }, (_, i) => i * 36);
   return (
@@ -66,7 +66,7 @@ export function KomponenArt({ className }: ArtProps) {
   );
 }
 
-/** Praktikum → headset VR (lab virtual berbasis WebXR). */
+
 export function PraktikumArt({ className }: ArtProps) {
   return (
     <svg viewBox="0 0 100 100" fill="none" className={className}>

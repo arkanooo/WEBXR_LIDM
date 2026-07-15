@@ -42,12 +42,10 @@ export default function KomponenDetailPage() {
         </button>
 
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-2">
-          {/* Left: 3D / AR viewer */}
           <div>
             <ComponentViewer no={item.no} />
           </div>
 
-          {/* Right: info */}
           <div>
             <div className="flex items-center gap-4">
               <div className="flex h-14 w-14 items-center justify-center rounded-xl border border-[#BFFD44]/50 bg-black/40 text-[#BFFD44]">
@@ -69,7 +67,6 @@ export default function KomponenDetailPage() {
               {item.desc}
             </p>
 
-            {/* Specs */}
             <dl className="mt-8 grid grid-cols-2 gap-x-6 gap-y-4 sm:grid-cols-3">
               {item.specs.map((s) => (
                 <div key={s.label} className="border-l-2 border-[#BFFD44]/40 pl-3">
@@ -79,7 +76,6 @@ export default function KomponenDetailPage() {
               ))}
             </dl>
 
-            {/* AR marker / QR */}
             <div className="mt-10 flex flex-col gap-5 rounded-2xl border border-white/12 bg-white/[0.04] p-6 backdrop-blur-md sm:flex-row sm:items-center">
               <div className="rounded-xl bg-white p-3">
                 <QRCodeSVG value={arUrl} size={128} level="M" includeMargin={false} />
@@ -97,7 +93,6 @@ export default function KomponenDetailPage() {
               </div>
             </div>
 
-            {/* Marker ARPeGa asli dari lembar modul (diekstrak dari Layout ARPEGA Final.pdf) */}
             <div className="mt-5 flex flex-col gap-5 rounded-2xl border border-white/12 bg-white/[0.04] p-6 backdrop-blur-md sm:flex-row sm:items-center">
               <div className="shrink-0 rounded-xl bg-white p-3">
                 <img

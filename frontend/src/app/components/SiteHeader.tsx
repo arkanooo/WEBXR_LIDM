@@ -2,9 +2,9 @@ import { useState } from "react";
 import { useNavigate, useLocation } from "react-router";
 import { useAuth } from "../auth";
 
-// Header disederhanakan: Home & About langsung, sisanya (Praktikum, Modul,
-// Komponen) dikelompokkan di dropdown "Jelajahi" yang hanya muncul setelah
-// login. Di beranda, ketiganya juga bisa diakses lewat slide carousel.
+
+
+
 const EXPLORE: { label: string; path: string }[] = [
   { label: "Praktikum", path: "/praktikum" },
   { label: "Modul", path: "/modul" },
@@ -47,7 +47,6 @@ export default function SiteHeader() {
   return (
     <header className="sticky top-0 z-50 w-full backdrop-blur-md bg-black/30 border-b border-white/10">
       <div className="mx-auto max-w-[1440px] px-6 md:px-10 h-[80px] flex items-center justify-between">
-        {/* Logo */}
         <button onClick={() => navigate("/")} className="flex items-center gap-3 cursor-pointer group">
           <LogoMark />
           <span
@@ -58,7 +57,6 @@ export default function SiteHeader() {
           </span>
         </button>
 
-        {/* Desktop nav */}
         <nav
           className="hidden md:flex items-center gap-9 text-[18px]"
           style={{ fontFamily: "'Chivo', sans-serif" }}
@@ -103,7 +101,6 @@ export default function SiteHeader() {
             {isActive("/about") && <span className="absolute -bottom-2 left-0 h-[2px] w-full bg-[#BFFD44] rounded-full" />}
           </button>
 
-          {/* Auth control */}
           {user ? (
             <div className="flex items-center gap-3 pl-3">
               <span className="flex items-center gap-2">
@@ -132,7 +129,6 @@ export default function SiteHeader() {
           )}
         </nav>
 
-        {/* Mobile toggle */}
         <button
           onClick={() => setOpen((v) => !v)}
           className="md:hidden flex flex-col gap-[5px] p-2 cursor-pointer"
@@ -144,7 +140,6 @@ export default function SiteHeader() {
         </button>
       </div>
 
-      {/* Mobile menu */}
       {open && (
         <nav
           className="md:hidden border-t border-white/10 bg-black/60 backdrop-blur-md px-6 py-4 flex flex-col gap-3"

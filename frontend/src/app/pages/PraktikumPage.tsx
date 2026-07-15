@@ -34,14 +34,14 @@ const OPSI = [
   },
 ];
 
-// Aplikasi VR native (Unity) — dikembangkan terpisah sebagai Tugas Akhir,
-// sudah terpasang & berjalan mandiri di headset Quest 2 lab. Bukan bagian
-// dari kode website ini; ditautkan sebagai pengalaman VR penuh pelengkap
-// simulasi berbasis browser di atas.
-// packageId = application ID Android app yang sudah di-sideload (Unknown
-// Sources) ke headset Quest 2 lab. Dipakai untuk membangun Android intent
-// link agar tombol "Buka di Quest 2" bisa langsung meluncurkan app terpasang
-// — TANPA perlu mengubah source code app itu sendiri.
+
+
+
+
+
+
+
+
 const VR_NATIVE = [
   {
     id: "vr-embossing",
@@ -65,10 +65,7 @@ const VR_NATIVE = [
   },
 ];
 
-/** Android intent link: meluncurkan app terpasang lewat activity utamanya
- *  berdasarkan package ID. Hanya berfungsi di browser berbasis Chromium
- *  Android (termasuk Meta Quest Browser) DAN hanya jika app dengan package
- *  ID tersebut memang sudah ter-install di perangkat yang membuka link ini. */
+
 function launchIntent(packageId: string): string {
   return `intent://#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;package=${packageId};end`;
 }
@@ -149,7 +146,6 @@ export default function PraktikumPage() {
           ))}
         </div>
 
-        {/* Aplikasi VR native (Unity) — pengalaman penuh, terpasang di headset lab */}
         <div className="mt-20">
           <div className="flex items-center gap-3">
             <span className="text-[22px]">🥽</span>

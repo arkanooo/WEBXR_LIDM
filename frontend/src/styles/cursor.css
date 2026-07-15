@@ -1,5 +1,3 @@
-/* Cursor kustom bertema mesin — lihat CustomCursor.tsx */
-
 .custom-cursor-active,
 .custom-cursor-active * {
   cursor: none !important;
@@ -48,7 +46,6 @@
   backdrop-filter: blur(1px);
 }
 
-/* Efek "stempel": ring memuai dan memudar di titik klik, seperti press mesin. */
 .cc-stamp-layer {
   position: fixed;
   inset: 0;

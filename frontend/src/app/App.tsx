@@ -15,12 +15,12 @@ import ModulPage from "./pages/ModulPage";
 import ModulDetailPage from "./pages/ModulDetailPage";
 import PraktikumPage from "./pages/PraktikumPage";
 
-// three.js berat — muat simulator hanya saat dibuka.
+
 const EmbossingSimPage = lazy(() => import("./pages/EmbossingSimPage"));
 const TensileSimPage = lazy(() => import("./pages/TensileSimPage"));
 import { AuthProvider, useAuth } from "./auth";
 
-// three.js is heavy — load the 3D/AR detail page only when it is opened.
+
 const KomponenDetailPage = lazy(() => import("./pages/KomponenDetailPage"));
 
 const DESIGN_W = 1440;
@@ -129,13 +129,11 @@ function Group23() {
     <div className="absolute contents left-[1240.76px] top-[-442.08px]">
       <div className="absolute flex h-[1201.688px] items-center justify-center left-[1240.76px] top-[-442.08px] w-[238px]">
         <div className="-rotate-90 flex-none">
-          {/* Changed: Metaverse → 3DUTOPIA */}
           <p className="[word-break:break-word] font-['Chivo:Black',sans-serif] font-black leading-[normal] relative text-[200px] text-[rgba(45,45,45,0.5)] w-[1201.688px]">3DUTOPIA</p>
         </div>
       </div>
       <div className="absolute flex h-[1201.688px] items-center justify-center left-[1251.16px] top-[778.21px] w-[238px]">
         <div className="-rotate-90 flex-none">
-          {/* Changed: Metaverse → 3DUTOPIA */}
           <p className="[word-break:break-word] font-['Chivo:Black',sans-serif] font-black leading-[normal] relative text-[200px] text-[rgba(45,45,45,0.5)] w-[1201.688px]">3DUTOPIA</p>
         </div>
       </div>
@@ -371,7 +369,6 @@ function Group10() {
 function Group11() {
   return (
     <div className="absolute contents left-[39.93px] top-[46px]">
-      {/* Changed: OCULuS → 3DUTOPIA */}
       <p className="[word-break:break-word] absolute font-['Chivo:Black',sans-serif] font-black h-[36.931px] leading-[normal] left-[97.1px] text-[28px] text-white top-[46px] uppercase w-[200px] tracking-widest">3DUTOPIA</p>
       <Group10 />
     </div>
@@ -574,12 +571,10 @@ function CenterSlot({ title, Art, bg, soon, onOpen }: { title: string; Art: Comp
           <Art className="h-[78px] w-[78px]" />
         </div>
       </div>
-      {/* title + call-to-action hint */}
       <div className="absolute left-0 top-[181px] flex w-full flex-col items-center gap-1 text-center" style={{ pointerEvents: 'none' }}>
         <span className="font-['Chivo:Bold',sans-serif] font-bold text-[24px] leading-[1.1] text-white">{title}</span>
         <span className="text-[13px] font-medium text-[#bffd44] tracking-wide">{soon ? 'Segera hadir →' : 'Buka halaman →'}</span>
       </div>
-      {/* clickable overlay with neon highlight */}
       <div
         onClick={onOpen}
         className="group absolute inset-0 cursor-pointer rounded-[16px] transition-transform duration-300 hover:scale-[1.03]"
@@ -604,14 +599,12 @@ function SideSlot({ Art, bgColor, position, label, onSelect }: { Art: ComponentT
       <div className="absolute flex items-center justify-center h-[121.375px] w-[109.912px] text-white transition-all duration-500" style={{ left: leftPos, top: topPos }}>
         <Art className="h-[58px] w-[58px]" />
       </div>
-      {/* label */}
       <p
         className="absolute text-center text-[15px] font-['Chivo:Light',sans-serif] font-light text-white/70 w-[109.912px]"
         style={{ left: leftPos, top: '1082px', pointerEvents: 'none' }}
       >
         {label}
       </p>
-      {/* clickable overlay to bring this item to center */}
       <div
         onClick={onSelect}
         className="group absolute cursor-pointer rounded-[12px] transition-transform duration-300 hover:scale-[1.06]"
@@ -743,7 +736,6 @@ function OculusDesign() {
       <div className="absolute h-[1159px] left-0 shadow-[0px_30px_4px_0px_rgba(0,0,0,0.8)] top-0 w-[1440px]" style={{ backgroundImage: "linear-gradient(119.498deg, rgb(84, 38, 27) 1.3746%, rgb(0, 0, 2) 36.02%)" }} />
       <div className="absolute flex h-[1201.688px] items-center justify-center left-[-100px] top-[0.31px] w-[238px]">
         <div className="-rotate-90 flex-none">
-          {/* Changed: Metaverse → 3DUTOPIA */}
           <p className="[word-break:break-word] font-['Chivo:Black',sans-serif] font-black leading-[normal] relative text-[200px] text-[rgba(45,45,45,0.3)] w-[1201.688px]">3DUTOPIA</p>
         </div>
       </div>
@@ -809,7 +801,6 @@ function OculusDesign() {
       <div className="absolute border border-[rgba(255,255,255,0.38)] border-solid h-[482.337px] left-[123px] rounded-[302px] top-[155.84px] w-[1193.697px]" style={{ zIndex: 1, WebkitMaskImage: 'linear-gradient(to bottom, black 20%, transparent 80%)', maskImage: 'linear-gradient(to bottom, black 20%, transparent 80%)' }} />
       <div className="absolute border border-[rgba(255,255,255,0.38)] border-solid h-[592.658px] left-[57px] rounded-[302px] top-[108px] w-[1325.907px]" style={{ zIndex: 1, WebkitMaskImage: 'linear-gradient(to bottom, black 20%, transparent 80%)', maskImage: 'linear-gradient(to bottom, black 20%, transparent 80%)' }} />
       <div className="absolute border border-[rgba(255,255,255,0.38)] border-solid h-[368.175px] left-[187px] rounded-[302px] top-[202.92px] w-[1066.192px]" style={{ zIndex: 1, WebkitMaskImage: 'linear-gradient(to bottom, black 20%, transparent 80%)', maskImage: 'linear-gradient(to bottom, black 20%, transparent 80%)' }} />
-      {/* Badge "jelajahi..." hanya muncul setelah login */}
       {user && <Group6 activeIndex={activeIndex} />}
       <Group11 />
       <Group16 />
@@ -817,7 +808,6 @@ function OculusDesign() {
       <p className="-translate-x-full [word-break:break-word] absolute font-['Chivo:Regular',sans-serif] font-normal leading-[normal] left-[1437.37px] text-[30px] text-right text-white top-[-51.03px] whitespace-nowrap">spatialforge.id</p>
       <p className="[word-break:break-word] absolute font-['Saira_ExtraCondensed:Regular',sans-serif] leading-[normal] left-[248px] not-italic text-[#bffd44] text-[80px] top-[488px] whitespace-nowrap" style={{ zIndex: 10 }}>you need to</p>
       <p className="[word-break:break-word] absolute font-['Chivo:Regular',sans-serif] font-normal leading-[normal] left-[246px] text-[#bffd44] text-[110px] top-[617px] whitespace-nowrap" style={{ zIndex: 10 }}>Explore</p>
-      {/* Carousel pemilihan hanya muncul setelah login */}
       {user && <Group24 activeIndex={activeIndex} setActiveIndex={setActiveIndex} />}
     </div>
   );
@@ -929,13 +919,10 @@ function HomePage() {
         [class*="Monoton:Regular"] { font-family: 'Monoton', sans-serif !important; font-weight: 400 !important; }
         [class*="Saira_ExtraCondensed:Regular"] { font-family: 'Saira Extra Condensed', sans-serif !important; font-weight: 400 !important; }
       `}</style>
-      {/* Mobile (< md): purpose-built fluid layout */}
       <div className="md:hidden">
         <HomeMobile />
       </div>
 
-      {/* Tablet & desktop (>= md): the fixed-scale Figma billboard, centered
-          vertically on the hero gradient so short screens show no black void. */}
       <div
         className="hidden md:flex min-h-screen w-full items-center overflow-hidden"
         style={{

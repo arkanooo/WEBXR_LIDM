@@ -51,9 +51,7 @@ function AnggotaCard({ a, index }: { a: Anggota; index: number }) {
         reversed ? "lg:flex-row-reverse" : "lg:flex-row"
       }`}
     >
-      {/* Foto interaktif */}
       <div className="relative mx-auto w-full max-w-[340px] shrink-0 lg:mx-0">
-        {/* blob dekoratif melayang */}
         <motion.div
           aria-hidden
           animate={{ y: [0, -14, 0], rotate: [0, 6, 0] }}
@@ -81,7 +79,6 @@ function AnggotaCard({ a, index }: { a: Anggota; index: number }) {
             whileHover={{ scale: 1.08 }}
             transition={{ duration: 0.5, ease: "easeOut" }}
           />
-          {/* gradient bawah + role */}
           <div className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-black/85 to-transparent" />
           <span
             className="absolute bottom-4 left-4 rounded-full px-4 py-1.5 text-[12px] font-bold uppercase tracking-wider text-black"
@@ -92,7 +89,6 @@ function AnggotaCard({ a, index }: { a: Anggota; index: number }) {
         </motion.div>
       </div>
 
-      {/* Detail */}
       <div className="min-w-0 flex-1">
         <p className="text-[13px] font-light uppercase tracking-[0.3em]" style={{ color: a.accent }}>
           {a.jurusan} · Angkatan {a.angkatan}
@@ -110,7 +106,6 @@ function AnggotaCard({ a, index }: { a: Anggota; index: number }) {
           <ListGroup judul="Organisasi" items={a.organisasi} accent={a.accent} />
         </div>
 
-        {/* statistik ala reference */}
         <div className="mt-8 flex flex-wrap gap-10 border-t border-white/10 pt-6">
           {a.prestasi.length > 0 && (
             <StatBlock value={String(a.prestasi.length)} label="Prestasi" accent={a.accent} />
@@ -128,7 +123,6 @@ export default function AboutPage() {
   return (
     <PageShell>
       <div style={{ fontFamily: "'Chivo', sans-serif" }}>
-        {/* ===== Karya ===== */}
         <section className="mx-auto max-w-[1200px] px-6 pt-16 md:px-10">
           <motion.div {...fadeUp}>
             <p className="text-[15px] font-light uppercase tracking-[0.3em] text-[#BFFD44]">
@@ -157,7 +151,6 @@ export default function AboutPage() {
             </p>
           </motion.div>
 
-          {/* fitur */}
           <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-3">
             {KARYA.fitur.map((f, i) => (
               <motion.div
@@ -175,7 +168,6 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* ===== Tim ===== */}
         <section className="mx-auto max-w-[1200px] px-6 pt-24 md:px-10">
           <motion.div {...fadeUp}>
             <p className="text-[15px] font-light uppercase tracking-[0.3em] text-[#BFFD44]">
@@ -197,7 +189,6 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* ===== CTA ===== */}
         <section className="mx-auto max-w-[1200px] px-6 pt-24 md:px-10">
           <motion.div
             {...fadeUp}

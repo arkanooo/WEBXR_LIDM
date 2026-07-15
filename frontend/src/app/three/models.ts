@@ -1,9 +1,9 @@
 import * as THREE from "three";
 
-// Procedural approximations of the 13 ARPeGa components, built from the
-// dimensions in "Layout ARPeGa Final". Units: PDF millimetres are scaled down
-// (÷ SCALE) into scene metres so a component sits nicely ~0.1–0.3 m in AR.
-const SCALE = 200; // 1 scene unit = 200 mm  → a 60 mm part ≈ 0.3 units
+
+
+
+const SCALE = 200; 
 const mm = (v: number) => v / SCALE;
 
 const METAL = new THREE.MeshStandardMaterial({
@@ -18,11 +18,11 @@ const METAL_DARK = new THREE.MeshStandardMaterial({
 });
 
 function hexPrism(acrossFlats: number, height: number, boreDia = 0): THREE.Mesh {
-  // acrossFlats = distance between opposite flats. Circumradius = AF / sqrt(3).
+  
   const R = mm(acrossFlats) / Math.sqrt(3);
   const shape = new THREE.Shape();
   for (let i = 0; i < 6; i++) {
-    const a = Math.PI / 6 + (i * Math.PI) / 3; // flat-top hex
+    const a = Math.PI / 6 + (i * Math.PI) / 3; 
     const x = R * Math.cos(a);
     const y = R * Math.sin(a);
     i === 0 ? shape.moveTo(x, y) : shape.lineTo(x, y);
@@ -55,7 +55,7 @@ function group(...objs: THREE.Object3D[]): THREE.Group {
   return g;
 }
 
-// ---- Individual builders -------------------------------------------------
+
 
 function buildNut(): THREE.Object3D {
   return hexPrism(24, 13, 16);
@@ -63,7 +63,7 @@ function buildNut(): THREE.Object3D {
 
 function buildBolt(headAF = 24, headH = 13, shaftDia = 16, shaftLen = 44): THREE.Object3D {
   const head = hexPrism(headAF, headH, 0);
-  head.rotation.x = Math.PI / 2; // align hex axis with the vertical shaft
+  head.rotation.x = Math.PI / 2; 
   head.position.y = mm(shaftLen) / 2;
   const shaft = threadedShaft(shaftDia, shaftLen);
   shaft.position.y = -mm(headH) / 2;
@@ -193,7 +193,7 @@ function buildBearing(): THREE.Object3D {
     METAL
   );
   const g = group(outer, outerInner, inner, innerBore);
-  // balls
+  
   const ballR = mm(8);
   const track = mm(46) / 2;
   for (let i = 0; i < 9; i++) {
@@ -216,7 +216,7 @@ function tubeAlong(points: THREE.Vector3[], radius: number, closed = false): THR
 }
 
 function buildRod(): THREE.Object3D {
-  // Straight section then a 30° bend with R100.
+  
   const pts: THREE.Vector3[] = [];
   const straight = mm(300);
   pts.push(new THREE.Vector3(-straight, 0, 0));
@@ -254,7 +254,7 @@ function buildConeSpring(): THREE.Object3D {
   return tubeAlong(pts, mm(4) / 2);
 }
 
-// ---- Registry ------------------------------------------------------------
+
 
 const BUILDERS: Record<number, () => THREE.Object3D> = {
   1: buildNut,
@@ -272,12 +272,12 @@ const BUILDERS: Record<number, () => THREE.Object3D> = {
   13: buildConeSpring,
 };
 
-/** Build a centered, unit-normalized model for the given component number. */
+
 export function buildModel(no: number): THREE.Object3D {
   const builder = BUILDERS[no] ?? buildNut;
   const obj = builder();
 
-  // Center on origin.
+  
   const box = new THREE.Box3().setFromObject(obj);
   const center = box.getCenter(new THREE.Vector3());
   obj.position.sub(center);

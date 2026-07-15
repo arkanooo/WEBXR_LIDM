@@ -21,13 +21,13 @@ import {
   type Material,
 } from "../sim/tensile";
 
-// ---------- Scene 3D Universal Testing Machine ----------
-const MM = 0.01; // 1 mm = 0.01 unit scene
-const GAUGE = L0 * MM; // 0.5
+
+const MM = 0.01; 
+const GAUGE = L0 * MM; 
 const RAD = (12.5 / 2) * MM;
 
-const CENTER_Y = 1.15; // pusat spesimen saat ε = 0
-const TOP_GRIP_Y = CENTER_Y + GAUGE / 2 + 0.16; // ragum atas (statis)
+const CENTER_Y = 1.15; 
+const TOP_GRIP_Y = CENTER_Y + GAUGE / 2 + 0.16; 
 
 function buildUTM(scene: THREE.Scene, specimenColor: number) {
   const steel = new THREE.MeshStandardMaterial({ color: 0xb8c0cc, metalness: 0.65, roughness: 0.3 });
@@ -35,7 +35,7 @@ function buildUTM(scene: THREE.Scene, specimenColor: number) {
   const darker = new THREE.MeshStandardMaterial({ color: 0x353a44, metalness: 0.4, roughness: 0.6 });
   const specMat = new THREE.MeshStandardMaterial({ color: specimenColor, metalness: 0.6, roughness: 0.35 });
 
-  // lantai lab (lingkaran gelap agar mesin "berpijak")
+  
   const ground = new THREE.Mesh(
     new THREE.CircleGeometry(2.3, 48),
     new THREE.MeshStandardMaterial({ color: 0x0e1013, roughness: 1 })
@@ -44,7 +44,7 @@ function buildUTM(scene: THREE.Scene, specimenColor: number) {
   ground.position.y = -0.5;
   scene.add(ground);
 
-  // base dua tingkat + kisi ventilasi + lampu power
+  
   const base = new THREE.Mesh(new THREE.BoxGeometry(1.6, 0.5, 1.0), dark);
   base.position.y = -0.25;
   const basePlate = new THREE.Mesh(new THREE.BoxGeometry(1.72, 0.06, 1.12), darker);
@@ -62,7 +62,7 @@ function buildUTM(scene: THREE.Scene, specimenColor: number) {
   powerLight.position.set(0.55, -0.12, 0.505);
   scene.add(powerLight);
 
-  // konsol kontrol di samping + layar
+  
   const console3d = new THREE.Mesh(new THREE.BoxGeometry(0.36, 0.52, 0.3), dark);
   console3d.position.set(1.12, 0.26, 0.15);
   console3d.rotation.y = -0.35;
@@ -74,7 +74,7 @@ function buildUTM(scene: THREE.Scene, specimenColor: number) {
   screen.rotation.y = -0.35;
   scene.add(console3d, screen);
 
-  // dua column utama + dua lead screw (berputar saat mesin menarik)
+  
   const colGeo = new THREE.CylinderGeometry(0.05, 0.05, 2.1, 20);
   const colL = new THREE.Mesh(colGeo, steel); colL.position.set(-0.45, 1.05, 0.1);
   const colR = new THREE.Mesh(colGeo, steel); colR.position.set(0.45, 1.05, 0.1);
@@ -82,7 +82,7 @@ function buildUTM(scene: THREE.Scene, specimenColor: number) {
   const screwMat = new THREE.MeshStandardMaterial({ color: 0x8b93a1, metalness: 0.8, roughness: 0.25 });
   const screwL = new THREE.Mesh(screwGeo, screwMat); screwL.position.set(-0.45, 1.0, -0.14);
   const screwR = new THREE.Mesh(screwGeo, screwMat); screwR.position.set(0.45, 1.0, -0.14);
-  // ulir dekoratif: torus kecil bertumpuk pada tiap screw
+  
   const threadGeo = new THREE.TorusGeometry(0.03, 0.006, 6, 14);
   [screwL, screwR].forEach((s) => {
     for (let i = -8; i <= 8; i++) {
@@ -94,52 +94,52 @@ function buildUTM(scene: THREE.Scene, specimenColor: number) {
   });
   scene.add(colL, colR, screwL, screwR);
 
-  // upper crosshead (tetap) + load cell + batang penghubung ke ragum atas
+  
   const upperCross = new THREE.Mesh(new THREE.BoxGeometry(1.25, 0.18, 0.38), steel);
   upperCross.position.y = 2.0;
   const loadCell = new THREE.Mesh(new THREE.CylinderGeometry(0.075, 0.075, 0.12, 24), darker);
   loadCell.position.y = 1.85;
-  // batang: dari bawah load cell (1.79) sampai atas blok ragum atas (TOP_GRIP_Y+0.12)
+  
   const upperRodLen = 1.79 - (TOP_GRIP_Y + 0.12);
   const upperRod = new THREE.Mesh(new THREE.CylinderGeometry(0.045, 0.045, upperRodLen, 16), steel);
   upperRod.position.y = TOP_GRIP_Y + 0.12 + upperRodLen / 2;
   scene.add(upperCross, loadCell, upperRod);
 
-  // lower crosshead (bergerak turun saat menarik)
+  
   const lowerCross = new THREE.Mesh(new THREE.BoxGeometry(1.25, 0.16, 0.34), steel);
   scene.add(lowerCross);
 
-  // ram hidrolik: dari base ke lower crosshead (memanjang mengikuti crosshead)
+  
   const ramGeo = new THREE.CylinderGeometry(0.09, 0.09, 1, 24);
-  ramGeo.translate(0, 0.5, 0); // pivot di dasar
+  ramGeo.translate(0, 0.5, 0); 
   const ram = new THREE.Mesh(ramGeo, darker);
   ram.position.y = 0.06;
   const ramCollar = new THREE.Mesh(new THREE.CylinderGeometry(0.13, 0.15, 0.1, 24), dark);
   ramCollar.position.y = 0.1;
   scene.add(ram, ramCollar);
 
-  // ---- Spesimen ASTM E8: dua paruh (atas tetap, bawah ikut lower crosshead) ----
+  
   function makeHalf(): { group: THREE.Group; gauge: THREE.Mesh } {
     const g = new THREE.Group();
     const grip = new THREE.Mesh(new THREE.CylinderGeometry(RAD * 1.6, RAD * 1.6, 0.22, 20), specMat.clone());
     grip.position.y = 0.11 + GAUGE / 2 + 0.05;
     const shoulder = new THREE.Mesh(new THREE.CylinderGeometry(RAD * 1.6, RAD, 0.05, 20), specMat.clone());
     shoulder.position.y = GAUGE / 2 + 0.025;
-    // paruh gauge: pivot di ujung bahu (luar), memanjang KE ARAH pusat saat
-    // di-scale — sehingga kedua paruh tetap menyatu di tengah sampai patah.
+    
+    
     const gaugeGeo = new THREE.CylinderGeometry(RAD, RAD, GAUGE / 2, 20);
-    gaugeGeo.translate(0, -GAUGE / 4, 0); // span lokal: (-GAUGE/2 .. 0)
+    gaugeGeo.translate(0, -GAUGE / 4, 0); 
     const gauge = new THREE.Mesh(gaugeGeo, specMat.clone());
-    gauge.position.y = GAUGE / 2; // ujung dalam tepat di origin grup (pusat spesimen)
+    gauge.position.y = GAUGE / 2; 
     g.add(grip, shoulder, gauge);
     return { group: g, gauge };
   }
   const top = makeHalf();
   const bottom = makeHalf();
-  bottom.group.rotation.z = Math.PI; // dibalik menghadap ke bawah
+  bottom.group.rotation.z = Math.PI; 
   scene.add(top.group, bottom.group);
 
-  // ragum wedge-grip: blok + rahang + baut, sebagai grup utuh
+  
   function makeGrip(): THREE.Group {
     const g = new THREE.Group();
     const block = new THREE.Mesh(new THREE.BoxGeometry(0.3, 0.24, 0.3), dark);
@@ -160,11 +160,11 @@ function buildUTM(scene: THREE.Scene, specimenColor: number) {
   const lowerGrip = makeGrip();
   scene.add(upperGrip, lowerGrip);
 
-  // batang penghubung ragum bawah → lower crosshead (offset tetap, ikut bergerak)
+  
   const lowerRod = new THREE.Mesh(new THREE.CylinderGeometry(0.045, 0.045, 0.16, 16), steel);
   scene.add(lowerRod);
 
-  // kilatan saat patah
+  
   const flash = new THREE.Mesh(
     new THREE.SphereGeometry(0.09, 16, 16),
     new THREE.MeshBasicMaterial({ color: 0xffb066, transparent: true, opacity: 0 })
@@ -174,7 +174,7 @@ function buildUTM(scene: THREE.Scene, specimenColor: number) {
   return { top, bottom, lowerCross, upperGrip, lowerGrip, lowerRod, ram, screwL, screwR, screen: screenMat, powerLight, flash, specMat };
 }
 
-// ---------- Kurva live (canvas 2D) ----------
+
 type ChartMode = "F-dL" | "engineering" | "true";
 
 function drawChart(
@@ -188,7 +188,7 @@ function drawChart(
   const m = s.material;
   const pad = { l: 54, r: 14, t: 16, b: 40 };
 
-  // rentang sumbu (mode True: puncak σT ada di titik fracture — kurva terus naik)
+  
   const sigmaTMax = trueStressAt(m, m.epsF, stressAt(m, m.epsF));
   const xMax0 = mode === "F-dL" ? m.epsF * L0 * 1.08 : mode === "true" ? Math.log(1 + m.epsF) * 1.08 : m.epsF * 1.08;
   const yMax0 =
@@ -196,7 +196,7 @@ function drawChart(
   const X = (x: number) => pad.l + (x / xMax0) * (W - pad.l - pad.r);
   const Y = (y: number) => H - pad.b - (y / yMax0) * (H - pad.t - pad.b);
 
-  // grid + sumbu
+  
   ctx.strokeStyle = "rgba(255,255,255,0.08)";
   ctx.lineWidth = 1;
   for (let i = 1; i <= 4; i++) {
@@ -218,14 +218,14 @@ function drawChart(
   ctx.fillText(labels[mode][0], W - pad.r - 70, H - 8);
   ctx.save(); ctx.translate(12, pad.t + 76); ctx.rotate(-Math.PI / 2); ctx.fillText(labels[mode][1], 0, 0); ctx.restore();
 
-  // transform titik sesuai mode
+  
   const pt = (eps: number, sigma: number): [number, number] => {
     if (mode === "F-dL") return [eps * L0, sigma * A0];
     if (mode === "true") { const t = toTrue(m, { eps, sigma }); return [t.eps, t.sigma]; }
     return [eps, sigma];
   };
 
-  // kurva
+  
   ctx.strokeStyle = m.warna;
   ctx.lineWidth = 2.2;
   ctx.beginPath();
@@ -235,7 +235,7 @@ function drawChart(
   });
   ctx.stroke();
 
-  // penanda titik penting
+  
   const mark = (eps: number, sigma: number, label: string, on: boolean) => {
     if (!on) return;
     const [x, y] = pt(eps, sigma);
@@ -250,7 +250,7 @@ function drawChart(
   mark(m.epsUTS, m.sigmaUTS, "UTS", s.hitUTS);
   mark(m.epsF, stressAt(m, m.epsF), "Fracture", s.fractured);
 
-  // titik berjalan
+  
   if (!s.fractured && s.eps > 0) {
     const [x, y] = pt(s.eps, stressAt(m, s.eps));
     ctx.fillStyle = m.warna;
@@ -258,11 +258,11 @@ function drawChart(
   }
 }
 
-// ---------- Suara mesin (Web Audio, disintesis — tanpa file eksternal) ----------
+
 type SoundEngine = {
   setRunning(on: boolean): void;
-  setLoad(x: number): void; // 0..1 → nada motor naik seiring beban
-  bang(): void; // suara spesimen patah
+  setLoad(x: number): void; 
+  bang(): void; 
   setMuted(m: boolean): void;
   dispose(): void;
 };
@@ -273,7 +273,7 @@ function createSound(): SoundEngine {
   master.gain.value = 0.9;
   master.connect(ctx.destination);
 
-  // dengung motor: dua osilator saw rendah → lowpass
+  
   const humGain = ctx.createGain();
   humGain.gain.value = 0;
   const humLP = ctx.createBiquadFilter();
@@ -286,7 +286,7 @@ function createSound(): SoundEngine {
   humLP.connect(humGain); humGain.connect(master);
   o1.start(); o2.start();
 
-  // desis hidrolik: white noise loop → bandpass
+  
   const noiseBuf = ctx.createBuffer(1, ctx.sampleRate, ctx.sampleRate);
   const d = noiseBuf.getChannelData(0);
   for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
@@ -315,7 +315,7 @@ function createSound(): SoundEngine {
     bang() {
       if (ctx.state === "suspended") void ctx.resume();
       const t = ctx.currentTime;
-      // ledakan: burst noise pendek
+      
       const src = ctx.createBufferSource(); src.buffer = noiseBuf;
       const hp = ctx.createBiquadFilter(); hp.type = "highpass"; hp.frequency.value = 250;
       const g = ctx.createGain();
@@ -323,7 +323,7 @@ function createSound(): SoundEngine {
       g.gain.exponentialRampToValueAtTime(0.001, t + 0.22);
       src.connect(hp); hp.connect(g); g.connect(master);
       src.start(t); src.stop(t + 0.25);
-      // dentum rendah
+      
       const th = ctx.createOscillator(); th.type = "sine";
       th.frequency.setValueAtTime(130, t);
       th.frequency.exponentialRampToValueAtTime(42, t + 0.3);
@@ -332,7 +332,7 @@ function createSound(): SoundEngine {
       tg.gain.exponentialRampToValueAtTime(0.001, t + 0.38);
       th.connect(tg); tg.connect(master);
       th.start(t); th.stop(t + 0.4);
-      // denting logam
+      
       const pg = ctx.createGain();
       pg.gain.setValueAtTime(0.18, t + 0.02);
       pg.gain.exponentialRampToValueAtTime(0.001, t + 0.6);
@@ -351,7 +351,7 @@ function createSound(): SoundEngine {
   };
 }
 
-// ---------- Halaman ----------
+
 export default function TensileSimPage() {
   const navigate = useNavigate();
   const mountRef = useRef<HTMLDivElement>(null);
@@ -359,7 +359,7 @@ export default function TensileSimPage() {
   const vrSlotRef = useRef<HTMLDivElement>(null);
   const vrObserverRef = useRef<MutationObserver | null>(null);
   const simRef = useRef<TensileState>(initTensile(MATERIALS[0]));
-  const speedRef = useRef(1); // pengali kecepatan
+  const speedRef = useRef(1); 
   const modeRef = useRef<ChartMode>("engineering");
   const soundRef = useRef<SoundEngine | null>(null);
   const mutedRef = useRef(false);
@@ -393,7 +393,7 @@ export default function TensileSimPage() {
     if (simRef.current.fractured) simRef.current = initTensile(simRef.current.material);
     simRef.current = { ...simRef.current, running: true };
     setUi(simRef.current);
-    sound().setRunning(true); // dipanggil dari klik → AudioContext boleh mulai
+    sound().setRunning(true); 
   };
   const reset = () => {
     simRef.current = initTensile(simRef.current.material);
@@ -464,7 +464,7 @@ export default function TensileSimPage() {
       const dt = Math.min(clock.getDelta(), 0.05);
       const m = simRef.current.material;
 
-      // ganti warna spesimen bila material berganti
+      
       if (m.id !== currentMatId) {
         currentMatId = m.id;
         const c = new THREE.Color(m.warna);
@@ -475,16 +475,16 @@ export default function TensileSimPage() {
         );
       }
 
-      // laju regangan: kurva penuh ~24 detik pada 1×
+      
       const rate = (m.epsF / 24) * speedRef.current;
       simRef.current = stepTensile(simRef.current, dt, rate);
       const s = simRef.current;
 
-      // geometri: paruh atas tetap, paruh bawah turun sebesar ΔL (skala scene)
+      
       const dL = s.eps * L0 * MM;
       const gap = s.fractured ? 0.05 : 0;
       const stretch = 1 + s.eps;
-      // necking hanya material ductile setelah UTS — rasio sama dengan model Ai
+      
       const neck = neckFactorAt(m, s.eps);
 
       rig.top.group.position.y = CENTER_Y + gap / 2;
@@ -492,7 +492,7 @@ export default function TensileSimPage() {
       [rig.top, rig.bottom].forEach((h) => {
         h.gauge.scale.set(neck, stretch, neck);
       });
-      // ragum, batang penghubung, crosshead, dan ram mengikuti
+      
       const botGripY = CENTER_Y - dL - gap - GAUGE / 2 - 0.16;
       rig.upperGrip.position.y = TOP_GRIP_Y;
       rig.lowerGrip.position.y = botGripY;
@@ -500,7 +500,7 @@ export default function TensileSimPage() {
       rig.lowerCross.position.y = botGripY - 0.28;
       rig.ram.scale.y = Math.max(0.1, rig.lowerCross.position.y - 0.08 - 0.06);
 
-      // lead screw berputar & indikator menyala saat mesin bekerja
+      
       if (s.running) {
         rig.screwL.rotation.y += dt * 4;
         rig.screwR.rotation.y -= dt * 4;
@@ -509,7 +509,7 @@ export default function TensileSimPage() {
       rig.screen.emissive.set(s.running ? 0x3f6b1a : 0x1c2a10);
       (rig.powerLight.material as THREE.MeshStandardMaterial).emissiveIntensity = s.running ? 1.6 : 0.4;
 
-      // kilatan + suara saat patah (deteksi transisi)
+      
       if (s.fractured && !prevFractured) {
         prevFractured = true;
         flashT = 0.45;
@@ -527,10 +527,10 @@ export default function TensileSimPage() {
         (rig.flash.material as THREE.MeshBasicMaterial).opacity = 0;
       }
 
-      // nada motor mengikuti beban
+      
       soundRef.current?.setLoad(stressAt(m, s.eps) / m.sigmaUTS);
 
-      // sinkron UI + gambar kurva ±12×/detik
+      
       uiSync += dt;
       if (uiSync > 0.08) {
         uiSync = 0;
@@ -619,7 +619,6 @@ export default function TensileSimPage() {
         </div>
 
         <div className="mt-8 grid grid-cols-1 gap-6 xl:grid-cols-2">
-          {/* Kiri: mesin 3D */}
           <div>
             <div ref={mountRef} className="h-[380px] w-full overflow-hidden rounded-2xl border border-white/12 md:h-[440px]" />
             <div className="mt-3 flex flex-wrap items-center gap-3">
@@ -640,7 +639,6 @@ export default function TensileSimPage() {
             </div>
             <VRAccessCard judul="Tensile Test" vrSlotRef={vrSlotRef} />
 
-            {/* readout */}
             <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
               {[
                 { l: "Force", v: (sigmaNow * A0).toFixed(0), u: "kgf" },
@@ -661,7 +659,6 @@ export default function TensileSimPage() {
             </div>
           </div>
 
-          {/* Kanan: kurva + kontrol */}
           <div className="flex flex-col gap-4">
             <div className="rounded-2xl border border-white/12 bg-black/40 p-4">
               <div className="flex flex-wrap items-center justify-between gap-2">
@@ -729,7 +726,6 @@ export default function TensileSimPage() {
               </div>
             </div>
 
-            {/* Hasil */}
             {ui.fractured && (
               <div className="rounded-2xl border border-[#BFFD44]/30 bg-[#BFFD44]/[0.05] p-5">
                 <div className="flex items-center justify-between">
@@ -771,7 +767,6 @@ export default function TensileSimPage() {
           </div>
         </div>
 
-        {/* Titik-titik penting */}
         <div className="mt-12">
           <h2 className="flex items-center gap-3 text-[22px] font-black uppercase tracking-wide text-white">
             <span className="h-[2px] w-8 rounded-full bg-[#BFFD44]" />

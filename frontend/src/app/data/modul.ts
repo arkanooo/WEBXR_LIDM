@@ -1,6 +1,6 @@
-// Data modul praktikum. Sumber: "Embossing Machine.pdf" — Percobaan 4,
-// Praktikum Sistem Hidrolik, Laboratorium Sistem Pneumatik dan Hidrolik,
-// Departemen Teknik Mesin Industri ITS.
+
+
+
 
 export type PraktikumKind = "pneumatik-hidrolik" | "tensile-test";
 
@@ -35,7 +35,7 @@ export type DataTableRow = { p1z1: string; p1z4: string };
 export type VRStage = {
   no: number;
   judul: string;
-  icon: string; // emoji sederhana untuk tiap tahap
+  icon: string; 
   ringkas: string;
   detail: string[];
 };
@@ -54,7 +54,7 @@ export type Modul = {
   ukuran: { simbol: string; arti: string }[];
   tabelInlet?: DataTableRow[];
   tabelOutlet?: DataTableRow[];
-  /** Dimensi benda kerja standar (khusus modul uji material). */
+  
   dimensi?: { param: string; inch: string; mm: string }[];
   pertanyaan: string[];
   vrStages: VRStage[];

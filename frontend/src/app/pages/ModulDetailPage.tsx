@@ -92,7 +92,6 @@ export default function ModulDetailPage() {
           ← Semua Modul
         </button>
 
-        {/* Header */}
         <p className="text-[14px] font-light uppercase tracking-[0.3em] text-[#BFFD44]">
           {modul.praktikum === "tensile-test" ? "Praktikum Ilmu Bahan" : "Praktikum Sistem Hidrolik"} · {modul.percobaan}
         </p>
@@ -122,7 +121,6 @@ export default function ModulDetailPage() {
           ))}
         </div>
 
-        {/* Tujuan */}
         <div className="mt-12">
           <SectionTitle>Tujuan Praktikum</SectionTitle>
           <ol className="mt-5 flex flex-col gap-3">
@@ -135,13 +133,11 @@ export default function ModulDetailPage() {
           </ol>
         </div>
 
-        {/* Deskripsi */}
         <div className="mt-12">
           <SectionTitle>Deskripsi Mesin</SectionTitle>
           <p className="mt-5 max-w-3xl text-[16px] font-light leading-relaxed text-white/75">{modul.deskripsi}</p>
         </div>
 
-        {/* Peralatan */}
         <div className="mt-12">
           <SectionTitle>Peralatan Percobaan</SectionTitle>
           <div className="mt-5 overflow-x-auto rounded-2xl border border-white/12">
@@ -166,7 +162,6 @@ export default function ModulDetailPage() {
           </div>
         </div>
 
-        {/* Prosedur */}
         <div className="mt-12">
           <SectionTitle>Prosedur Praktikum</SectionTitle>
           <ol className="mt-5 flex flex-col gap-2">
@@ -179,7 +174,6 @@ export default function ModulDetailPage() {
           </ol>
         </div>
 
-        {/* Data yang diukur */}
         <div className="mt-12">
           <SectionTitle>Data yang Diukur</SectionTitle>
           <dl className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2">
@@ -191,7 +185,6 @@ export default function ModulDetailPage() {
             ))}
           </dl>
 
-          {/* Tabel dimensi benda kerja (modul uji material) */}
           {modul.dimensi && (
             <div className="mt-8 overflow-x-auto rounded-2xl border border-white/12">
               <p className="border-b border-white/12 bg-white/[0.05] px-5 py-3 text-[13px] font-bold uppercase tracking-wide text-white/60">
@@ -211,7 +204,6 @@ export default function ModulDetailPage() {
             </div>
           )}
 
-          {/* Tabel pengamatan */}
           <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-2">
             {[
               { judul: "Fluctuating inlet pressure", rows: modul.tabelInlet },
@@ -248,7 +240,6 @@ export default function ModulDetailPage() {
           </div>
         </div>
 
-        {/* Alur pelaksanaan VR */}
         <div className="mt-14 rounded-3xl border border-[#BFFD44]/25 bg-[#BFFD44]/[0.04] p-6 md:p-9">
           <p className="text-[13px] font-bold uppercase tracking-[0.3em] text-[#BFFD44]">
             Rancangan Pelaksanaan · Virtual Reality
@@ -285,7 +276,6 @@ export default function ModulDetailPage() {
           </div>
         </div>
 
-        {/* Pertanyaan kesimpulan */}
         <div className="mt-12">
           <SectionTitle>Pertanyaan Kesimpulan</SectionTitle>
           <div className="mt-5 flex flex-col gap-3">

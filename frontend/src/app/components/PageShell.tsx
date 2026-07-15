@@ -10,7 +10,6 @@ export default function PageShell({ children }: { children: ReactNode }) {
           "linear-gradient(119.498deg, rgb(84, 38, 27) 1.3746%, rgb(0, 0, 2) 36.02%)",
       }}
     >
-      {/* Ambient glows */}
       <div
         className="pointer-events-none fixed -top-40 -left-40 h-[520px] w-[520px] rounded-full blur-[230px] opacity-40"
         style={{ background: "#FB7A43" }}

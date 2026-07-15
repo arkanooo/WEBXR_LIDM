@@ -7,7 +7,7 @@ export type Account = {
   role: string;
 };
 
-// Akun demo bawaan (hardcoded). Untuk keperluan demo/praktikum, bukan produksi.
+
 export const ACCOUNTS: Account[] = [
   { username: "admin", password: "admin123", name: "Administrator", role: "Admin" },
   { username: "dosen", password: "teknik2026", name: "Dosen Teknik Mesin", role: "Dosen" },
@@ -40,7 +40,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if (user) localStorage.setItem(STORAGE_KEY, JSON.stringify(user));
       else localStorage.removeItem(STORAGE_KEY);
     } catch {
-      /* ignore storage errors */
+      
     }
   }, [user]);
 

@@ -14,23 +14,19 @@ function KomponenCard({ item }: { item: Komponen }) {
       className="group relative flex cursor-pointer flex-col overflow-hidden rounded-2xl border border-white/12 bg-white/[0.04] p-6 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-[#BFFD44]/70 hover:bg-white/[0.07] hover:shadow-[0_0_40px_-8px_rgba(191,253,68,0.35)]"
       style={{ fontFamily: "'Chivo', sans-serif" }}
     >
-      {/* number badge */}
       <span className="absolute right-5 top-5 text-[13px] font-bold tabular-nums text-white/25 group-hover:text-[#BFFD44]/60 transition-colors">
         {String(item.no).padStart(2, "0")}
       </span>
 
-      {/* icon */}
       <div className="mb-5 flex h-16 w-16 items-center justify-center rounded-xl border border-white/12 bg-black/30 text-white/80 transition-colors group-hover:border-[#BFFD44]/50 group-hover:text-[#BFFD44]">
         <Icon className="h-9 w-9" />
       </div>
 
-      {/* title */}
       <h3 className="text-[22px] font-bold leading-tight text-white">{item.nama}</h3>
       <p className="mt-0.5 text-[14px] font-light italic text-[#BFFD44]/90">{item.namaEn}</p>
 
       <p className="mt-3 text-[14px] font-light leading-relaxed text-white/65">{item.desc}</p>
 
-      {/* specs */}
       <dl className="mt-5 grid grid-cols-2 gap-x-4 gap-y-2 border-t border-white/10 pt-4">
         {item.specs.map((s) => (
           <div key={s.label} className="flex flex-col">
@@ -40,7 +36,6 @@ function KomponenCard({ item }: { item: Komponen }) {
         ))}
       </dl>
 
-      {/* footer chip */}
       <div className="mt-5 flex items-center justify-between">
         <span className="rounded-full border border-white/12 px-3 py-1 text-[11px] font-light text-white/60">
           {item.category}
@@ -65,7 +60,6 @@ export default function KomponenPage() {
   return (
     <PageShell>
       <section className="mx-auto max-w-[1440px] px-6 pt-16 pb-8 md:px-10">
-        {/* Header */}
         <p
           className="text-[15px] font-light uppercase tracking-[0.3em] text-[#BFFD44]"
           style={{ fontFamily: "'Chivo', sans-serif" }}
@@ -92,7 +86,6 @@ export default function KomponenPage() {
           <span className="text-white">sudut ketiga</span>.
         </p>
 
-        {/* Stat row */}
         <div className="mt-8 flex flex-wrap gap-8" style={{ fontFamily: "'Chivo', sans-serif" }}>
           {[
             { v: `${KOMPONEN.length}`, l: "Komponen 3D" },
@@ -107,7 +100,6 @@ export default function KomponenPage() {
         </div>
       </section>
 
-      {/* Filters */}
       <section className="mx-auto max-w-[1440px] px-6 md:px-10">
         <div className="flex flex-wrap gap-3" style={{ fontFamily: "'Chivo', sans-serif" }}>
           {FILTERS.map((f) => {
@@ -131,7 +123,6 @@ export default function KomponenPage() {
         </div>
       </section>
 
-      {/* Grid */}
       <section className="mx-auto max-w-[1440px] px-6 pt-8 md:px-10">
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {filtered.map((item) => (

@@ -1,5 +1,5 @@
-// Data halaman About. Sumber: Profile.docx — deskripsi karya 3DUTOPIA dan
-// profil tim peserta LIDM. Foto berada di frontend/public/profil/.
+
+
 
 export const KARYA = {
   nama: "3DUTOPIA",

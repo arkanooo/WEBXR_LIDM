@@ -25,7 +25,6 @@ export default function ModulPage() {
           Virtual Reality</span> sehingga percobaan dapat dijalankan tanpa risiko kerusakan alat.
         </p>
 
-        {/* Pemilih praktikum */}
         <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 max-w-3xl">
           {PRAKTIKUM_OPTIONS.map((p) => {
             const active = selected === p.id;
@@ -62,7 +61,6 @@ export default function ModulPage() {
           })}
         </div>
 
-        {/* Daftar modul */}
         <div className="mt-12">
           <h3 className="text-[13px] font-bold uppercase tracking-[0.25em] text-white/40">
             Modul {aktif.nama}

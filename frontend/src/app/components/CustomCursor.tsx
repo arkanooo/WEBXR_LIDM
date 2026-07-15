@@ -1,10 +1,10 @@
 import { useEffect, useRef } from "react";
 
-// Cursor kustom bertema mesin: gir kecil yang mengikuti pointer dan berputar
-// terus-menerus, membesar + berputar lebih cepat di atas elemen interaktif,
-// dan meninggalkan efek "cap/stempel" melingkar saat diklik — menggemakan
-// motif Embossing Machine di seluruh situs. Hanya aktif pada perangkat dengan
-// mouse presisi (pointer: fine) — disentuh (touch) tetap memakai cursor asli.
+
+
+
+
+
 
 const INTERACTIVE_SELECTOR =
   'a, button, input, select, textarea, [role="button"], .cursor-pointer, [class*="cursor-pointer"]';
@@ -57,7 +57,7 @@ export default function CustomCursor() {
 
     const onDown = () => {
       gear.style.transform = `${hovering ? "scale(1.7)" : "scale(1)"} scale(0.8)`;
-      // efek "stempel": ring memuai lalu memudar, pas di posisi klik
+      
       const stamp = document.createElement("span");
       stamp.className = "cc-stamp";
       stamp.style.left = `${x}px`;

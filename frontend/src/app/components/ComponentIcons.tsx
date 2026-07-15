@@ -1,5 +1,4 @@
-// Compact line icons for the ARPeGa mechanical components.
-// All use currentColor so they inherit the neon accent on the card.
+
 
 type IconProps = { className?: string };
 

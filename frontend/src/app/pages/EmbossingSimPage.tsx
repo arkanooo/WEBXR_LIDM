@@ -15,19 +15,19 @@ import {
   type DataRow,
 } from "../sim/embossing";
 
-// ---------- Scene 3D mesin emboss ----------
+
 function buildMachine(scene: THREE.Scene) {
   const steel = new THREE.MeshStandardMaterial({ color: 0xb8c0cc, metalness: 0.65, roughness: 0.35 });
   const dark = new THREE.MeshStandardMaterial({ color: 0x5a626f, metalness: 0.45, roughness: 0.55 });
   const neon = new THREE.MeshStandardMaterial({ color: 0xbffd44, emissive: 0x86b322, emissiveIntensity: 0.4 });
   const foilMat = new THREE.MeshStandardMaterial({ color: 0xe8ecf1, metalness: 0.85, roughness: 0.22 });
 
-  // meja
+  
   const table = new THREE.Mesh(new THREE.BoxGeometry(2.4, 0.08, 1.1), dark);
   table.position.y = -0.04;
   scene.add(table);
 
-  // rangka press (portal)
+  
   const frame = new THREE.Group();
   const colGeo = new THREE.BoxGeometry(0.1, 0.85, 0.12);
   const colL = new THREE.Mesh(colGeo, steel); colL.position.set(-0.33, 0.425, 0);
@@ -36,26 +36,26 @@ function buildMachine(scene: THREE.Scene) {
   frame.add(colL, colR, head);
   scene.add(frame);
 
-  // silinder hidrolik di atas head
+  
   const cylBody = new THREE.Mesh(new THREE.CylinderGeometry(0.09, 0.09, 0.42, 24), dark);
   cylBody.position.y = 1.18;
   scene.add(cylBody);
 
-  // Batang piston: mesh terpisah dengan tinggi 1 unit berpivot di dasar,
-  // di-scale tiap frame agar SELALU tersambung dari stempel ke dalam silinder.
+  
+  
   const rodGeo = new THREE.CylinderGeometry(0.035, 0.035, 1, 16);
-  rodGeo.translate(0, 0.5, 0); // pivot di ujung bawah
+  rodGeo.translate(0, 0.5, 0); 
   const rod = new THREE.Mesh(rodGeo, steel);
   scene.add(rod);
 
-  // stempel (bergerak bersama piston)
+  
   const ram = new THREE.Group();
   const die = new THREE.Mesh(new THREE.BoxGeometry(0.26, 0.1, 0.24), neon);
   die.position.y = -0.02;
   ram.add(die);
   scene.add(ram);
 
-  // roll foil + pita foil
+  
   const roll = new THREE.Mesh(new THREE.CylinderGeometry(0.13, 0.13, 0.3, 24), steel);
   roll.rotation.z = Math.PI / 2;
   roll.position.set(-1.0, 0.16, 0);
@@ -65,23 +65,23 @@ function buildMachine(scene: THREE.Scene) {
   foil.position.set(0.05, 0.09, 0);
   scene.add(foil);
 
-  // penyangga foil
+  
   const anvil = new THREE.Mesh(new THREE.BoxGeometry(0.3, 0.06, 0.3), dark);
   anvil.position.set(0, 0.05, 0);
   scene.add(anvil);
 
-  // grup hasil emboss (cap pada foil)
+  
   const stamps = new THREE.Group();
   scene.add(stamps);
 
   return { ram, rod, roll, die, stamps };
 }
 
-const RAM_TOP = 0.62; // posisi y ram saat piston di atas
-const RAM_BOTTOM = 0.13; // saat stempel menyentuh foil
-const ROD_ANCHOR = 1.05; // dasar silinder — batang selalu menjangkau titik ini
+const RAM_TOP = 0.62; 
+const RAM_BOTTOM = 0.13; 
+const ROD_ANCHOR = 1.05; 
 
-// ---------- Komponen UI kecil ----------
+
 function Gauge({ label, value }: { label: string; value: number }) {
   return (
     <div className="rounded-xl border border-white/12 bg-black/40 px-4 py-3 text-center">
@@ -136,7 +136,7 @@ function Toggle({ label, on, onToggle, danger }: { label: string; on: boolean; o
   );
 }
 
-// ---------- Halaman ----------
+
 export default function EmbossingSimPage() {
   const navigate = useNavigate();
   const mountRef = useRef<HTMLDivElement>(null);
@@ -147,7 +147,7 @@ export default function EmbossingSimPage() {
   const [rows, setRows] = useState<DataRow[]>([]);
   const [emboss, setEmboss] = useState(0);
 
-  // sinkronkan perubahan kontrol UI ke sim loop
+  
   const update = (patch: Partial<SimState>) => {
     simRef.current = { ...simRef.current, ...patch };
     setUi(simRef.current);
@@ -188,7 +188,7 @@ export default function EmbossingSimPage() {
     controls.minDistance = 1.2;
     controls.maxDistance = 5;
 
-    // tombol VR (immersive-vr — Quest 2)
+    
     if (navigator.xr && vrSlotRef.current) {
       const btn = VRButton.createButton(renderer);
       btn.style.position = "static";
@@ -217,7 +217,7 @@ export default function EmbossingSimPage() {
     let uiSync = 0;
     const clock = new THREE.Clock();
     let stampFlash = 0;
-    let pendingShift = false; // foil maju satu langkah setelah retract penuh
+    let pendingShift = false; 
     let embossTotal = 0;
     const stampMat = new THREE.MeshStandardMaterial({
       color: 0x2e3440,
@@ -231,15 +231,15 @@ export default function EmbossingSimPage() {
       simRef.current = step(simRef.current, dt);
       const s = simRef.current;
 
-      // ram + batang piston selalu tersambung ke dasar silinder
+      
       const ramY = RAM_TOP - (RAM_TOP - RAM_BOTTOM) * s.pistonPos;
       ram.position.y = ramY;
       rod.position.y = ramY + 0.03;
-      rod.scale.y = ROD_ANCHOR + 0.25 - ramY; // masuk ke dalam bodi silinder
+      rod.scale.y = ROD_ANCHOR + 0.25 - ramY; 
 
       if (s.pumpOn) roll.rotation.x += dt * 0.8;
 
-      // saat mengecap: flash + munculkan hasil emboss di foil
+      
       if (s.stamping) {
         stampFlash = 0.5;
         pendingShift = true;
@@ -253,7 +253,7 @@ export default function EmbossingSimPage() {
         (die.material as THREE.MeshStandardMaterial).emissiveIntensity = 0.4 + stampFlash * 2.4;
       }
 
-      // setelah retract penuh, foil (beserta hasil emboss) maju satu langkah
+      
       if (pendingShift && !s.leverExtend && s.pistonPos <= 0.02) {
         pendingShift = false;
         stamps.children.forEach((m) => (m.position.x += 0.3));
@@ -262,7 +262,7 @@ export default function EmbossingSimPage() {
         }
       }
 
-      // sinkron UI ±10×/detik agar gauge & stopwatch hidup tanpa re-render berlebih
+      
       uiSync += dt;
       if (uiSync > 0.1) {
         uiSync = 0;
@@ -296,8 +296,8 @@ export default function EmbossingSimPage() {
   const moving = isMoving(ui);
 
   const catat = () => {
-    // Catat pembacaan gauge SAAT silinder bergerak (dibekukan saat extend penuh),
-    // seperti pengamatan pada percobaan nyata — bukan tekanan statis setelah berhenti.
+    
+    
     const fg = ui.lastStrokeGauges;
     if (!fg) return;
     setRows((r) => [...r, { p1z1: fg.p1Z1, p1z3: fg.p1Z3, p1z4: fg.p1Z4, t: ui.lastStrokeTime }]);
@@ -331,7 +331,6 @@ export default function EmbossingSimPage() {
         </div>
 
         <div className="mt-8 grid grid-cols-1 gap-6 xl:grid-cols-[1.5fr_1fr]">
-          {/* Scene 3D */}
           <div>
             <div
               ref={mountRef}
@@ -342,7 +341,6 @@ export default function EmbossingSimPage() {
             </p>
             <VRAccessCard judul="Embossing Machine" vrSlotRef={vrSlotRef} />
 
-            {/* Gauges */}
             <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
               <Gauge label="0Z2 · Sistem" value={g.p0Z2} />
               <Gauge label="P1Z1 · Pra-FCV" value={g.p1Z1} />
@@ -350,7 +348,6 @@ export default function EmbossingSimPage() {
               <Gauge label="P1Z4 · Counter" value={g.p1Z4} />
             </div>
 
-            {/* Stopwatch */}
             <div className="mt-3 flex items-center gap-4 rounded-xl border border-white/12 bg-black/30 px-5 py-3">
               <span className="text-[12px] uppercase tracking-wide text-white/45">⏱ Stopwatch langkah maju</span>
               <span className="text-[24px] font-bold tabular-nums text-white">
@@ -367,7 +364,6 @@ export default function EmbossingSimPage() {
             </div>
           </div>
 
-          {/* Panel kontrol */}
           <div className="flex flex-col gap-4">
             <div className="rounded-2xl border border-white/12 bg-white/[0.04] p-5 backdrop-blur-md">
               <p className="text-[12px] font-bold uppercase tracking-[0.25em] text-white/45">Panel Kontrol</p>
@@ -395,7 +391,6 @@ export default function EmbossingSimPage() {
               </button>
             </div>
 
-            {/* Pencatatan data */}
             <div className="rounded-2xl border border-white/12 bg-white/[0.04] p-5 backdrop-blur-md">
               <div className="flex items-center justify-between">
                 <p className="text-[12px] font-bold uppercase tracking-[0.25em] text-white/45">Tabel Data</p>
@@ -454,7 +449,6 @@ export default function EmbossingSimPage() {
           </div>
         </div>
 
-        {/* Keterangan komponen */}
         <div className="mt-14">
           <h2 className="flex items-center gap-3 text-[22px] font-black uppercase tracking-wide text-white">
             <span className="h-[2px] w-8 rounded-full bg-[#BFFD44]" />

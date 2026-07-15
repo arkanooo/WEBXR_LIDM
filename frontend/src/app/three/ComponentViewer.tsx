@@ -24,7 +24,7 @@ export default function ComponentViewer({ no }: { no: number }) {
     renderer.xr.enabled = true;
     mount.appendChild(renderer.domElement);
 
-    // Lighting — brightened to match the simulator's studio-lit look.
+    
     scene.add(new THREE.AmbientLight(0xffffff, 0.6));
     scene.add(new THREE.HemisphereLight(0xffffff, 0x3a3a38, 1.5));
     const key = new THREE.DirectionalLight(0xffffff, 3.0);
@@ -37,14 +37,14 @@ export default function ComponentViewer({ no }: { no: number }) {
     rim.position.set(-2, 1, -2);
     scene.add(rim);
 
-    // Model
+    
     const model = buildModel(no);
     const previewGroup = new THREE.Group();
     previewGroup.add(model);
-    previewGroup.rotation.x = -0.25; // slight downward tilt so flat faces read as 3D
+    previewGroup.rotation.x = -0.25; 
     scene.add(previewGroup);
 
-    // Frame the model in the preview camera.
+    
     const box = new THREE.Box3().setFromObject(model);
     const size = box.getSize(new THREE.Vector3()).length();
     const fitDist = size / (2 * Math.tan((Math.PI * camera.fov) / 360));
@@ -57,7 +57,7 @@ export default function ComponentViewer({ no }: { no: number }) {
     controls.minDistance = size * 0.6;
     controls.maxDistance = fitDist * 3;
 
-    // AR button (immersive-ar with passthrough — works on Meta Quest browser).
+    
     let arObserver: MutationObserver | undefined;
     if (navigator.xr && arSlotRef.current) {
       navigator.xr
@@ -82,7 +82,7 @@ export default function ComponentViewer({ no }: { no: number }) {
       button.style.cursor = "pointer";
       button.style.width = "auto";
 
-      // Localize ARButton's built-in English labels to Indonesian.
+      
       const localize = () => {
         const map: Record<string, string> = {
           "START AR": "Masuk AR",
@@ -104,7 +104,6 @@ export default function ComponentViewer({ no }: { no: number }) {
       setArSupported(false);
     }
 
-    // On entering AR, place the model ~0.5 m in front at eye height and enlarge it.
     const onSessionStart = () => {
       controls.enabled = false;
       previewGroup.position.set(0, 1.3, -0.6);

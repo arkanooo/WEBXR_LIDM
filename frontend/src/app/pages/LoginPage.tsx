@@ -44,12 +44,10 @@ export default function LoginPage() {
         fontFamily: "'Chivo', sans-serif",
       }}
     >
-      {/* ambient glows */}
       <div className="pointer-events-none absolute -top-40 -left-40 h-[520px] w-[520px] rounded-full opacity-40 blur-[230px]" style={{ background: "#FB7A43" }} />
       <div className="pointer-events-none absolute top-1/3 -right-40 h-[520px] w-[520px] rounded-full opacity-30 blur-[230px]" style={{ background: "#BFFD44" }} />
       <div className="pointer-events-none absolute bottom-0 left-1/4 h-[420px] w-[420px] rounded-full opacity-20 blur-[230px]" style={{ background: "#00A3FF" }} />
 
-      {/* back button */}
       <button
         onClick={() => navigate("/")}
         className="absolute left-5 top-5 z-20 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-[15px] font-light text-white/80 backdrop-blur-md transition-colors hover:border-white/40 hover:text-white md:left-8 md:top-8"
@@ -59,7 +57,6 @@ export default function LoginPage() {
 
       <div className="relative z-10 flex min-h-screen items-center justify-center px-6 py-20">
         <div className="w-full max-w-md rounded-3xl border border-white/12 bg-white/[0.05] p-8 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.7)] backdrop-blur-xl">
-          {/* brand */}
           <div className="flex items-center gap-3">
             <LogoMark />
             <span className="text-[22px] font-black uppercase tracking-widest">3DUTOPIA</span>
@@ -118,7 +115,6 @@ export default function LoginPage() {
             </button>
           </form>
 
-          {/* demo accounts */}
           <div className="mt-7 border-t border-white/10 pt-5">
             <p className="text-[12px] uppercase tracking-wide text-white/40">Akun demo (klik untuk isi)</p>
             <div className="mt-3 flex flex-col gap-2">

@@ -28,9 +28,6 @@ export type Komponen = {
   specs: Spec[];
 };
 
-// Sumber data: "Layout ARPeGa Final" — modul praktikum Penyederhanaan Gambar
-// (Menggambar Teknik, Teknik Mesin). Semua gambar tanpa skala, satuan milimeter,
-// sistem proyeksi sudut ketiga.
 export const KOMPONEN: Komponen[] = [
   {
     no: 1,
