@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router";
 import PageShell from "../components/PageShell";
-import { KARYA, TIM, type Anggota } from "../data/tim";
+import { KARYA, TIM, DOSEN, type Anggota } from "../data/tim";
 import logo3d from "../../assets/Logo 3DUTOPIA 2 tes.png";
 
 const fadeUp = {
@@ -170,6 +170,21 @@ export default function AboutPage() {
 
         <section className="mx-auto max-w-[1200px] px-6 pt-24 md:px-10">
           <motion.div {...fadeUp}>
+            <p className="text-[15px] font-light uppercase tracking-[0.3em] text-[#ff5252]">
+              Dosen Pembimbing
+            </p>
+            <h2 className="mt-3 text-[44px] font-black uppercase leading-[0.95] text-white md:text-[64px]">
+              Pembimbing Akademik
+            </h2>
+            <p className="mt-4 max-w-2xl text-[16px] font-light leading-relaxed text-white/65">
+              Akademisi yang memberikan arahan teknis dan mengawasi jalannya pengembangan proyek inovasi pembelajaran ini.
+            </p>
+          </motion.div>
+          <div className="mt-16 mb-24">
+            <AnggotaCard a={DOSEN} index={0} />
+          </div>
+
+          <motion.div {...fadeUp}>
             <p className="text-[15px] font-light uppercase tracking-[0.3em] text-[#BFFD44]">
               Peserta LIDM
             </p>
@@ -184,7 +199,7 @@ export default function AboutPage() {
 
           <div className="mt-16 flex flex-col gap-24">
             {TIM.map((a, i) => (
-              <AnggotaCard key={a.id} a={a} index={i} />
+              <AnggotaCard key={a.id} a={a} index={i % 2 === 0 ? 1 : 0} />
             ))}
           </div>
         </section>

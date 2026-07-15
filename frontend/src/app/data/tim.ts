@@ -107,3 +107,23 @@ export const TIM: Anggota[] = [
     organisasi: ["CSSMORA ITS"],
   },
 ];
+
+export const DOSEN: Anggota = {
+  id: "rivai",
+  nama: "Rivai Wardhani",
+  role: "Dosen Pembimbing",
+  jurusan: "Teknik Mesin Industri",
+  angkatan: "ITS Surabaya",
+  foto: "https://ui-avatars.com/api/?name=Rivai+Wardhani&background=ff5252&color=fff&size=512",
+  accent: "#ff5252",
+  prestasi: [
+    "S1 Teknik Mesin - Institut Teknologi Bandung (ITB)",
+    "S2 Production and Logistics - Universität Duisburg Essen, Germany",
+  ],
+  project: [
+    "Dosen Departemen Teknik Mesin Industri",
+  ],
+  organisasi: [
+    "Laboratorium Manufaktur Industri",
+  ],
+};
