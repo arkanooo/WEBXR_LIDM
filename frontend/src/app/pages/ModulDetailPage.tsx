@@ -68,10 +68,15 @@ export default function ModulDetailPage() {
   const [openStage, setOpenStage] = useState<number | null>(1);
   const [showPretest, setShowPretest] = useState(false);
   const [passedPretest, setPassedPretest] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
 
   const handleStartSim = () => {
     if (modul?.pretest && !passedPretest) {
-      setShowPretest(true);
+      setToastMessage("Harap selesaikan Pre-test terlebih dahulu untuk membuka simulasi.");
+      setTimeout(() => {
+        setToastMessage("");
+        setShowPretest(true);
+      }, 2000);
     } else {
       navigate("/praktikum");
     }
@@ -306,6 +311,17 @@ export default function ModulDetailPage() {
             : "Sumber: Modul Praktikum Sistem Hidrolik — Laboratorium Sistem Pneumatik dan Hidrolik, Departemen Teknik Mesin Industri ITS."}
         </p>
       </section>
+      {/* Toast Notification */}
+      {toastMessage && (
+        <div className="fixed top-24 left-1/2 -translate-x-1/2 z-[9999] animate-in slide-in-from-top-4 fade-in duration-300 pointer-events-none">
+          <div className="bg-[#BFFD44] text-black font-bold px-6 py-3 rounded-full shadow-[0_0_20px_rgba(191,253,68,0.4)] flex items-center gap-3">
+            <svg className="w-6 h-6 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            {toastMessage}
+          </div>
+        </div>
+      )}
 
       {modul.pretest && (
         <QuizModal
