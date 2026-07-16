@@ -138,21 +138,108 @@ export const MODUL_LIST: Modul[] = [
       "Bagaimana waktu langkah (travel time) berubah ketika tekanan pada sisi masuk (inlet) dan sisi keluar (outlet) divariasikan?",
       "Apa perbedaan sirkuit ini dengan sirkuit yang menggunakan 2-way flow control valve, dan apa alasannya?",
     ],
-    quiz: [
+    pretest: [
       {
-        q: "Apa fungsi utama dari One Way Flow Control Valve pada mesin emboss hidrolik?",
-        options: ["Menurunkan tekanan pompa", "Mengatur kecepatan silinder secara presisi", "Menahan beban dari gravitasi", "Menutup aliran hidrolik"],
-        answerIndex: 1
+        q: "Apa fungsi utama dari One Way Flow Control Valve (1V2) pada sistem sirkuit Embossing Machine?",
+        options: [
+          "Mengatur kecepatan gerakan stempel ke bawah agar sesuai dengan kecepatan pergerakan foil.",
+          "Membatasi tekanan kerja maksimum di dalam seluruh sistem sirkuit.",
+          "Menghentikan total aliran fluida dari pompa hidrolik secara manual.",
+          "Mengubah arah aliran fluida untuk menggerakkan silinder bolak-balik."
+        ],
+        answerIndex: 0
       },
       {
-        q: "Komponen apa yang digunakan untuk mencegah stempel jatuh ke bawah akibat beratnya?",
-        options: ["Shut-off valve", "Counter-holding valve (PRV)", "Directional Control Valve", "Pressure Gauge"],
-        answerIndex: 1
+        q: "Untuk mencegah stempel jatuh ke bawah akibat beratnya sendiri pada mesin emboss hidrolik, komponen apa yang dipasang sebagai katup penahan balik (counter-holding valve)?",
+        options: [
+          "Pressure Relief Valve (1V3)",
+          "Shut-off Valve (0V2)",
+          "Directional 4/2-way Valve (1V1)",
+          "Hydraulic Power Pack (0Z1)"
+        ],
+        answerIndex: 0
       },
       {
-        q: "Berapa tekanan standar pompa hidrolik (power pack) yang digunakan dalam prosedur praktikum ini?",
-        options: ["10 bar", "30 bar", "50 bar", "60 bar"],
-        answerIndex: 3
+        q: "Berapakah batas tekanan maksimum yang diatur pada Katup Pengaman Pompa (Pump Safety Valve) sesuai dengan spesifikasi diagram sirkuit di modul?",
+        options: [
+          "60 bar (6 MPa)",
+          "50 bar (5 MPa)",
+          "10 bar (1 MPa)",
+          "100 bar (10 MPa)"
+        ],
+        answerIndex: 0
+      },
+      {
+        q: "Manakah jenis katup pengarah yang digunakan untuk mengontrol maju-mundurnya silinder kerja ganda secara manual pada praktikum ini?",
+        options: [
+          "4/2-way valve, manually operated",
+          "3/2-way valve, solenoid operated",
+          "One-way flow control valve",
+          "Non-return valve"
+        ],
+        answerIndex: 0
+      },
+      {
+        q: "Apa perbedaan mendasar antara One-way Flow Control Valve dengan Throttle Valve biasa dalam aplikasinya?",
+        options: [
+          "One-way FCV hanya mencekik aliran pada satu arah dan membebaskan aliran penuh pada arah sebaliknya melalui check valve internal.",
+          "Throttle valve mampu menjaga debit aliran tetap konstan meskipun terjadi fluktuasi beban mekanis.",
+          "One-way FCV membatasi tekanan, sedangkan throttle valve membatasi volume fluida di tangki.",
+          "Throttle valve tidak memiliki sekrup penyetel manual sedangkan One-way FCV memilikinya."
+        ],
+        answerIndex: 0
+      }
+    ],
+    posttest: [
+      {
+        q: "Pada pengujian fluktuasi tekanan inlet, jika tekanan P1Z1 diturunkan dari 50 bar menuju 20 bar sedangkan bukaan katup FCV tetap, bagaimana pengaruhnya terhadap waktu langkah maju silinder (t->)?",
+        options: [
+          "Waktu gerakan maju silinder menjadi lebih lama (gerakan melambat).",
+          "Waktu gerakan maju silinder menjadi lebih cepat (gerakan mempercepat).",
+          "Waktu gerakan maju silinder tetap konstan tanpa perubahan.",
+          "Silinder akan langsung berhenti total dan terkunci di tengah."
+        ],
+        answerIndex: 0
+      },
+      {
+        q: "Tekanan pada manometer P1Z4 menunjukkan nilai tekanan dari titik sirkuit yang mana?",
+        options: [
+          "Tekanan pada saluran keluar silinder sebelum katup penahan balik (counter-holding valve).",
+          "Tekanan suplai utama yang keluar langsung dari pompa hidrolik.",
+          "Tekanan minyak setelah melewati katup pengarah 4/2-way valve menuju tangki.",
+          "Tekanan tepat di area masukan sebelum fluida masuk ke One-way Flow Control Valve."
+        ],
+        answerIndex: 0
+      },
+      {
+        q: "Berapakah target durasi waktu langkah maju silinder (t->) yang harus dikalibrasi pertama kali menggunakan stopwatch pada langkah awal prosedur praktikum?",
+        options: [
+          "± 3 detik",
+          "± 10 detik",
+          "± 15 detik",
+          "± 5 detik"
+        ],
+        answerIndex: 0
+      },
+      {
+        q: "Sebelum menyalakan pompa dan mengatur tekanan sistem melalui PRV 0V1 ke nilai 50 bar, langkah pengondisian katup apa yang harus dilakukan sesuai prosedur?",
+        options: [
+          "Menutup shut-off valve (0V2).",
+          "Membuka penuh katup penahan balik (1V3).",
+          "Melepas selang saluran return menuju tangki.",
+          "Menyetel FCV pada bukaan minimum (tertutup rapat)."
+        ],
+        answerIndex: 0
+      },
+      {
+        q: "Mengapa kenaikan tekanan balik outlet (P1Z4) dari 10 bar menuju 50 bar menyebabkan perpanjangan waktu kayuh silinder meskipun tekanan inlet konstan?",
+        options: [
+          "Karena perbedaan tekanan efektif (Delta P) penentu debit aliran pada silinder menjadi semakin kecil akibat besarnya gaya lawan.",
+          "Karena fluida hidrolik mengalami kompresi volume yang ekstrem akibat tekanan balik.",
+          "Karena pompa otomatis menurunkan suplai debit oli ketika mendeteksi hambatan balik.",
+          "Karena katup FCV mengalami malafungsi mekanis tersumbat total."
+        ],
+        answerIndex: 0
       }
     ],
     vrStages: [
@@ -290,21 +377,98 @@ export const MODUL_LIST: Modul[] = [
       "Jelaskan mengapa pada Tensile Test terdapat dua diagram: Engineering Diagram dan True Diagram!",
       "Jelaskan yang dimaksud dengan Strain Hardening dan Poisson Ratio!",
     ],
-    quiz: [
+    pretest: [
       {
-        q: "Apa tujuan utama dari pengujian Tensile Test pada sebuah material?",
-        options: ["Mengukur tingkat kekerasan", "Mengukur ketahanan terhadap benturan", "Mengetahui sifat mekanik material terhadap tarikan", "Mendeteksi kecacatan mikro"],
-        answerIndex: 2
+        q: "Standar dimensi pengujian spesimen manakah yang diaplikasikan secara spesifik pada panduan praktikum uji tarik logam di modul ini?",
+        options: ["ASTM E8", "ASTM A36", "ISO 9001", "JIS B1180"],
+        answerIndex: 0
       },
       {
-        q: "Titik di mana material mulai mengalami deformasi plastis (permanen) disebut dengan?",
-        options: ["Ultimate Tensile Strength", "Yield Point", "Fracture Point", "Elastic Limit"],
-        answerIndex: 1
+        q: "Apa perbedaan asumsi mendasar dalam menghitung Tegangan Teknik (Engineering Stress) dibandingkan dengan Tegangan Sebenarnya (True Stress)?",
+        options: [
+          "Tegangan teknik mengasumsikan luas penampang spesimen selalu konstan menggunakan nilai luas awal (A0).",
+          "Tegangan sebenarnya menggunakan nilai panjang akhir total sebagai pembagi gaya beban.",
+          "Tegangan teknik mengukur deformasi atom secara mikroskopis sedangkan tegangan sebenarnya tidak.",
+          "Tegangan teknik nilainya selalu lebih tinggi daripada tegangan sebenarnya setelah melewati UTS."
+        ],
+        answerIndex: 0
       },
       {
-        q: "Standar dimensi benda kerja (spesimen) yang digunakan pada simulasi uji tarik ini mengacu pada?",
-        options: ["JIS G3101", "ISO 9001", "ASTM E8", "DIN EN 10025"],
-        answerIndex: 2
+        q: "Sifat mekanik apakah yang digambarkan secara langsung oleh besaran nilai kemiringan daerah linier awal (Modulus Elastisitas / E) pada material?",
+        options: [
+          "Kekakuan (stiffness) dari material tersebut.",
+          "Keuletan (ductility) material untuk ditarik menjadi kawat.",
+          "Tingkat kekerasan permukaan logam terhadap goresan.",
+          "Batas energi maksimum yang diserap sampai benda kerja pecah."
+        ],
+        answerIndex: 0
+      },
+      {
+        q: "Bagaimanakah cara menentukan lokasi Titik Luluh (Yield Point) pada material getas (brittle) yang kurva tegangan-regangannya tidak menunjukkan batas luluh yang jelas?",
+        options: [
+          "Menggunakan Offset Method dengan menarik garis sejajar daerah elastis pada jarak regangan 0,2% (0,002).",
+          "Membagi nilai beban patah akhir dengan akar kuadrat luas penampang mula-mula.",
+          "Mengambil nilai titik puncak tertinggi dari kurva beban-perpanjangan.",
+          "Mengukur sudut kemiringan grafik secara langsung dari titik awal koordinat nol."
+        ],
+        answerIndex: 0
+      },
+      {
+        q: "Berdasarkan skema komponen Universal Testing Machine pada Gambar 16 di modul, bagian bernomor (2) dan (13) secara berurutan adalah...",
+        options: [
+          "Ragum atas (Upper Grip) dan Ragum bawah (Lower Grip)",
+          "Base (Alas mesin) dan Upper Crosshead",
+          "Vernier Calliper dan Timbangan Digital",
+          "Grip Crank dan Shaft Adapter"
+        ],
+        answerIndex: 0
+      }
+    ],
+    posttest: [
+      {
+        q: "Apakah istilah untuk fenomena terjadinya pengecilan luas penampang secara lokal atau setempat pada material ulet setelah melewati batas pembebanan maksimum (UTS)?",
+        options: ["Necking", "Fracture", "Yielding", "Strain Hardening"],
+        answerIndex: 0
+      },
+      {
+        q: "Manakah formula yang tepat digunakan untuk menghitung Modulus Resilien (U) berdasarkan data titik luluh elastis benda uji?",
+        options: [
+          "U = 0.5 x tegangan luluh x regangan luluh",
+          "U = tegangan luluh ÷ regangan luluh",
+          "U = tegangan teknik x (1 + regangan teknik)",
+          "U = ln(1 + regangan teknik)"
+        ],
+        answerIndex: 0
+      },
+      {
+        q: "Mengapa kurva True Stress-Strain cenderung terus bergerak naik secara kontinyu pasca melewati titik UTS, berbeda dengan Engineering Diagram yang melengkung turun?",
+        options: [
+          "Karena perhitungan True Stress membagi gaya dengan luas penampang aktual (Ai) yang mengecil drastis akibat necking.",
+          "Karena material mengalami pendinginan mendadak akibat regangan tinggi.",
+          "Karena mesin Universal Testing Machine otomatis menaikkan kecepatan beban penarikan secara masif.",
+          "Karena efek slip batas butir kristal yang berhenti total."
+        ],
+        answerIndex: 0
+      },
+      {
+        q: "Persamaan manakah yang valid digunakan untuk mengonversi Regangan Teknik menjadi Regangan Sebenarnya (True Strain) sebelum daerah necking terjadi?",
+        options: [
+          "Regangan Sebenarnya = ln(1 + Regangan Teknik)",
+          "Regangan Sebenarnya = Regangan Teknik x (1 + Tegangan Teknik)",
+          "Regangan Sebenarnya = Tegangan Luluh ÷ Modulus Elastisitas",
+          "Regangan Sebenarnya = ln(Panjang Awal ÷ Panjang Aktual)"
+        ],
+        answerIndex: 0
+      },
+      {
+        q: "Tindakan apa yang wajib dilakukan praktikan segera setelah benda uji mengalami patah (fracture) dan mesin Universal Testing Machine berhenti menarik?",
+        options: [
+          "Melepaskan spesimen lalu mengukur panjang gauge length akhir dan diameter minimum pada sektor necking.",
+          "Langsung menekan tombol darurat (Emergency Stop) dan mencabut kabel listrik utama.",
+          "Membersihkan pecahan logam dengan tangan kosong tanpa alat bantu pelindung.",
+          "Menginput ulang data dimensi awal ke program komputer U-60."
+        ],
+        answerIndex: 0
       }
     ],
     vrStages: [
