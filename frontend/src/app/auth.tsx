@@ -18,7 +18,8 @@ export type User = { username: string; name: string; role: string };
 
 type AuthContextValue = {
   user: User | null;
-  login: (username: string, password: string) => boolean;
+  login: (username: string, password: string) => Promise<boolean>;
+  register: (email: string, password: string, name: string, role: string) => Promise<boolean>;
   logout: () => void;
 };
 
@@ -44,20 +45,49 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }, [user]);
 
-  const login = (username: string, password: string) => {
-    const acc = ACCOUNTS.find(
-      (a) => a.username === username.trim().toLowerCase() && a.password === password
-    );
-    if (acc) {
-      setUser({ username: acc.username, name: acc.name, role: acc.role });
-      return true;
+  const login = async (username: string, password: string) => {
+    try {
+      const res = await fetch("http://localhost:3000/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: username, password }),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setUser({ username: data.user.email, name: data.user.name, role: data.user.role });
+        localStorage.setItem("3dutopia_token", data.token);
+        return true;
+      }
+      return false;
+    } catch (err) {
+      console.error("Login API error:", err);
+      return false;
     }
-    return false;
   };
 
-  const logout = () => setUser(null);
+  const register = async (email: string, password: string, name: string, role: string) => {
+    try {
+      const res = await fetch("http://localhost:3000/api/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password, name, role }),
+      });
+      if (res.ok) {
+        return await login(email, password);
+      }
+      return false;
+    } catch (err) {
+      console.error("Register API error:", err);
+      return false;
+    }
+  };
 
-  return <AuthContext.Provider value={{ user, login, logout }}>{children}</AuthContext.Provider>;
+  const logout = () => {
+    setUser(null);
+    localStorage.removeItem("3dutopia_token");
+  };
+
+  return <AuthContext.Provider value={{ user, login, register, logout }}>{children}</AuthContext.Provider>;
 }
 
 export function useAuth() {

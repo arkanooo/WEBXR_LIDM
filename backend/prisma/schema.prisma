@@ -1,0 +1,42 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  name      String
+  role      String   @default("MAHASISWA") // "MAHASISWA" or "DOSEN"
+  results   SimulationResult[]
+  createdAt DateTime @default(now())
+}
+
+model Module {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String?
+  sopPdfUrl   String?
+  results     SimulationResult[]
+  createdAt   DateTime @default(now())
+}
+
+model SimulationResult {
+  id         Int      @id @default(autoincrement())
+  userId     Int
+  user       User     @relation(fields: [userId], references: [id])
+  moduleId   Int
+  module     Module   @relation(fields: [moduleId], references: [id])
+  score      Int
+  mistakes   Int      @default(0)
+  graphData  String   // Stored as JSON string [{x:1, y:2}, ...]
+  completedAt DateTime @default(now())
+}

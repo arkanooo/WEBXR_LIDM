@@ -14,18 +14,32 @@ function LogoMark() {
 
 export default function LoginPage() {
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const { login, register } = useAuth();
+  const [isRegister, setIsRegister] = useState(false);
+  const [name, setName] = useState("");
+  const [role, setRole] = useState("Mahasiswa");
   const [username, setUsername] = useState(ACCOUNTS[0].username);
   const [password, setPassword] = useState(ACCOUNTS[0].password);
   const [show, setShow] = useState(false);
   const [error, setError] = useState("");
 
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (login(username, password)) {
-      navigate("/");
+    if (isRegister) {
+      if (!name.trim()) return setError("Nama tidak boleh kosong!");
+      const success = await register(username, password, name, "Mahasiswa");
+      if (success) {
+        navigate("/");
+      } else {
+        setError("Gagal mendaftar. Username mungkin sudah digunakan.");
+      }
     } else {
-      setError("Username atau password salah. Coba salah satu akun demo di bawah.");
+      const success = await login(username, password);
+      if (success) {
+        navigate("/");
+      } else {
+        setError("Email atau password salah, atau server sedang tidak aktif.");
+      }
     }
   };
 
@@ -62,14 +76,26 @@ export default function LoginPage() {
             <span className="text-[22px] font-black uppercase tracking-widest">3DUTOPIA</span>
           </div>
 
-          <h1 className="mt-7 text-[40px] font-black leading-none">Masuk</h1>
+          <h1 className="mt-7 text-[40px] font-black leading-none">{isRegister ? "Daftar" : "Masuk"}</h1>
           <p className="mt-3 text-[15px] font-light leading-relaxed text-white/65">
-            Masuk untuk menjelajahi modul pembelajaran, komponen mesin 3D + AR, dan lab virtual.
+            {isRegister ? "Buat akun baru untuk mulai bereksperimen di laboratorium 3DUTOPIA." : "Masuk untuk menjelajahi modul pembelajaran, komponen mesin 3D + AR, dan lab virtual."}
           </p>
 
           <form onSubmit={submit} className="mt-7 flex flex-col gap-4">
+            {isRegister && (
+              <label className="flex flex-col gap-1.5">
+                <span className="text-[12px] uppercase tracking-wide text-white/50">Nama Lengkap</span>
+                <input
+                  type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className="rounded-xl border border-white/15 bg-black/30 px-4 py-3 text-[16px] text-white outline-none transition-colors placeholder:text-white/30 focus:border-[#BFFD44]"
+                  placeholder="Nama Lengkap"
+                />
+              </label>
+            )}
             <label className="flex flex-col gap-1.5">
-              <span className="text-[12px] uppercase tracking-wide text-white/50">Username</span>
+              <span className="text-[12px] uppercase tracking-wide text-white/50">{isRegister ? "NRP / NIP (Untuk Login)" : "NRP / NIP / Username"}</span>
               <input
                 type="text"
                 value={username}
@@ -111,12 +137,25 @@ export default function LoginPage() {
               type="submit"
               className="mt-1 rounded-xl bg-[#BFFD44] px-4 py-3 text-[16px] font-bold text-black transition-transform hover:scale-[1.02] active:scale-[0.99]"
             >
-              Masuk →
+              {isRegister ? "Daftar Sekarang →" : "Masuk →"}
             </button>
           </form>
 
+          <div className="mt-5 text-center">
+            <button
+              type="button"
+              onClick={() => {
+                setIsRegister(!isRegister);
+                setError("");
+              }}
+              className="text-[14px] text-white/60 hover:text-white transition-colors"
+            >
+              {isRegister ? "Sudah punya akun? Masuk di sini" : "Belum punya akun? Daftar di sini"}
+            </button>
+          </div>
+
           <div className="mt-7 border-t border-white/10 pt-5">
-            <p className="text-[12px] uppercase tracking-wide text-white/40">Akun demo (klik untuk isi)</p>
+            <p className="text-[12px] uppercase tracking-wide text-white/40">Akun simulasi (akan gagal jika tidak terdaftar di database)</p>
             <div className="mt-3 flex flex-col gap-2">
               {ACCOUNTS.map((a) => (
                 <button
