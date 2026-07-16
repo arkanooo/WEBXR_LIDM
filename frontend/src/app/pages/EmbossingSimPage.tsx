@@ -5,6 +5,8 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { VRButton } from "three/examples/jsm/webxr/VRButton.js";
 import PageShell from "../components/PageShell";
 import VRAccessCard from "../components/VRAccessCard";
+import { QuizModal } from "../components/QuizModal";
+import { MODUL_LIST } from "../data/modul";
 import {
   initialState,
   computeGauges,
@@ -145,7 +147,10 @@ export default function EmbossingSimPage() {
   const simRef = useRef<SimState>(initialState());
   const [ui, setUi] = useState<SimState>(simRef.current);
   const [rows, setRows] = useState<DataRow[]>([]);
+  const [showPostTest, setShowPostTest] = useState(false);
   const [emboss, setEmboss] = useState(0);
+
+  const modul = MODUL_LIST.find(m => m.id === "embossing-machine");
 
   
   const update = (patch: Partial<SimState>) => {
@@ -367,7 +372,17 @@ export default function EmbossingSimPage() {
           <div className="flex flex-col gap-4">
             <div className="rounded-2xl border border-white/12 bg-white/[0.04] p-5 backdrop-blur-md">
               <p className="text-[12px] font-bold uppercase tracking-[0.25em] text-white/45">Panel Kontrol</p>
-              <div className="mt-4 grid grid-cols-1 gap-2.5">
+              
+              <div className="mt-4 flex gap-3 mb-6">
+                <button
+                  onClick={() => setShowPostTest(true)}
+                  className="w-full rounded-xl bg-[#00cba0] px-4 py-3 text-[15px] font-bold text-black transition-transform hover:scale-[1.02] shadow-[0_0_15px_rgba(0,203,160,0.3)]"
+                >
+                  Akhiri Praktikum & Ambil Post-test →
+                </button>
+              </div>
+
+              <div className="mb-6 flex gap-2 border-b border-white/10 pb-2">
                 <Toggle label="Pompa hidrolik (60 bar)" on={ui.pumpOn} onToggle={() => update({ pumpOn: !ui.pumpOn })} />
                 <Toggle label="Shut-off valve (0V2)" on={ui.shutOffOpen} onToggle={() => update({ shutOffOpen: !ui.shutOffOpen })} />
               </div>
@@ -471,6 +486,21 @@ export default function EmbossingSimPage() {
           </div>
         </div>
       </section>
+
+      {modul?.quiz && (
+        <QuizModal
+          isOpen={showPostTest}
+          onClose={() => {
+            setShowPostTest(false);
+            navigate("/modul");
+          }}
+          quiz={modul.quiz}
+          type="Post-test"
+          onComplete={(score) => {
+            // we just let them see the score, onClose will handle navigation
+          }}
+        />
+      )}
     </PageShell>
   );
 }

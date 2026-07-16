@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import PageShell from "../components/PageShell";
 import { MODUL_LIST, type VRStage } from "../data/modul";
+import { QuizModal } from "../components/QuizModal";
 
 function SectionTitle({ children }: { children: React.ReactNode }) {
   return (
@@ -65,6 +66,16 @@ export default function ModulDetailPage() {
   const navigate = useNavigate();
   const modul = MODUL_LIST.find((m) => m.id === id);
   const [openStage, setOpenStage] = useState<number | null>(1);
+  const [showPretest, setShowPretest] = useState(false);
+  const [passedPretest, setPassedPretest] = useState(false);
+
+  const handleStartSim = () => {
+    if (modul?.quiz && !passedPretest) {
+      setShowPretest(true);
+    } else {
+      navigate("/praktikum");
+    }
+  };
 
   if (!modul) {
     return (
@@ -265,7 +276,7 @@ export default function ModulDetailPage() {
           </div>
           <div className="mt-8 flex flex-wrap items-center gap-4">
             <button
-              onClick={() => navigate("/praktikum")}
+              onClick={handleStartSim}
               className="rounded-full bg-[#BFFD44] px-7 py-3 text-[16px] font-bold text-black transition-transform hover:scale-105 active:scale-95"
             >
               Mulai Praktikum VR →
@@ -295,6 +306,21 @@ export default function ModulDetailPage() {
             : "Sumber: Modul Praktikum Sistem Hidrolik — Laboratorium Sistem Pneumatik dan Hidrolik, Departemen Teknik Mesin Industri ITS."}
         </p>
       </section>
+
+      {modul.quiz && (
+        <QuizModal
+          isOpen={showPretest}
+          onClose={() => {
+            setShowPretest(false);
+            if (passedPretest) navigate("/praktikum");
+          }}
+          quiz={modul.quiz}
+          type="Pre-test"
+          onComplete={(score) => {
+            setPassedPretest(true);
+          }}
+        />
+      )}
     </PageShell>
   );
 }

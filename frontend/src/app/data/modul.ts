@@ -40,6 +40,12 @@ export type VRStage = {
   detail: string[];
 };
 
+export type QuizItem = {
+  q: string;
+  options: string[];
+  answerIndex: number;
+};
+
 export type Modul = {
   id: string;
   praktikum: PraktikumKind;
@@ -57,6 +63,7 @@ export type Modul = {
   
   dimensi?: { param: string; inch: string; mm: string }[];
   pertanyaan: string[];
+  quiz?: QuizItem[];
   vrStages: VRStage[];
   pdfUrl: string;
 };
@@ -130,6 +137,23 @@ export const MODUL_LIST: Modul[] = [
     pertanyaan: [
       "Bagaimana waktu langkah (travel time) berubah ketika tekanan pada sisi masuk (inlet) dan sisi keluar (outlet) divariasikan?",
       "Apa perbedaan sirkuit ini dengan sirkuit yang menggunakan 2-way flow control valve, dan apa alasannya?",
+    ],
+    quiz: [
+      {
+        q: "Apa fungsi utama dari One Way Flow Control Valve pada mesin emboss hidrolik?",
+        options: ["Menurunkan tekanan pompa", "Mengatur kecepatan silinder secara presisi", "Menahan beban dari gravitasi", "Menutup aliran hidrolik"],
+        answerIndex: 1
+      },
+      {
+        q: "Komponen apa yang digunakan untuk mencegah stempel jatuh ke bawah akibat beratnya?",
+        options: ["Shut-off valve", "Counter-holding valve (PRV)", "Directional Control Valve", "Pressure Gauge"],
+        answerIndex: 1
+      },
+      {
+        q: "Berapa tekanan standar pompa hidrolik (power pack) yang digunakan dalam prosedur praktikum ini?",
+        options: ["10 bar", "30 bar", "50 bar", "60 bar"],
+        answerIndex: 3
+      }
     ],
     vrStages: [
       {
@@ -265,6 +289,23 @@ export const MODUL_LIST: Modul[] = [
       "Konversi Stress (σE) – Strain (εE) Engineering Diagram menjadi Stress (σT) – Strain (εT) True Diagram!",
       "Jelaskan mengapa pada Tensile Test terdapat dua diagram: Engineering Diagram dan True Diagram!",
       "Jelaskan yang dimaksud dengan Strain Hardening dan Poisson Ratio!",
+    ],
+    quiz: [
+      {
+        q: "Apa tujuan utama dari pengujian Tensile Test pada sebuah material?",
+        options: ["Mengukur tingkat kekerasan", "Mengukur ketahanan terhadap benturan", "Mengetahui sifat mekanik material terhadap tarikan", "Mendeteksi kecacatan mikro"],
+        answerIndex: 2
+      },
+      {
+        q: "Titik di mana material mulai mengalami deformasi plastis (permanen) disebut dengan?",
+        options: ["Ultimate Tensile Strength", "Yield Point", "Fracture Point", "Elastic Limit"],
+        answerIndex: 1
+      },
+      {
+        q: "Standar dimensi benda kerja (spesimen) yang digunakan pada simulasi uji tarik ini mengacu pada?",
+        options: ["JIS G3101", "ISO 9001", "ASTM E8", "DIN EN 10025"],
+        answerIndex: 2
+      }
     ],
     vrStages: [
       {

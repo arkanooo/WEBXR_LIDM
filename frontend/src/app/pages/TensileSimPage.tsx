@@ -5,6 +5,8 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { VRButton } from "three/examples/jsm/webxr/VRButton.js";
 import PageShell from "../components/PageShell";
 import VRAccessCard from "../components/VRAccessCard";
+import { QuizModal } from "../components/QuizModal";
+import { MODUL_LIST } from "../data/modul";
 import {
   MATERIALS,
   L0,
@@ -367,6 +369,9 @@ export default function TensileSimPage() {
   const [mode, setMode] = useState<ChartMode>("engineering");
   const [speed, setSpeed] = useState(1);
   const [muted, setMutedState] = useState(false);
+  const [showPostTest, setShowPostTest] = useState(false);
+
+  const modul = MODUL_LIST.find(m => m.id === "tensile-test");
 
   const sound = () => {
     if (!soundRef.current) {
@@ -756,6 +761,14 @@ export default function TensileSimPage() {
                     ? `Material ductile: kurva menunjukkan yield point jelas, strain hardening hingga UTS, lalu necking (pengecilan penampang setempat) sebelum fracture — perhatikan leher pada spesimen 3D.`
                     : `Material brittle: patah terjadi segera setelah beban maksimum TANPA necking. Yield point tidak tampak jelas sehingga ditentukan dengan Offset Method 0,2%.`}
                 </p>
+                <div className="mt-6 flex justify-end">
+                  <button
+                    onClick={() => setShowPostTest(true)}
+                    className="rounded-full bg-[#BFFD44] px-8 py-3 text-[15px] font-bold text-black transition-transform hover:scale-105 shadow-[0_0_15px_rgba(191,253,68,0.3)]"
+                  >
+                    Akhiri Praktikum & Ambil Post-test →
+                  </button>
+                </div>
               </div>
             )}
 
@@ -788,6 +801,21 @@ export default function TensileSimPage() {
           </div>
         </div>
       </section>
+
+      {modul?.quiz && (
+        <QuizModal
+          isOpen={showPostTest}
+          onClose={() => {
+            setShowPostTest(false);
+            navigate("/modul");
+          }}
+          quiz={modul.quiz}
+          type="Post-test"
+          onComplete={(score) => {
+            // we just let them see the score, onClose will handle navigation
+          }}
+        />
+      )}
     </PageShell>
   );
 }
