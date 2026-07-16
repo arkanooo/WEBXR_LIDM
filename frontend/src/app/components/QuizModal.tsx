@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { type QuizItem } from "../data/modul";
 
 type QuizModalProps = {
@@ -14,8 +15,13 @@ export function QuizModal({ isOpen, onClose, quiz, type, onComplete }: QuizModal
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [score, setScore] = useState(0);
   const [isFinished, setIsFinished] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
-  if (!isOpen) return null;
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!isOpen || !mounted) return null;
 
   const currentQ = quiz[currentIndex];
 
@@ -38,11 +44,11 @@ export function QuizModal({ isOpen, onClose, quiz, type, onComplete }: QuizModal
     }
   };
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+  return createPortal(
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4">
       {/* Backdrop */}
       <div 
-        className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+        className="absolute inset-0 bg-black/80 backdrop-blur-md"
         onClick={isFinished ? onClose : undefined}
       />
 
@@ -143,6 +149,7 @@ export function QuizModal({ isOpen, onClose, quiz, type, onComplete }: QuizModal
           )}
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
