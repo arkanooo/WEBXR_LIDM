@@ -487,14 +487,14 @@ export default function EmbossingSimPage() {
         </div>
       </section>
 
-      {modul?.quiz && (
+      {modul?.posttest && (
         <QuizModal
           isOpen={showPostTest}
           onClose={() => {
             setShowPostTest(false);
             navigate("/modul");
           }}
-          quiz={modul.quiz}
+          quiz={modul.posttest}
           type="Post-test"
           onComplete={(score) => {
             // we just let them see the score, onClose will handle navigation

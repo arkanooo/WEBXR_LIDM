@@ -70,7 +70,7 @@ export default function ModulDetailPage() {
   const [passedPretest, setPassedPretest] = useState(false);
 
   const handleStartSim = () => {
-    if (modul?.quiz && !passedPretest) {
+    if (modul?.pretest && !passedPretest) {
       setShowPretest(true);
     } else {
       navigate("/praktikum");
@@ -307,14 +307,14 @@ export default function ModulDetailPage() {
         </p>
       </section>
 
-      {modul.quiz && (
+      {modul.pretest && (
         <QuizModal
           isOpen={showPretest}
           onClose={() => {
             setShowPretest(false);
             if (passedPretest) navigate("/praktikum");
           }}
-          quiz={modul.quiz}
+          quiz={modul.pretest}
           type="Pre-test"
           onComplete={(score) => {
             setPassedPretest(true);

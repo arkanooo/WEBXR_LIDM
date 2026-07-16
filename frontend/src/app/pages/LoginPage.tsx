@@ -1,14 +1,12 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import { useAuth, ACCOUNTS } from "../auth";
+import { useAuth } from "../auth";
+
+import logo3d from "../../assets/Logo 3DUTOPIA 2 tes.png";
 
 function LogoMark() {
   return (
-    <svg width="44" height="26" viewBox="0 0 50 28.5369" fill="none">
-      <path d="M1 6 L24 1 L49 6 L49 22 L24 27.5 L1 22 Z" stroke="white" strokeWidth="1" fill="none" opacity="0.6" />
-      <rect x="6" y="9" width="16" height="11" rx="1.5" fill="#BFFD44" />
-      <rect x="28" y="9" width="16" height="11" rx="1.5" fill="#BFFD44" opacity="0.85" />
-    </svg>
+    <img src={logo3d} alt="3DUTOPIA Logo" className="h-8 w-auto object-contain" />
   );
 }
 
@@ -18,8 +16,8 @@ export default function LoginPage() {
   const [isRegister, setIsRegister] = useState(false);
   const [name, setName] = useState("");
   const [role, setRole] = useState("Mahasiswa");
-  const [username, setUsername] = useState(ACCOUNTS[0].username);
-  const [password, setPassword] = useState(ACCOUNTS[0].password);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [show, setShow] = useState(false);
   const [error, setError] = useState("");
 
@@ -43,11 +41,7 @@ export default function LoginPage() {
     }
   };
 
-  const pick = (u: string, p: string) => {
-    setUsername(u);
-    setPassword(p);
-    setError("");
-  };
+
 
   return (
     <div
@@ -154,29 +148,7 @@ export default function LoginPage() {
             </button>
           </div>
 
-          <div className="mt-7 border-t border-white/10 pt-5">
-            <p className="text-[12px] uppercase tracking-wide text-white/40">Akun simulasi (akan gagal jika tidak terdaftar di database)</p>
-            <div className="mt-3 flex flex-col gap-2">
-              {ACCOUNTS.map((a) => (
-                <button
-                  key={a.username}
-                  type="button"
-                  onClick={() => pick(a.username, a.password)}
-                  className={`flex items-center justify-between rounded-xl border px-4 py-2.5 text-left transition-all ${
-                    username === a.username
-                      ? "border-[#BFFD44]/60 bg-[#BFFD44]/10"
-                      : "border-white/12 bg-white/[0.03] hover:border-white/30"
-                  }`}
-                >
-                  <span className="flex flex-col">
-                    <span className="text-[15px] font-bold text-white">{a.username}</span>
-                    <span className="text-[12px] font-light text-white/50">{a.role}</span>
-                  </span>
-                  <span className="font-mono text-[13px] text-[#BFFD44]/90">{a.password}</span>
-                </button>
-              ))}
-            </div>
-          </div>
+
         </div>
       </div>
     </div>
