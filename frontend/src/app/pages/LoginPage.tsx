@@ -89,14 +89,14 @@ export default function LoginPage() {
               </label>
             )}
             <label className="flex flex-col gap-1.5">
-              <span className="text-[12px] uppercase tracking-wide text-white/50">{isRegister ? "NRP / NIP (Untuk Login)" : "NRP / NIP / Username"}</span>
+              <span className="text-[12px] uppercase tracking-wide text-white/50">NRP</span>
               <input
                 type="text"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 autoComplete="username"
                 className="rounded-xl border border-white/15 bg-black/30 px-4 py-3 text-[16px] text-white outline-none transition-colors placeholder:text-white/30 focus:border-[#BFFD44]"
-                placeholder="username"
+                placeholder="Masukkan NRP"
               />
             </label>
 
@@ -109,15 +109,17 @@ export default function LoginPage() {
                   onChange={(e) => setPassword(e.target.value)}
                   autoComplete="current-password"
                   className="flex-1 bg-transparent px-4 py-3 text-[16px] text-white outline-none placeholder:text-white/30"
-                  placeholder="••••••••"
+                  placeholder="Masukkan Password"
                 />
-                <button
-                  type="button"
-                  onClick={() => setShow((v) => !v)}
-                  className="px-4 text-[13px] font-light text-white/50 transition-colors hover:text-[#BFFD44]"
-                >
-                  {show ? "Sembunyikan" : "Lihat"}
-                </button>
+                {password.length > 0 && (
+                  <button
+                    type="button"
+                    onClick={() => setShow((v) => !v)}
+                    className="px-4 text-[13px] font-light text-white/50 transition-colors hover:text-[#BFFD44]"
+                  >
+                    {show ? "Sembunyikan" : "Lihat"}
+                  </button>
+                )}
               </div>
             </label>
 
