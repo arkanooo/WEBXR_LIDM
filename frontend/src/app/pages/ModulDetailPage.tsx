@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { createPortal } from "react-dom";
 import { useNavigate, useParams } from "react-router";
 import PageShell from "../components/PageShell";
 import { MODUL_LIST, type VRStage } from "../data/modul";
@@ -312,7 +313,7 @@ export default function ModulDetailPage() {
         </p>
       </section>
       {/* Toast Notification */}
-      {toastMessage && (
+      {toastMessage && typeof document !== "undefined" && createPortal(
         <div className="fixed top-24 left-1/2 -translate-x-1/2 z-[9999] animate-in slide-in-from-top-4 fade-in duration-300 pointer-events-none">
           <div className="bg-[#BFFD44] text-black font-bold px-6 py-3 rounded-full shadow-[0_0_20px_rgba(191,253,68,0.4)] flex items-center gap-3">
             <svg className="w-6 h-6 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -320,7 +321,8 @@ export default function ModulDetailPage() {
             </svg>
             {toastMessage}
           </div>
-        </div>
+        </div>,
+        document.body
       )}
 
       {modul.pretest && (
