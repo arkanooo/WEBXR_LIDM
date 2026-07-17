@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { useNavigate } from "react-router";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
@@ -370,14 +371,9 @@ export default function TensileSimPage() {
   const [speed, setSpeed] = useState(1);
   const [muted, setMutedState] = useState(false);
   const [showPostTest, setShowPostTest] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
 
   const modul = MODUL_LIST.find(m => m.id === "tensile-test");
-
-  useEffect(() => {
-    if (!sessionStorage.getItem("pretest_tensile-test")) {
-      navigate("/modul/tensile-test");
-    }
-  }, [navigate]);
 
   const sound = () => {
     if (!soundRef.current) {
@@ -695,7 +691,17 @@ export default function TensileSimPage() {
               <p className="text-[12px] font-bold uppercase tracking-[0.25em] text-white/45">Benda Kerja & Kontrol</p>
               <div className="mt-4 flex gap-3 mb-5">
                 <button
-                  onClick={() => setShowPostTest(true)}
+                  onClick={() => {
+                    if (!sessionStorage.getItem("pretest_tensile-test")) {
+                      setToastMessage("Harap kerjakan Pre-test terlebih dahulu di halaman modul!");
+                      setTimeout(() => {
+                        setToastMessage("");
+                        navigate("/modul/tensile-test");
+                      }, 2500);
+                    } else {
+                      setShowPostTest(true);
+                    }
+                  }}
                   className="w-full rounded-xl bg-[#00cba0] px-4 py-3 text-[15px] font-bold text-black transition-transform hover:scale-[1.02] shadow-[0_0_15px_rgba(0,203,160,0.3)]"
                 >
                   Akhiri Praktikum & Ambil Post-test →
@@ -807,6 +813,18 @@ export default function TensileSimPage() {
           </div>
         </div>
       </section>
+
+      {toastMessage && typeof document !== "undefined" && createPortal(
+        <div className="fixed top-24 left-1/2 -translate-x-1/2 z-[9999] animate-in slide-in-from-top-4 fade-in duration-300 pointer-events-none">
+          <div className="bg-[#FB7943] text-black font-bold px-6 py-3 rounded-full shadow-[0_0_20px_rgba(251,121,67,0.4)] flex items-center gap-3">
+            <svg className="w-6 h-6 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
+            {toastMessage}
+          </div>
+        </div>,
+        document.body
+      )}
 
       {modul?.posttest && (
         <QuizModal
