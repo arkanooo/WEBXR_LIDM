@@ -687,6 +687,14 @@ export default function TensileSimPage() {
 
             <div className="rounded-2xl border border-white/12 bg-white/[0.04] p-5 backdrop-blur-md">
               <p className="text-[12px] font-bold uppercase tracking-[0.25em] text-white/45">Benda Kerja & Kontrol</p>
+              <div className="mt-4 flex gap-3 mb-5">
+                <button
+                  onClick={() => setShowPostTest(true)}
+                  className="w-full rounded-xl bg-[#00cba0] px-4 py-3 text-[15px] font-bold text-black transition-transform hover:scale-[1.02] shadow-[0_0_15px_rgba(0,203,160,0.3)]"
+                >
+                  Akhiri Praktikum & Ambil Post-test →
+                </button>
+              </div>
               <div className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-3">
                 {MATERIALS.map((mat) => (
                   <button
@@ -761,14 +769,6 @@ export default function TensileSimPage() {
                     ? `Material ductile: kurva menunjukkan yield point jelas, strain hardening hingga UTS, lalu necking (pengecilan penampang setempat) sebelum fracture — perhatikan leher pada spesimen 3D.`
                     : `Material brittle: patah terjadi segera setelah beban maksimum TANPA necking. Yield point tidak tampak jelas sehingga ditentukan dengan Offset Method 0,2%.`}
                 </p>
-                <div className="mt-6 flex justify-end">
-                  <button
-                    onClick={() => setShowPostTest(true)}
-                    className="rounded-full bg-[#BFFD44] px-8 py-3 text-[15px] font-bold text-black transition-transform hover:scale-105 shadow-[0_0_15px_rgba(191,253,68,0.3)]"
-                  >
-                    Akhiri Praktikum & Ambil Post-test →
-                  </button>
-                </div>
               </div>
             )}
 
