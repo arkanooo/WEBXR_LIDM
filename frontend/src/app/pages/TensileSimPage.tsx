@@ -373,6 +373,12 @@ export default function TensileSimPage() {
 
   const modul = MODUL_LIST.find(m => m.id === "tensile-test");
 
+  useEffect(() => {
+    if (!sessionStorage.getItem("pretest_tensile-test")) {
+      navigate("/modul/tensile-test");
+    }
+  }, [navigate]);
+
   const sound = () => {
     if (!soundRef.current) {
       soundRef.current = createSound();

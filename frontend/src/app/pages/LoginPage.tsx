@@ -29,14 +29,14 @@ export default function LoginPage() {
       if (success) {
         navigate("/");
       } else {
-        setError("Gagal mendaftar. Username mungkin sudah digunakan.");
+        setError("Gagal mendaftar. NRP mungkin sudah digunakan.");
       }
     } else {
       const success = await login(username, password);
       if (success) {
         navigate("/");
       } else {
-        setError("Email atau password salah, atau server sedang tidak aktif.");
+        setError("NRP atau password salah, atau server sedang tidak aktif.");
       }
     }
   };

@@ -79,7 +79,7 @@ export default function ModulDetailPage() {
         setShowPretest(true);
       }, 2000);
     } else {
-      navigate("/praktikum");
+      navigate(`/praktikum/${id}`);
     }
   };
 
@@ -330,12 +330,13 @@ export default function ModulDetailPage() {
           isOpen={showPretest}
           onClose={() => {
             setShowPretest(false);
-            if (passedPretest) navigate("/praktikum");
+            if (passedPretest) navigate(`/praktikum/${id}`);
           }}
           quiz={modul.pretest}
           type="Pre-test"
           onComplete={(score) => {
             setPassedPretest(true);
+            sessionStorage.setItem(`pretest_${id}`, "true");
           }}
         />
       )}

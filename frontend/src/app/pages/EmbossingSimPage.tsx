@@ -152,7 +152,12 @@ export default function EmbossingSimPage() {
 
   const modul = MODUL_LIST.find(m => m.id === "embossing-machine");
 
-  
+  useEffect(() => {
+    if (!sessionStorage.getItem("pretest_embossing-machine")) {
+      navigate("/modul/embossing-machine");
+    }
+  }, [navigate]);
+
   const update = (patch: Partial<SimState>) => {
     simRef.current = { ...simRef.current, ...patch };
     setUi(simRef.current);
